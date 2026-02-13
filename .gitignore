@@ -10,3 +10,6 @@ wheels/
 .venv
 
 node_modules/
+
+# Environment variables
+.env

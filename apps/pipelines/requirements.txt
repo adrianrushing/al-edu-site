@@ -1,5 +1,5 @@
 polars==1.21.0
 connectorx==0.4.1
 sqlalchemy==2.0.37
-mysql-connector-python==9.1.0
+psycopg2-binary==2.9.10
 cryptography==44.0.0
