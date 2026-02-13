@@ -1,0 +1,15 @@
+ext\ data/1_index
+ext\ data/2_subdomains
+ext\ data/3_pop
+ext\ data/APRED
+ext\ data/Development
+ext\ data/Distress
+ext\ data/Social\ Context/
+*.csv
+*.xls
+*xlsx
+scripts/*.csv
+scripts/*.xlsx
+scripts/*.xls
+utils/*.csv
+utils/*.xls*
