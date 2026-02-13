@@ -1,0 +1,63 @@
+erDiagram
+    DISTRICT ||--o{ SCHOOL : "contains"
+    DISTRICT ||--o{ DISTRICT_FINANCE : "has year-over-year"
+    GEOGRAPHY ||--o{ SCHOOL : "locates"
+    GEOGRAPHY ||--o{ OPPORTUNITY_INDEX : "measures"
+    SCHOOL ||--o{ TEACHER_METRICS : "employs"
+    SCHOOL ||--o{ STUDENT_DEMOGRAPHICS : "enrolls"
+
+    DISTRICT {
+        Int leaid PK "Local Education Agency ID"
+        String leanm "District Name"
+        Int county_fips "County Identifier"
+        String locale3 "Locale Category"
+    }
+
+    SCHOOL {
+        Int ncessch PK "NCES School ID"
+        String school_name "School Name"
+        Int leaid FK "District Link"
+        Int geoid10 FK "Census Tract Link"
+        Float latcod "Latitude"
+        Float loncod "Longitude"
+    }
+
+    GEOGRAPHY {
+        Int geoid10 PK "Census Tract ID"
+        Int county_fips "County FIPS"
+        Int state_fips "State FIPS"
+        String metro_name "Metropolitan Area Name"
+    }
+
+    OPPORTUNITY_INDEX {
+        Int geoid10 PK, FK
+        Int year PK
+        Int oppty_index "Child Opportunity Index (COI)"
+        Float edu_dmn "Education Domain Score"
+        Float health_environ_dmn "Health/Environment Score"
+    }
+
+    DISTRICT_FINANCE {
+        Int leaid PK, FK
+        Int year PK
+        Float direvtotal "Total Revenue"
+        Float diexptotal "Total Expenditures"
+        Float disalall "Total Salary Outlay"
+    }
+
+    TEACHER_METRICS {
+        Int school_code PK, FK
+        Int year PK
+        String race "Teacher Race"
+        Float experienced_rate "Percent Experienced"
+        String effectiveness_score "Evaluation Score"
+    }
+
+    STUDENT_DEMOGRAPHICS {
+        Int ncessch PK, FK
+        Int year PK
+        Float pctblack "Percent Black Students"
+        Float pctwhite "Percent White Students"
+        Float pctecd "Percent Economically Disadvantaged"
+        Float achall "Overall Achievement Score"
+    }

@@ -1,0 +1,5028 @@
+[
+  {
+    "file": "al_sch_v1_codebook__Sheet1.csv",
+    "sheet_name": "al_sch_v1_codebook__Sheet1",
+    "columns": [
+      {
+        "name": "variable",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "notes",
+        "dtype": "String"
+      },
+      {
+        "name": "source",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__4",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__6",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_altonces__Sheet1.csv",
+    "sheet_name": "seda_altonces__Sheet1",
+    "columns": [
+      {
+        "name": "ncessch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "codebook_3__Sheet1.csv",
+    "sheet_name": "codebook_3__Sheet1",
+    "columns": [
+      {
+        "name": "position",
+        "dtype": "Int64"
+      },
+      {
+        "name": "name",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "usage",
+        "dtype": "String"
+      },
+      {
+        "name": "level",
+        "dtype": "String"
+      },
+      {
+        "name": "tune",
+        "dtype": "String"
+      },
+      {
+        "name": "charts",
+        "dtype": "String"
+      },
+      {
+        "name": "note",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "codebook_2__Sheet1.csv",
+    "sheet_name": "codebook_2__Sheet1",
+    "columns": [
+      {
+        "name": "position",
+        "dtype": "Int64"
+      },
+      {
+        "name": "name",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "usage",
+        "dtype": "String"
+      },
+      {
+        "name": "feature level",
+        "dtype": "String"
+      },
+      {
+        "name": "note",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_19_20__FY 2019-20.csv",
+    "sheet_name": "edunomics_19_20__FY 2019-20",
+    "columns": [
+      {
+        "name": "state",
+        "dtype": "String"
+      },
+      {
+        "name": "year",
+        "dtype": "String"
+      },
+      {
+        "name": "distid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "distname",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolname",
+        "dtype": "String"
+      },
+      {
+        "name": "ncesdistid_admin",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesdistid_geo",
+        "dtype": "Int64"
+      },
+      {
+        "name": "census_id",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesenroll",
+        "dtype": "Int64"
+      },
+      {
+        "name": "gradespan",
+        "dtype": "String"
+      },
+      {
+        "name": "level",
+        "dtype": "Int64"
+      },
+      {
+        "name": "enroll_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolstloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolfed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schooltot_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_norm_nerds",
+        "dtype": "Float64"
+      },
+      {
+        "name": "flag_nerds",
+        "dtype": "Int64"
+      },
+      {
+        "name": "flag_f33",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_locale",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_charter",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_magnet",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1_schoolwide",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_freelunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_reducedlunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_poverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "nces_address",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_city",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_zip",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_19_20__Documentation.csv",
+    "sheet_name": "edunomics_19_20__Documentation",
+    "columns": [
+      {
+        "name": "for documentation and codebook, click the link below.",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_20_21__FY 2020-21.csv",
+    "sheet_name": "edunomics_20_21__FY 2020-21",
+    "columns": [
+      {
+        "name": "state",
+        "dtype": "String"
+      },
+      {
+        "name": "year",
+        "dtype": "String"
+      },
+      {
+        "name": "distid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "distname",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolname",
+        "dtype": "String"
+      },
+      {
+        "name": "ncesdistid_admin",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesdistid_geo",
+        "dtype": "Int64"
+      },
+      {
+        "name": "census_id",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesenroll",
+        "dtype": "Int64"
+      },
+      {
+        "name": "gradespan",
+        "dtype": "String"
+      },
+      {
+        "name": "level",
+        "dtype": "Int64"
+      },
+      {
+        "name": "enroll_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolstloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolfed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schooltot_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_norm_nerds",
+        "dtype": "Float64"
+      },
+      {
+        "name": "flag_nerds",
+        "dtype": "Int64"
+      },
+      {
+        "name": "flag_f33",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_locale",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_charter",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_magnet",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1_schoolwide",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_freelunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_reducedlunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_poverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "nces_address",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_city",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_zip",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_20_21__Documentation.csv",
+    "sheet_name": "edunomics_20_21__Documentation",
+    "columns": [
+      {
+        "name": "for documentation and codebook, click the link below.",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_21_22__FY 2021-22.csv",
+    "sheet_name": "edunomics_21_22__FY 2021-22",
+    "columns": [
+      {
+        "name": "state",
+        "dtype": "String"
+      },
+      {
+        "name": "year",
+        "dtype": "String"
+      },
+      {
+        "name": "distid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolid_stateassigned",
+        "dtype": "String"
+      },
+      {
+        "name": "distname",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolname",
+        "dtype": "String"
+      },
+      {
+        "name": "ncesdistid_admin",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesdistid_geo",
+        "dtype": "Int64"
+      },
+      {
+        "name": "census_id",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesenroll",
+        "dtype": "Int64"
+      },
+      {
+        "name": "gradespan",
+        "dtype": "String"
+      },
+      {
+        "name": "level",
+        "dtype": "Int64"
+      },
+      {
+        "name": "enroll_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolstloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolfed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schooltot_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "flag_nerds",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_locale",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_charter",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_magnet",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_title1_schoolwide",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_freelunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_reducedlunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_poverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "nces_address",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_city",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_zip",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_21_22__Docmentation.csv",
+    "sheet_name": "edunomics_21_22__Docmentation",
+    "columns": [
+      {
+        "name": "for documentation and codebook, click the link below.",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "edunomics_22_23__Sheet 1.csv",
+    "sheet_name": "edunomics_22_23__Sheet 1",
+    "columns": [
+      {
+        "name": "state",
+        "dtype": "String"
+      },
+      {
+        "name": "year",
+        "dtype": "String"
+      },
+      {
+        "name": "distid_stateassigned",
+        "dtype": "Int64"
+      },
+      {
+        "name": "schoolid_stateassigned",
+        "dtype": "Int64"
+      },
+      {
+        "name": "distname",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolname",
+        "dtype": "String"
+      },
+      {
+        "name": "ncesdistid_admin",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesdistid_geo",
+        "dtype": "Int64"
+      },
+      {
+        "name": "census_id",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncesenroll",
+        "dtype": "Int64"
+      },
+      {
+        "name": "gradespan",
+        "dtype": "String"
+      },
+      {
+        "name": "level",
+        "dtype": "Int64"
+      },
+      {
+        "name": "enroll_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_total_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_site_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_stloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_fed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "pp_centshare_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolstloc_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schoolfed_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "schooltot_raw_al",
+        "dtype": "String"
+      },
+      {
+        "name": "flag_nerds",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_locale",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_charter",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_freelunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_reducedlunch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "nces_poverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "nces_address",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_city",
+        "dtype": "String"
+      },
+      {
+        "name": "nces_zip",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "prof_20_21__Sheet.csv",
+    "sheet_name": "prof_20_21__Sheet",
+    "columns": [
+      {
+        "name": "report card - alabama state department of education - 2021",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__1",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__2",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__3",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__4",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__5",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__6",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__7",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__8",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__9",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "prof_21_22__Sheet.csv",
+    "sheet_name": "prof_21_22__Sheet",
+    "columns": [
+      {
+        "name": "report card - alabama state department of education - 2022",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__1",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__2",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__3",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__4",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__5",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__6",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__7",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__8",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__9",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "prof_22_23__Sheet.csv",
+    "sheet_name": "prof_22_23__Sheet",
+    "columns": [
+      {
+        "name": "report card - alabama state department of education - 2023",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__1",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__2",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__3",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__4",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__5",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__6",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__7",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__8",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__9",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "prof_23_24__Sheet.csv",
+    "sheet_name": "prof_23_24__Sheet",
+    "columns": [
+      {
+        "name": "report card - alabama state department of education - 2024",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__1",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__2",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__3",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__4",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__5",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__6",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__7",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__8",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__9",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_alsde_crosswalk2__Sheet1.csv",
+    "sheet_name": "seda_alsde_crosswalk2__Sheet1",
+    "columns": [
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_alsde_crosswalk__Sheet1.csv",
+    "sheet_name": "seda_alsde_crosswalk__Sheet1",
+    "columns": [
+      {
+        "name": "school name",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_seda_crosswalk2__SEDA.csv",
+    "sheet_name": "seda_seda_crosswalk2__SEDA",
+    "columns": [
+      {
+        "name": "seda school",
+        "dtype": "String"
+      },
+      {
+        "name": "(last) ncessch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "alsde school",
+        "dtype": "String"
+      },
+      {
+        "name": "hand match",
+        "dtype": "String"
+      },
+      {
+        "name": "alsde school_1",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_seda_crosswalk2__SEDA w ALSDE.csv",
+    "sheet_name": "seda_seda_crosswalk2__SEDA w ALSDE",
+    "columns": [
+      {
+        "name": "seda school",
+        "dtype": "String"
+      },
+      {
+        "name": "ncessch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_seda_crosswalk2__Sheet2.csv",
+    "sheet_name": "seda_seda_crosswalk2__Sheet2",
+    "columns": [
+      {
+        "name": "alsde school",
+        "dtype": "String"
+      },
+      {
+        "name": "hand match",
+        "dtype": "String"
+      },
+      {
+        "name": "__unnamed__2",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_seda_crosswalk2__ALSDE.csv",
+    "sheet_name": "seda_seda_crosswalk2__ALSDE",
+    "columns": [
+      {
+        "name": "alsed",
+        "dtype": "String"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "seda",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "seda_seda_crosswalk__Sheet1.csv",
+    "sheet_name": "seda_seda_crosswalk__Sheet1",
+    "columns": [
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "1_index.csv",
+    "sheet_name": "1_index",
+    "columns": [
+      {
+        "name": "geoid10",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_usps",
+        "dtype": "String"
+      },
+      {
+        "name": "state_name",
+        "dtype": "String"
+      },
+      {
+        "name": "county_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "county_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "metro_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_type",
+        "dtype": "String"
+      },
+      {
+        "name": "in100",
+        "dtype": "Int64"
+      },
+      {
+        "name": "primary_ruca",
+        "dtype": "Int64"
+      },
+      {
+        "name": "c5_coi_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_coi_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_coi_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_coi_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_coi_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_coi_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_met",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "district_fancy.csv",
+    "sheet_name": "district_fancy",
+    "columns": [
+      {
+        "name": "id",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leaid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leanm",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "achv",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achvz",
+        "dtype": "Float64"
+      },
+      {
+        "name": "math",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rla",
+        "dtype": "Float64"
+      },
+      {
+        "name": "totenrl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perasn",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perblk",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perind",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perwht",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perell",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hperasn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperblk",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperhsp",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperind",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperwht",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperecd",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperell",
+        "dtype": "Int64"
+      },
+      {
+        "name": "locale4",
+        "dtype": "String"
+      },
+      {
+        "name": "locale3",
+        "dtype": "String"
+      },
+      {
+        "name": "blackbeltsm",
+        "dtype": "Float64"
+      },
+      {
+        "name": "distr",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diinstaid",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diguidc",
+        "dtype": "Float64"
+      },
+      {
+        "name": "dilib",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diadmin",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvtotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvlocal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexptotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpsuppt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexppupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalreg",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalpupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmunemp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmsglprnt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmcollege",
+        "dtype": "Float64"
+      },
+      {
+        "name": "snapall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "fooddesert",
+        "dtype": "Float64"
+      },
+      {
+        "name": "ct_econtype",
+        "dtype": "String"
+      },
+      {
+        "name": "ct_loweducation",
+        "dtype": "Float64"
+      },
+      {
+        "name": "ct_poploss",
+        "dtype": "Float64"
+      },
+      {
+        "name": "ct_retiredest",
+        "dtype": "Float64"
+      },
+      {
+        "name": "ct_persistpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "ct_persistchildpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "h_fctr_zs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hbehavezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "clincarezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "socecnzs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "physenvzs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "district_id_number",
+        "dtype": "Int64"
+      },
+      {
+        "name": "county_names",
+        "dtype": "String"
+      },
+      {
+        "name": "county_fips",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "pop.csv",
+    "sheet_name": "pop",
+    "columns": [
+      {
+        "name": "geoid10",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "aian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "asian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "black",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hisp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "white",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "index.csv",
+    "sheet_name": "index",
+    "columns": [
+      {
+        "name": "geoid10",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_usps",
+        "dtype": "String"
+      },
+      {
+        "name": "state_name",
+        "dtype": "String"
+      },
+      {
+        "name": "county_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "county_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "metro_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_type",
+        "dtype": "String"
+      },
+      {
+        "name": "in100",
+        "dtype": "Int64"
+      },
+      {
+        "name": "primary_ruca",
+        "dtype": "Int64"
+      },
+      {
+        "name": "c5_coi_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_coi_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_coi_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_coi_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_coi_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_coi_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_coi_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_met",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "coi_joined.csv",
+    "sheet_name": "coi_joined",
+    "columns": [
+      {
+        "name": "geoid10",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_usps",
+        "dtype": "String"
+      },
+      {
+        "name": "county_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "county_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "metro_name",
+        "dtype": "String"
+      },
+      {
+        "name": "primary_ruca",
+        "dtype": "Int64"
+      },
+      {
+        "name": "oppty_index",
+        "dtype": "Int64"
+      },
+      {
+        "name": "oppty_index_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "edu_dmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "edu_dmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "health_environ_dmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "health_environ_dmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "soc_econ_dmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "soc_econ_dmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "early_childhood_edu_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "early_childhood_edu_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "elementary_edu_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "elementary_edu_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "edu_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "edu_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "secondary_post-secondary_edu_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "secondary_post-secondary_edu_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pollution_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "pollution_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "health_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "health_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "safety-related_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "safety-related_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "healthy_environs_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "healthy_environs_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "concentrated_socio-econ_inequity_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "concentrated_socio-econ_inequity_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "employment_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "employment_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "econ_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "econ_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "housing_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "housing_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "soc_resources_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "soc_resources_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "wealth_subdmn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "wealth_subdmn_std",
+        "dtype": "Float64"
+      },
+      {
+        "name": "aian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "asian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "black",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hisp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "white",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "district_county.csv",
+    "sheet_name": "district_county",
+    "columns": [
+      {
+        "name": "state postal code",
+        "dtype": "String"
+      },
+      {
+        "name": "state fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "district id number",
+        "dtype": "Int64"
+      },
+      {
+        "name": "school district name",
+        "dtype": "String"
+      },
+      {
+        "name": "county names",
+        "dtype": "String"
+      },
+      {
+        "name": "county fips",
+        "dtype": "Int64"
+      }
+    ]
+  },
+  {
+    "file": "subdoms.csv",
+    "sheet_name": "subdoms",
+    "columns": [
+      {
+        "name": "geoid10",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "state_usps",
+        "dtype": "String"
+      },
+      {
+        "name": "state_name",
+        "dtype": "String"
+      },
+      {
+        "name": "county_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "county_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_fips",
+        "dtype": "Int64"
+      },
+      {
+        "name": "metro_name",
+        "dtype": "String"
+      },
+      {
+        "name": "metro_type",
+        "dtype": "String"
+      },
+      {
+        "name": "in100",
+        "dtype": "Int64"
+      },
+      {
+        "name": "primary_ruca",
+        "dtype": "Int64"
+      },
+      {
+        "name": "c5_ed_ec_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_ec_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_ec_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_ec_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_ec_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_ec_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_ec_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_ec_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_ec_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_el_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_el_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_el_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_el_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_el_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_el_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_el_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_el_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_el_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_er_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_er_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_er_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_er_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_er_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_er_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_sp_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_sp_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_ed_sp_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_ed_sp_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_sp_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_ed_sp_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_ed_sp_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_sp_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_ed_sp_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_ep_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_ep_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_ep_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_ep_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_ep_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_ep_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_ep_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_ep_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_ep_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_hr_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_hr_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_hr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_hr_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_hr_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_hr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_hr_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_hr_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_hr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_se_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_se_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_se_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_se_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_se_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_se_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_se_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_he_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_he_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_he_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_he_he_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_he_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_he_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_he_he_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_he_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_he_he_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_ei_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_ei_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_ei_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_ei_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_ei_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_ei_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_ei_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_ei_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_ei_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_eo_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_eo_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_eo_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_eo_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_eo_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_eo_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_eo_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_eo_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_eo_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_er_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_er_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_er_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_er_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_er_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_er_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_er_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_hq_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_hq_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_hq_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_hq_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_hq_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_hq_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_hq_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_hq_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_hq_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_sr_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_sr_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_sr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_sr_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_sr_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_sr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_sr_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_sr_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_sr_met",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_wl_nat",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_wl_stt",
+        "dtype": "String"
+      },
+      {
+        "name": "c5_se_wl_met",
+        "dtype": "String"
+      },
+      {
+        "name": "r_se_wl_nat",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_wl_stt",
+        "dtype": "Int64"
+      },
+      {
+        "name": "r_se_wl_met",
+        "dtype": "String"
+      },
+      {
+        "name": "z_se_wl_nat",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_wl_stt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "z_se_wl_met",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "stu_demo_20_21.csv",
+    "sheet_name": "stu_demo_20_21",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "demo_20_21.csv",
+    "sheet_name": "demo_20_21",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "stu_demo_21_22.csv",
+    "sheet_name": "stu_demo_21_22",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "demo_21_22.csv",
+    "sheet_name": "demo_21_22",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "stu_demo_22_23.csv",
+    "sheet_name": "stu_demo_22_23",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "demo_22_23.csv",
+    "sheet_name": "demo_22_23",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "tchr_exp_20_21.csv",
+    "sheet_name": "tchr_exp_20_21",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced rate",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_exp_21_22.csv",
+    "sheet_name": "tchr_exp_21_22",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced rate",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_exp_22_23.csv",
+    "sheet_name": "tchr_exp_22_23",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced rate",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_exp_23_24.csv",
+    "sheet_name": "tchr_exp_23_24",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "experienced rate",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "inexperienced rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_demo_20_21.csv",
+    "sheet_name": "tchr_demo_20_21",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "demographic count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "demographic rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_demo_21_22.csv",
+    "sheet_name": "tchr_demo_21_22",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "demographic count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "demographic rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_demo_22_23.csv",
+    "sheet_name": "tchr_demo_22_23",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "demographic count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "demographic rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "tchr_effect_22_23.csv",
+    "sheet_name": "tchr_effect_22_23",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system code",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school code",
+        "dtype": "Int64"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "educator effectiveness score",
+        "dtype": "String"
+      },
+      {
+        "name": "atot completion rate designation",
+        "dtype": "String"
+      },
+      {
+        "name": "title i status",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "tchr_effect_23_24.csv",
+    "sheet_name": "tchr_effect_23_24",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system code",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school code",
+        "dtype": "Int64"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "educator effectiveness score",
+        "dtype": "String"
+      },
+      {
+        "name": "atot completion rate designation",
+        "dtype": "String"
+      },
+      {
+        "name": "title i status",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "tchr_demo_23_24.csv",
+    "sheet_name": "tchr_demo_23_24",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "race",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "demographic count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "total count",
+        "dtype": "Float64"
+      },
+      {
+        "name": "demographic rate",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "stu_demo_23_24.csv",
+    "sheet_name": "stu_demo_23_24",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "demo_23_24.csv",
+    "sheet_name": "demo_23_24",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "String"
+      },
+      {
+        "name": "gender",
+        "dtype": "String"
+      },
+      {
+        "name": "ethnicity",
+        "dtype": "String"
+      },
+      {
+        "name": "sub population",
+        "dtype": "String"
+      },
+      {
+        "name": "total student count",
+        "dtype": "String"
+      },
+      {
+        "name": "asian",
+        "dtype": "String"
+      },
+      {
+        "name": "asian %",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american",
+        "dtype": "String"
+      },
+      {
+        "name": "black or african american %",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native",
+        "dtype": "String"
+      },
+      {
+        "name": "american indian / alaska native %",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander",
+        "dtype": "String"
+      },
+      {
+        "name": "native hawaiian / pacific islander %",
+        "dtype": "String"
+      },
+      {
+        "name": "white",
+        "dtype": "String"
+      },
+      {
+        "name": "white %",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races",
+        "dtype": "String"
+      },
+      {
+        "name": "two or more races %",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "subodomain_data_dict.csv",
+    "sheet_name": "subodomain_data_dict",
+    "columns": [
+      {
+        "name": "column",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "description",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "pop_data_dict.csv",
+    "sheet_name": "pop_data_dict",
+    "columns": [
+      {
+        "name": "column",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "description",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "index_data_dict.csv",
+    "sheet_name": "index_data_dict",
+    "columns": [
+      {
+        "name": "column",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "description",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "data_dict.csv",
+    "sheet_name": "data_dict",
+    "columns": [
+      {
+        "name": "column",
+        "dtype": "String"
+      },
+      {
+        "name": "type",
+        "dtype": "String"
+      },
+      {
+        "name": "label",
+        "dtype": "String"
+      },
+      {
+        "name": "description",
+        "dtype": "String"
+      }
+    ]
+  },
+  {
+    "file": "al_dist_cln2.csv",
+    "sheet_name": "al_dist_cln2",
+    "columns": [
+      {
+        "name": "leaid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leanm",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "achv",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achvz",
+        "dtype": "Float64"
+      },
+      {
+        "name": "math",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rla",
+        "dtype": "Float64"
+      },
+      {
+        "name": "totenrl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perasn",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perblk",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perind",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perwht",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perell",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hperasn",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperblk",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperhsp",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperind",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperwht",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperecd",
+        "dtype": "Int64"
+      },
+      {
+        "name": "hperell",
+        "dtype": "Int64"
+      },
+      {
+        "name": "locale_vars",
+        "dtype": "String"
+      },
+      {
+        "name": "locale4",
+        "dtype": "String"
+      },
+      {
+        "name": "locale3",
+        "dtype": "String"
+      },
+      {
+        "name": "blackbeltsm",
+        "dtype": "Int64"
+      },
+      {
+        "name": "dist_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "distr",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diinstaid",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diguidc",
+        "dtype": "Float64"
+      },
+      {
+        "name": "dilib",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diadmin",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvtotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvlocal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexptotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpsuppt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexppupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalreg",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalpupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "county_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "cmpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmunemp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmsglprnt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmcollege",
+        "dtype": "Float64"
+      },
+      {
+        "name": "snapall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "fooddesert",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_econtype",
+        "dtype": "String"
+      },
+      {
+        "name": "ct_loweducation",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_poploss",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_retiredest",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistchildpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "health_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "h_fctr_zs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hbehavezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "clincarezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "socecnzs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "physenvzs",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "al_dist_cln.csv",
+    "sheet_name": "al_dist_cln",
+    "columns": [
+      {
+        "name": "leaid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leanm",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "achv",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achvz",
+        "dtype": "Float64"
+      },
+      {
+        "name": "math",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rla",
+        "dtype": "Float64"
+      },
+      {
+        "name": "totenrl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perasn",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perblk",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perind",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perwht",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perell",
+        "dtype": "Float64"
+      },
+      {
+        "name": "locale_vars",
+        "dtype": "String"
+      },
+      {
+        "name": "locale4",
+        "dtype": "String"
+      },
+      {
+        "name": "locale3",
+        "dtype": "String"
+      },
+      {
+        "name": "blackbeltsm",
+        "dtype": "Int64"
+      },
+      {
+        "name": "dist_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "distr",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diinstaid",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diguidc",
+        "dtype": "Float64"
+      },
+      {
+        "name": "dilib",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diadmin",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvtotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvlocal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexptotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpsuppt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexppupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalreg",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalpupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "county_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "cmpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmunemp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmsglprnt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmcollege",
+        "dtype": "Float64"
+      },
+      {
+        "name": "snapall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "fooddesert",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_econtype",
+        "dtype": "String"
+      },
+      {
+        "name": "ct_loweducation",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_poploss",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_retiredest",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistchildpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "health_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "h_fctr_zs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hbehavezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "clincarezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "socecnzs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "physenvzs",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "al_dist.csv",
+    "sheet_name": "al_dist",
+    "columns": [
+      {
+        "name": "leaid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leanm",
+        "dtype": "String"
+      },
+      {
+        "name": "grade",
+        "dtype": "Int64"
+      },
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "achv",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achvz",
+        "dtype": "Float64"
+      },
+      {
+        "name": "math",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rla",
+        "dtype": "Float64"
+      },
+      {
+        "name": "totenrl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perasn",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perblk",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perind",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perwht",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perell",
+        "dtype": "Float64"
+      },
+      {
+        "name": "locale_vars",
+        "dtype": "String"
+      },
+      {
+        "name": "locale4",
+        "dtype": "String"
+      },
+      {
+        "name": "locale3",
+        "dtype": "String"
+      },
+      {
+        "name": "blackbeltsm",
+        "dtype": "Int64"
+      },
+      {
+        "name": "dist_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "distr",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diinstaid",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diguidc",
+        "dtype": "Float64"
+      },
+      {
+        "name": "dilib",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diadmin",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvtotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "direvlocal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexptotal",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpsuppt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexppupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "diexpbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalreg",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalinst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalplant",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalbus",
+        "dtype": "Float64"
+      },
+      {
+        "name": "disalpupl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "rsecdnec",
+        "dtype": "Float64"
+      },
+      {
+        "name": "county_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "cmpoverty",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmunemp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmsglprnt",
+        "dtype": "Float64"
+      },
+      {
+        "name": "cmcollege",
+        "dtype": "Float64"
+      },
+      {
+        "name": "snapall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "fooddesert",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_econtype",
+        "dtype": "String"
+      },
+      {
+        "name": "ct_loweducation",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_poploss",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_retiredest",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ct_persistchildpoverty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "health_factors",
+        "dtype": "String"
+      },
+      {
+        "name": "h_fctr_zs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "hbehavezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "clincarezs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "socecnzs",
+        "dtype": "Float64"
+      },
+      {
+        "name": "physenvzs",
+        "dtype": "Float64"
+      }
+    ]
+  },
+  {
+    "file": "al_sch24_v1.csv",
+    "sheet_name": "al_sch24_v1",
+    "columns": [
+      {
+        "name": "year",
+        "dtype": "Int64"
+      },
+      {
+        "name": "system",
+        "dtype": "String"
+      },
+      {
+        "name": "school",
+        "dtype": "String"
+      },
+      {
+        "name": "enrollment",
+        "dtype": "Int64"
+      },
+      {
+        "name": "pctecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctesl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctswd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctasian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pcthisp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctwhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctaian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pctnhpi",
+        "dtype": "Float64"
+      },
+      {
+        "name": "pcttwo",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absecd",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achesl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwesl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absesl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achasian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwasian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absasian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwhsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "abshsp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achwhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwwhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "abswhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "achother",
+        "dtype": "Float64"
+      },
+      {
+        "name": "grwother",
+        "dtype": "Float64"
+      },
+      {
+        "name": "absother",
+        "dtype": "Float64"
+      },
+      {
+        "name": "staffcount",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tchcount",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tcasian",
+        "dtype": "String"
+      },
+      {
+        "name": "tcblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tchisp",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tcwhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tcother",
+        "dtype": "Float64"
+      },
+      {
+        "name": "prasian",
+        "dtype": "String"
+      },
+      {
+        "name": "prblack",
+        "dtype": "Float64"
+      },
+      {
+        "name": "prhisp",
+        "dtype": "String"
+      },
+      {
+        "name": "prwhite",
+        "dtype": "Float64"
+      },
+      {
+        "name": "prother",
+        "dtype": "String"
+      },
+      {
+        "name": "counselor",
+        "dtype": "Float64"
+      },
+      {
+        "name": "instasst",
+        "dtype": "Float64"
+      },
+      {
+        "name": "librarian",
+        "dtype": "Float64"
+      },
+      {
+        "name": "aricoach",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tcexperienced",
+        "dtype": "Float64"
+      },
+      {
+        "name": "tcinexperienced",
+        "dtype": "Float64"
+      },
+      {
+        "name": "prexperienced",
+        "dtype": "Float64"
+      },
+      {
+        "name": "prinexperienced",
+        "dtype": "Float64"
+      },
+      {
+        "name": "district",
+        "dtype": "String"
+      },
+      {
+        "name": "enrl38",
+        "dtype": "Int64"
+      },
+      {
+        "name": "avgrd38",
+        "dtype": "Float64"
+      },
+      {
+        "name": "perfrl",
+        "dtype": "Float64"
+      },
+      {
+        "name": "sesavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "lninc50avgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "baplusavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "unempavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "snapavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "povertyavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "single_momavgall",
+        "dtype": "Float64"
+      },
+      {
+        "name": "coi",
+        "dtype": "Int64"
+      },
+      {
+        "name": "coi_ed",
+        "dtype": "Int64"
+      },
+      {
+        "name": "coi_he",
+        "dtype": "Int64"
+      },
+      {
+        "name": "coi_st",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ppe",
+        "dtype": "Float64"
+      },
+      {
+        "name": "urban",
+        "dtype": "Int64"
+      },
+      {
+        "name": "suburb",
+        "dtype": "Int64"
+      },
+      {
+        "name": "town",
+        "dtype": "Int64"
+      },
+      {
+        "name": "rural",
+        "dtype": "Int64"
+      },
+      {
+        "name": "seda",
+        "dtype": "String"
+      },
+      {
+        "name": "sedasch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "ncessch",
+        "dtype": "Int64"
+      },
+      {
+        "name": "sedalea",
+        "dtype": "Int64"
+      },
+      {
+        "name": "sedaleaname",
+        "dtype": "String"
+      },
+      {
+        "name": "sedaadmin",
+        "dtype": "Int64"
+      },
+      {
+        "name": "sedaadminname",
+        "dtype": "String"
+      },
+      {
+        "name": "sedacounty",
+        "dtype": "Int64"
+      },
+      {
+        "name": "sedacountyname",
+        "dtype": "String"
+      },
+      {
+        "name": "sedametro",
+        "dtype": "Int64"
+      },
+      {
+        "name": "sedametroname",
+        "dtype": "String"
+      },
+      {
+        "name": "sedacz",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leaid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "leanm",
+        "dtype": "String"
+      },
+      {
+        "name": "countyid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "countyname",
+        "dtype": "String"
+      },
+      {
+        "name": "metroid13",
+        "dtype": "Int64"
+      },
+      {
+        "name": "metroname13",
+        "dtype": "String"
+      },
+      {
+        "name": "czid",
+        "dtype": "Int64"
+      },
+      {
+        "name": "locale",
+        "dtype": "String"
+      },
+      {
+        "name": "lcity",
+        "dtype": "String"
+      },
+      {
+        "name": "lzip",
+        "dtype": "Int64"
+      },
+      {
+        "name": "latcod",
+        "dtype": "Float64"
+      },
+      {
+        "name": "loncod",
+        "dtype": "Float64"
+      },
+      {
+        "name": "in_shape",
+        "dtype": "Int64"
+      },
+      {
+        "name": "schoolold",
+        "dtype": "String"
+      }
+    ]
+  }
+]
