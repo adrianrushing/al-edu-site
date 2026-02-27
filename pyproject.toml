@@ -5,5 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "debugpy>=1.8.20",
     "polars>=1.38.1",
 ]
