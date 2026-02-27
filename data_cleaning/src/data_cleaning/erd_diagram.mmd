@@ -1,0 +1,118 @@
+erDiagram
+    SCHOOL_ACCOUNTABILITY {
+        int Year
+        string System
+        string School
+        string Indicator
+        string Grade
+        string Gender
+        string Race
+        string Ethnicity
+        string Sub_Population
+        float Score
+    }
+
+    SCHOOL_EDUNOMICS {
+        string state
+        int year
+        string distid_stateassigned
+        string schoolid_stateassigned
+        string distname
+        string schoolname
+        string ncesdistid_admin
+        string ncesdistid_geo
+        string census_id
+        string ncesid
+        int ncesenroll
+        string gradespan
+        int level
+        string enroll_raw_AL
+        float pp_stloc_raw_AL
+        float pp_fed_raw_AL
+        float pp_total_raw_AL
+        float schoolstloc_raw_AL
+        float schoolfed_raw_AL
+        float schooltot_raw_AL
+        float pp_total_norm_NERDS
+        int flag_NERDS
+        int flag_f33
+        string nces_locale
+        string nces_charter
+        string nces_magnet
+        string nces_title1
+        string nces_title1_schoolwide
+        int nces_freelunch
+        int nces_reducedlunch
+        float nces_poverty
+        string nces_address
+        string nces_city
+        string nces_zip
+        float pp_site_stloc_raw_AL
+        float pp_site_fed_raw_AL
+        float pp_site_raw_AL
+        float pp_centshare_stloc_raw_AL
+        float pp_centshare_fed_raw_AL
+        float pp_centshare_raw_AL
+    }
+
+    STUDENT_DEMOGRAPHICS {
+        int Year
+        string System
+        string School
+        string Grade
+        string Gender
+        string Ethnicity
+        string Sub_Population
+        int Total_Student_Count
+        int Asian
+        float Asian_Pct
+        int Black_or_African_American
+        float Black_or_African_American_Pct
+        int American_Indian_Alaska_Native
+        float American_Indian_Alaska_Native_Pct
+        int Native_Hawaiian_Pacific_Islander
+        float Native_Hawaiian_Pacific_Islander_Pct
+        int White
+        float White_Pct
+        int Two_or_more_races
+        float Two_or_more_races_Pct
+    }
+
+    TEACHER_DEMOGRAPHICS {
+        int Year
+        string System
+        string School
+        string Gender
+        string Race
+        string Ethnicity
+        string Sub_Population
+        float Demographic_Count
+        float Total_Count
+        float Demographic_Rate
+    }
+
+    TEACHER_EFFECTIVENESS {
+        int Year
+        int System_Code
+        string System
+        int School_Code
+        string School
+        float Educator_Effectiveness_Score
+        string ATOT_Completion_Rate_Designation
+        string Title_I_Status
+    }
+
+    TEACHER_EXPERIENCE {
+        int Year
+        string System
+        string School
+        string Gender
+        string Race
+        string Ethnicity
+        string Sub_Population
+        float Total_Count
+        float Experienced_Count
+        float Experienced_Rate
+        float Inexperienced_Count
+        float Inexperienced_Rate
+    }
