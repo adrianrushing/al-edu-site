@@ -45,6 +45,10 @@ Single test: no test runner configured in repo.
 ### Data cleaning package (data_cleaning)
 
 - Run package entrypoint: `python -m data_cleaning`
+- Refresh review SQL tables: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/sandbox_refresh_all_review.sql`
+- Load reviewed tables to core: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/core_load_review_to_core.sql`
+- Load reviewed geographic tables to core: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/core_load_geo_to_core.sql`
+- Report school-county strict nulls: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/geo_strict_null_report.sql`
 
 Single test: no test runner configured in repo.
 

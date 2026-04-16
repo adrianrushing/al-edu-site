@@ -1,0 +1,26 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+        "postgres": {
+            "type": "local",
+            "command": [
+                "docker",
+                "run",
+                "-i",
+                "--rm",
+                "--add-host=host.docker.internal:host-gateway",
+                "-e",
+                "DATABASE_URI",
+                "crystaldba/postgres-mcp",
+                "--access-mode=unrestricted"
+            ],
+            "environment": {
+                "DATABASE_URI": "postgresql://dev_user:dev_password@host.docker.internal:5433/eflt"
+            }
+        },
+        "shadcn": {
+            "type": "local",
+            "command": ["npx", "shadcn@latest", "mcp"]
+        }
+    }
+}
