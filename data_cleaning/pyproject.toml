@@ -8,8 +8,11 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
+    "adbc-driver-postgresql>=1.10.0",
     "debugpy>=1.8.20",
     "fastexcel>=0.19.0",
+    "hypothesis>=6.151.9",
+    "marimo>=0.20.2",
     "polars>=1.37.1",
     "psycopg[binary]>=3.2.1",
     "xlsx2csv>=0.8.6",
@@ -21,3 +24,23 @@ data-cleaning = "data_cleaning:main"
 [build-system]
 requires = ["uv_build>=0.9.26,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "altair>=6.0.0",
+    "duckdb>=1.4.4",
+    "mcp>=1",
+    "nbformat>=5.10.4",
+    "openai>=2.24.0",
+    "polars[pyarrow]>=1.37.1",
+    "pydantic>=2",
+    "pytest>=9.0.2",
+    "python-lsp-ruff>=2.3.0",
+    "python-lsp-server>=1.14.0",
+    "ruff>=0.15.4",
+    "sqlglot>=29.0.1",
+    "ty>=0.0.19",
+    "vegafusion>=2.0.3",
+    "vl-convert-python>=1.9.0.post1",
+    "websockets>=16.0",
+]

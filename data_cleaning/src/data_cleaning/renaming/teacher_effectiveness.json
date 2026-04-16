@@ -1,0 +1,10 @@
+{
+    "Year": "year",
+    "System_Code": "system_code",
+    "System": "system",
+    "School_Code": "school_code",
+    "School": "school",
+    "Educator_Effectiveness_Score": "educator_effectiveness_score",
+    "ATOT_Completion_Rate_Designation": "atot_completion_rate_designation",
+    "Title_I_Status": "title_i_status"
+}

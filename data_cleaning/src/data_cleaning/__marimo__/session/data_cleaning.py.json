@@ -1,0 +1,51 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.20.2"
+  },
+  "cells": [
+    {
+      "id": "MJUe",
+      "code_hash": "ed6435f85b4b08b7b865aaab2a75b9d4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"edunomics-cleaning\">Edunomics Cleaning</h1>\n<h2 id=\"stepsobjectives\">Steps/Objectives</h2>\n<ol>\n<li>Put it in a db today</li>\n</ol>\n<ul>\n<li>Change column names</li>\n<li>Create a normalized thing for immutable schoool information (location, etc.)</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "f506a786d1c8080b393f6237a973c93b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "7f3e6dc8c0c00f8a405e9c55481817fd",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "d0afe3d1ac8c15772b1449ae94633b0f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "b5987a16c6771089e9d35f9a7f59e294",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "95ff13112a0fe84786d2f6fcdf942926",
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

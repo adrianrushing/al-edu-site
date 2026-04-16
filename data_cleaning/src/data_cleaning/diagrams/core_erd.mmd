@@ -1,0 +1,311 @@
+erDiagram
+    %% =========================
+    %% Core star relationships
+    %% =========================
+    dim_school_info ||--o{ fact_accountability : "assesses"
+    dim_school_info ||--o{ fact_edunomics : "finances"
+    dim_school_info ||--o{ fact_student_demographics : "enrolls"
+    dim_school_info ||--o{ fact_teacher_demographics : "staffs"
+    dim_school_info ||--o{ fact_teacher_effectiveness : "evaluates"
+    dim_school_info ||--o{ fact_teacher_experience : "tracks"
+    dim_school_info ||--o{ fact_school_outcomes_wide : "outcomes"
+
+    %% =========================
+    %% Reference canonicalization
+    %% =========================
+    ref_gender_canonical ||--o{ fact_accountability : "canonical gender"
+    ref_race_canonical ||--o{ fact_accountability : "canonical race"
+    ref_ethnicity_canonical ||--o{ fact_accountability : "canonical ethnicity"
+
+    ref_gender_canonical ||--o{ fact_student_demographics : "canonical gender"
+    ref_race_canonical ||--o{ fact_student_demographics : "canonical race"
+    ref_ethnicity_canonical ||--o{ fact_student_demographics : "canonical ethnicity"
+
+    ref_gender_canonical ||--o{ fact_teacher_demographics : "canonical gender"
+    ref_race_canonical ||--o{ fact_teacher_demographics : "canonical race"
+    ref_ethnicity_canonical ||--o{ fact_teacher_demographics : "canonical ethnicity"
+    ref_staff_position_canonical ||--o{ fact_teacher_demographics : "canonical staff position"
+
+    ref_gender_canonical ||--o{ fact_teacher_experience : "canonical gender"
+    ref_race_canonical ||--o{ fact_teacher_experience : "canonical race"
+    ref_ethnicity_canonical ||--o{ fact_teacher_experience : "canonical ethnicity"
+    ref_nces_locale_canonical ||--o{ dim_school_info : "canonical locale"
+
+    %% =========================
+    %% Geographic opportunity model
+    %% =========================
+    dim_geo_tract ||--o{ fact_geo_population : "counts"
+    dim_geo_tract ||--o{ fact_geo_opportunity : "scores"
+    ref_geo_population_group ||--o{ fact_geo_population : "group"
+    ref_geo_norm_scope ||--o{ fact_geo_opportunity : "norm scope"
+    ref_geo_metric ||--o{ fact_geo_opportunity : "metric"
+    ref_geo_opportunity_level ||--o{ fact_geo_opportunity : "opportunity level"
+    ref_geo_domain ||--o{ ref_geo_subdomain : "contains"
+    ref_geo_domain ||--o{ ref_geo_metric : "classifies"
+    ref_geo_subdomain ||--o{ ref_geo_metric : "classifies"
+    dim_school_info ||--o{ bridge_school_geo_county : "county bridge"
+    dim_geo_tract ||--o{ bridge_school_geo_county : "county"
+
+    dim_school_info {
+        bigint school_key PK
+        varchar school_year_label
+        smallint school_year_start
+        smallint school_year_end
+        char state_code
+        bigint nces_id
+        int state_dist_id
+        int state_school_id
+        text dist_name
+        text school_name
+        bigint nces_admin_id
+        bigint nces_geo_id
+        bigint census_id
+        smallint nces_locale_key FK
+        varchar nces_locale_type
+        varchar nces_locale_subtype
+        text source_nces_locale
+        bool nces_charter
+        bool nces_magnet
+        text nces_address
+        varchar nces_city
+        varchar nces_zip
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_accountability {
+        bigint school_key FK
+        smallint year
+        text indicator
+        varchar grade
+        text gender
+        text race
+        text ethnicity
+        text sub_population
+        text score
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_edunomics {
+        bigint school_key FK
+        smallint year
+        int ncesenroll
+        varchar gradespan
+        smallint level
+        int enroll_raw
+        numeric state_local_per_pupil
+        numeric state_local_fund
+        numeric nces_fund
+        numeric nces_poverty
+        varchar title_i_status
+        int nces_freelunch
+        int nces_reducedlunch
+        numeric per_pupil_nces_raw
+        numeric per_pupil_total_raw
+        numeric per_pupil_total_norm_nerds
+        int per_pupil_site_stloc_raw_al
+        int per_pupil_site_nces_raw_al
+        int per_pupil_site_raw_al
+        int per_pupil_centshare_stloc_raw_al
+        int per_pupil_centshare_nces_raw_al
+        int per_pupil_centshare_raw_al
+        bool flag_nerds
+        bool flag_f33
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_student_demographics {
+        bigint school_key FK
+        smallint year
+        varchar grade
+        text gender
+        text ethnicity
+        text race
+        text sub_population
+        numeric demographic_count
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    %% Long-grain teacher fact (fractional staffing/FTE compatible)
+    fact_teacher_demographics {
+        bigint school_key FK
+        smallint year
+        text gender
+        text race
+        text ethnicity
+        text sub_population
+        double demographic_count
+        double demographic_rate
+        bool imputed_flag
+        text imputation_method
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_teacher_effectiveness {
+        bigint school_key FK
+        smallint year
+        text score
+        text atot_completion_rate_designation
+        text title_i_status
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_teacher_experience {
+        bigint school_key FK
+        smallint year
+        text gender
+        text race
+        text ethnicity
+        text sub_population
+        numeric total_count
+        numeric exp_count
+        numeric exp_rate
+        numeric inexp_count
+        numeric inexp_rate
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_school_outcomes_wide {
+        bigint school_key FK
+        smallint year
+        double ach_all
+        double grw_all
+        double abs_all
+        double coi
+        double coi_ed
+        double coi_he
+        double coi_st
+        double ppe
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+
+
+    dim_geo_tract {
+        char geoid10 PK
+        char state_fips
+        char state_usps
+        text state_name
+        char county_fips FK
+        text county_name
+        char metro_fips
+        text metro_name
+        text metro_type
+        smallint in100
+        smallint primary_ruca
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+
+    bridge_school_geo_county {
+        bigint school_key PK
+        smallint school_year_start
+        char county_fips FK
+        text county_name
+        text match_method
+        numeric match_confidence
+        text strict_null_reason
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_geo_population {
+        char geoid10 FK
+        smallint year
+        text population_group FK
+        double population_count
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_geo_opportunity {
+        char geoid10 FK
+        smallint year
+        text metric_code FK
+        text norm_scope FK
+        text opportunity_level FK
+        smallint opportunity_score
+        double opportunity_zscore
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    ref_gender_canonical {
+        text canonical_value PK
+        text normalized_value
+    }
+
+    ref_race_canonical {
+        text canonical_value PK
+        text normalized_value
+    }
+
+    ref_ethnicity_canonical {
+        text canonical_value PK
+        text normalized_value
+    }
+
+    ref_staff_position_canonical {
+        text canonical_value PK
+        text normalized_value
+    }
+
+    ref_nces_locale_canonical {
+        smallint nces_locale_key PK
+        smallint locale_code
+        varchar locale_group
+        varchar locale_subtype
+        varchar canonical_value
+        varchar normalized_value
+        bool is_unknown
+    }
+
+    ref_geo_population_group {
+        text population_group PK
+        text label
+        text description
+        smallint display_order
+    }
+
+    ref_geo_norm_scope {
+        text norm_scope PK
+        text label
+        text description
+    }
+
+    ref_geo_opportunity_level {
+        text canonical_value PK
+        text normalized_value
+        smallint level_rank
+    }
+
+    ref_geo_domain {
+        text domain_code PK
+        text domain_name
+        text description
+    }
+
+    ref_geo_subdomain {
+        text subdomain_code PK
+        text domain_code FK
+        text subdomain_name
+        text description
+    }
+
+    ref_geo_metric {
+        text metric_code PK
+        text metric_level
+        text domain_code FK
+        text subdomain_code FK
+        text metric_name
+        text metric_description
+        text source_dataset
+    }

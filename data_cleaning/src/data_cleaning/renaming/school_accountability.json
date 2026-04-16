@@ -1,0 +1,12 @@
+{
+    "Year": "year",
+    "System": "system",
+    "School": "school",
+    "Indicator": "indicator",
+    "Grade": "grade",
+    "Gender": "gender",
+    "Race": "race",
+    "Ethnicity": "ethnicity",
+    "Sub_Population": "sub_population",
+    "Score": "score"
+}

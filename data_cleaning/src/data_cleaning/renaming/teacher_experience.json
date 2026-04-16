@@ -1,0 +1,14 @@
+{
+    "Year": "year",
+    "System": "system",
+    "School": "school",
+    "Gender": "gender",
+    "Race": "race",
+    "Ethnicity": "ethnicity",
+    "Sub_Population": "sub_population",
+    "Total_Count": "total_count",
+    "Experienced_Count": "experienced_count",
+    "Experienced_Rate": "experienced_rate",
+    "Inexperienced_Count": "inexperienced_count",
+    "Inexperienced_Rate": "inexperienced_rate"
+}

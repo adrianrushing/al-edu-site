@@ -1,0 +1,12 @@
+{
+    "Year": "year",
+    "System": "system",
+    "School": "school",
+    "Gender": "gender",
+    "Race": "race",
+    "Ethnicity": "ethnicity",
+    "Sub_Population": "sub_population",
+    "Demographic_Count": "demographic_count",
+    "Total_Count": "total_count",
+    "Demographic_Rate": "demographic_rate"
+}

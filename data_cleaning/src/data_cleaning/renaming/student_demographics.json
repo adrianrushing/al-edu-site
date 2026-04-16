@@ -1,0 +1,22 @@
+{
+    "Year": "year",
+    "System": "system",
+    "School": "school",
+    "Grade": "grade",
+    "Gender": "gender",
+    "Ethnicity": "ethnicity",
+    "Sub_Population": "sub_population",
+    "Total_Student_Count": "total_student_count",
+    "Asian": "asian",
+    "Asian_Pct": "asian_pct",
+    "Black_or_African_American": "black_or_african_american",
+    "Black_or_African_American_Pct": "black_or_african_american_pct",
+    "American_Indian_Alaska_Native": "american_indian_alaska_native",
+    "American_Indian_Alaska_Native_Pct": "american_indian_alaska_native_pct",
+    "Native_Hawaiian_Pacific_Islander": "native_hawaiian_pacific_islander",
+    "Native_Hawaiian_Pacific_Islander_Pct": "native_hawaiian_pacific_islander_pct",
+    "White": "white",
+    "White_Pct": "white_pct",
+    "Two_or_more_races": "two_or_more_races",
+    "Two_or_more_races_Pct": "two_or_more_races_pct"
+}
