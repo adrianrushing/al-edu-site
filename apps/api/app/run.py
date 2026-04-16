@@ -1,7 +1,12 @@
-from app import create_app
+import uvicorn
 
-# calls the create_app function that is imported from this same directory
-app = create_app()
+from app.config import settings
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    uvicorn.run(
+        "app.main:app",
+        host=settings.app_host,
+        port=settings.app_port,
+        reload=True,
+    )
