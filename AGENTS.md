@@ -8,6 +8,7 @@ existing patterns, and update this file when workflows change.
 - Monorepo with npm workspaces under `apps/*`.
 - Frontend: React + TypeScript + Vite + Tailwind in `apps/web`.
 - Backend API: FastAPI in `apps/api`.
+- Pipeline app under `apps/pipeline` (Python, uv_build).
 - Data cleaning package under `data_cleaning` (Python, uv_build).
 
 ## Build, Lint, Test
@@ -37,7 +38,11 @@ If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_nam
 
 ### Pipelines
 
-- `apps/pipelines` is not present in the current repository layout.
+- Sync deps: `uv sync --project apps/pipeline`
+- Status: `uv run --project apps/pipeline python -m pipeline.cli status`
+- Plan: `uv run --project apps/pipeline python -m pipeline.cli plan`
+- Apply: `uv run --project apps/pipeline python -m pipeline.cli apply`
+- Dry run: `uv run --project apps/pipeline python -m pipeline.cli apply --dry-run`
 
 ### Data cleaning package (data_cleaning)
 
@@ -99,7 +104,35 @@ Routing
 - Routes are configured in `apps/web/src/router.tsx` via TanStack Router.
 - Route page components are under `apps/web/src/pages`.
 
-### Python (apps/api, data_cleaning)
+
+
+Frontend Architecture & Modularization Rules:
+
+    Component Size Limits: Never write React components exceeding 150-200 lines. If a file grows larger, you MUST extract sub-components or business logic.
+
+    Separation of Concerns: Keep UI rendering separate from business logic. Extract complex state, data fetching (TanStack Query), and event handling into custom hooks (e.g., use[FeatureName].ts).
+
+    UI Component Reuse: Always check apps/web/src/components/ui for existing Radix/Tailwind components before creating new atomic elements. Do not duplicate UI logic.
+
+    Feature Grouping: Do not put complex logic directly in src/routes. Create feature-specific folders (e.g., src/features/districts/components/...) and import them into the TanStack router files.
+
+    Props & Types: Explicitly define interface blocks for all component props in the same file. Do not use inline any types.
+
+    Before modifying any frontend code, output a brief 'Architecture Plan' detailing: 1) Which files you will touch, 2) The new sub-components you plan to extract, and 3) The custom hooks you will create. Only proceed with writing code once the plan is established.
+
+
+Formatting & Validation Rules:
+
+    Biome Formatting: All code must adhere to the rules defined in biome.json: use 4-space indentation and an 80-character line width. Do not format unrelated code.
+
+    Frontend Linting: After generating React/TypeScript code, you must assume the code will be validated against the ESLint rules defined in apps/web (npm run lint -w apps/web). Ensure no unused directives or React-hooks violations occur.
+
+    Typescript strictness: Follow the tsconfig.json paths utilizing @/ for absolute imports, placing third-party imports before local ones.
+
+    Python Patterns (apps/api & apps/pipelines): Use concrete type hints (Path, dict[str, str]) instead of Any. Keep 4-space indentation. Maintain pure transformations using Polars lazy() idioms for data pipelines.
+
+
+### Python (apps/api, apps/pipeline, data_cleaning)
 
 Imports
 - Standard library first, then third-party, then local imports.
