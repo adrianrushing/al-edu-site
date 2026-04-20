@@ -1,0 +1,15 @@
+repos:
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.15.10
+      hooks:
+          - id: ruff-check
+            args: [--fix]
+          - id: ruff-format
+    - repo: local
+      hooks:
+          - id: biome-check
+            name: biome-check
+            entry: npm exec biome check apps/web biome.json
+            language: system
+            pass_filenames: false
+            stages: [pre-commit]

@@ -16,3 +16,26 @@ dependencies = [
     "statsmodels>=0.14.6",
     "torch>=2.11.0",
 ]
+
+[tool.uv.workspace]
+members = ["apps/api", "apps/pipeline", "data_cleaning"]
+
+[tool.ruff]
+line-length = 90
+indent-width = 4
+target-version = "py312"
+extend-exclude = ["*.ipynb", "data_cleaning/notebooks/**"]
+
+[tool.ruff.lint]
+select = ["UP", "E", "Q", "B", "C901", "I", "D"]
+
+[tool.ruff.lint.per-file-ignores]
+"apps/api/**/*.py" = ["D", "B008", "B904", "C901", "E501"]
+"apps/pipeline/**/*.py" = ["D"]
+"data_cleaning/src/**/*.py" = ["D", "B018", "C901", "E501", "UP035"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

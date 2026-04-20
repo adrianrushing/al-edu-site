@@ -123,7 +123,7 @@ Frontend Architecture & Modularization Rules:
 
 Formatting & Validation Rules:
 
-    Biome Formatting: All code must adhere to the rules defined in biome.json: use 4-space indentation and an 80-character line width. Do not format unrelated code.
+    Biome Formatting: All code must adhere to the rules defined in biome.json: use 4-space indentation and a 90-character line width. Do not format unrelated code.
 
     Frontend Linting: After generating React/TypeScript code, you must assume the code will be validated against the ESLint rules defined in apps/web (npm run lint -w apps/web). Ensure no unused directives or React-hooks violations occur.
 
@@ -171,6 +171,10 @@ Error handling
 
 - No Cursor rules found in `.cursor/rules/` or `.cursorrules`.
 - No Copilot rules found in `.github/copilot-instructions.md`.
+
+## Hard Checks
+
+All commits must pass Ruff and Biome validation. Run npx biome check --apply . and ruff check --fix . before pushing.
 
 ## If You Add Tests
 
