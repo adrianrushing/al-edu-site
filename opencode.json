@@ -21,6 +21,10 @@
         "shadcn": {
             "type": "local",
             "command": ["npx", "shadcn@latest", "mcp"]
+        },
+        "marimo": {
+            "type": "remote",
+            "url": "http://localhost:PORT/mcp/server"
         }
     }
 }

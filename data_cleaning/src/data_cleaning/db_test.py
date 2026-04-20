@@ -1,11 +1,13 @@
 import polars as pl
 from pathlib import Path
 from datetime import datetime
+import os
 
 # 1. Setup Configuration
 # Using Pathlib is much cleaner for cross-platform paths
 DATA_DIR = Path(__file__).resolve().parents[3] / "flat_data" / "out"
-DB_URI = "postgresql://dev_user:dev_password@localhost:5433/eflt"
+DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
+DB_URI = os.getenv("DATABASE_URL") or os.getenv("DB_URI") or DEFAULT_DB_URI
 
 
 def clean_column_names(df: pl.DataFrame) -> pl.DataFrame:

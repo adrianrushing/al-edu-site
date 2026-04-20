@@ -1,0 +1,28 @@
+{
+  "cv_metrics": {
+    "r2": {
+      "mean": 0.6589530935017706,
+      "std": 0.030291054481207905
+    },
+    "rmse": {
+      "mean": 10.594975729593521,
+      "std": 0.4081577835627132
+    },
+    "mae": {
+      "mean": 8.414703250799668,
+      "std": 0.2919166089746394
+    }
+  },
+  "selection_frequency": {
+    "nces_charter": 0.2,
+    "nces_magnet": 1.0,
+    "teacher_effectiveness_score": 1.0,
+    "grw_all": 1.0,
+    "abs_all": 1.0,
+    "coi_ed": 1.0,
+    "coi_he": 1.0,
+    "coi_st": 1.0,
+    "ppe": 1.0
+  },
+  "n_folds_used": 5
+}

@@ -1,0 +1,16 @@
+{
+  "selected_features": [
+    "nces_magnet",
+    "teacher_effectiveness_score",
+    "grw_all",
+    "abs_all",
+    "coi_ed",
+    "coi_he",
+    "coi_st",
+    "ppe"
+  ],
+  "alpha": 0.05,
+  "vif_threshold": 10.0,
+  "min_feature_coverage_labeled": 0.0,
+  "min_feature_coverage_unlabeled": 0.0
+}

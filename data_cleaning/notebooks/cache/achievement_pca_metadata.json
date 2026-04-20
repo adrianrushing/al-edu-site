@@ -1,0 +1,38 @@
+{
+  "n_components": 5,
+  "explained_variance_ratio": [
+    0.7321300363787212,
+    0.1056090895709662,
+    0.05031256835962516,
+    0.04024294581279336,
+    0.027925322463043772
+  ],
+  "explained_variance_cumulative": [
+    0.7321300363787212,
+    0.8377391259496874,
+    0.8880516943093125,
+    0.9282946401221059,
+    0.9562199625851497
+  ],
+  "residual_std": 10.823857944756995,
+  "continuous_cols": [
+    "year",
+    "total_staff_count",
+    "teacher_effectiveness_score",
+    "grw_all",
+    "abs_all",
+    "coi",
+    "coi_ed",
+    "coi_he",
+    "coi_st",
+    "ppe",
+    "county_coi_score_stt",
+    "county_coi_z_stt",
+    "county_coi_score_met",
+    "county_coi_z_met"
+  ],
+  "binary_cols": [
+    "nces_charter",
+    "nces_magnet"
+  ]
+}

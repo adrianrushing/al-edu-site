@@ -12,14 +12,22 @@ dependencies = [
     "debugpy>=1.8.20",
     "fastexcel>=0.19.0",
     "hypothesis>=6.151.9",
+    "matplotlib>=3.10.7",
     "marimo>=0.20.2",
+    "numpy>=2.3.4",
+    "pandas>=2.3.3",
     "polars>=1.37.1",
     "psycopg[binary]>=3.2.1",
+    "scikit-learn>=1.8.0",
+    "scipy>=1.16.3",
+    "statsmodels>=0.14.6",
+    "torch>=2.8.0",
     "xlsx2csv>=0.8.6",
 ]
 
 [project.scripts]
 data-cleaning = "data_cleaning:main"
+data-cleaning-mlr = "data_cleaning.modeling.run_mlr:main"
 
 [build-system]
 requires = ["uv_build>=0.9.26,<0.10.0"]

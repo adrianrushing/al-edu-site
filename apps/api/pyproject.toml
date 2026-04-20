@@ -17,6 +17,7 @@ dependencies = [
     "psycopg2-binary>=2.9.11",
     "numpy>=2.4.4",
     "statsmodels>=0.14.6",
+    "torch>=2.11.0",
 ]
 
 [build-system]

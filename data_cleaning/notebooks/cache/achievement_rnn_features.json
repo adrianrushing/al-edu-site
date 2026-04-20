@@ -1,0 +1,15 @@
+{
+  "feature_cols": [
+    "nces_charter",
+    "nces_magnet",
+    "total_staff_count",
+    "teacher_effectiveness_score",
+    "grw_all",
+    "abs_all",
+    "coi",
+    "coi_ed",
+    "coi_he",
+    "coi_st",
+    "ppe"
+  ]
+}

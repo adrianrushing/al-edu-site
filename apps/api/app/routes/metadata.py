@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from psycopg import Connection
 from psycopg.errors import LockNotAvailable, QueryCanceled
 from psycopg.rows import dict_row
@@ -61,8 +61,11 @@ def list_schools(
         with conn.cursor(row_factory=dict_row) as cur:
             cur.execute(query, params)  # pyright: ignore[reportArgumentType]
             rows = cur.fetchall()
-    except (LockNotAvailable, QueryCanceled):
-        return []
+    except (LockNotAvailable, QueryCanceled) as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Database is busy processing another job. Retry shortly.",
+        ) from exc
 
     return [SchoolItem.model_validate(dict(row)) for row in rows]
 
@@ -98,12 +101,11 @@ def get_filters(conn: Connection = Depends(get_connection)) -> FiltersResponse:
                 "SELECT canonical_value FROM ref.ethnicity_canonical ORDER BY canonical_value"
             )
             ethnicities = [row[0] for row in cur.fetchall()]
-    except (LockNotAvailable, QueryCanceled):
-        years = []
-        districts = []
-        genders = []
-        races = []
-        ethnicities = []
+    except (LockNotAvailable, QueryCanceled) as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Database is busy processing another job. Retry shortly.",
+        ) from exc
 
     return FiltersResponse(
         years=years,

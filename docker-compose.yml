@@ -1,72 +1,25 @@
 services:
   db:
     image: postgres:16-alpine
-    restart: unless-stopped
+    container_name: local_db
+    restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-dashboard}
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: eflt
     ports:
       - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - app-net
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-dashboard}" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - ./pgdata:/var/lib/postgresql/data
 
-  api:
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile
-    restart: unless-stopped
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
     ports:
-      - "5000:5000"
-    environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/dashboard}
-      SECRET_KEY: ${SECRET_KEY:-change-me}
+      - "8080:80"
     depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-net
-
-  web:
-    build:
-      context: ./apps/web
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - "5173:5173"
-    environment:
-      VITE_API_BASE: ${VITE_API_BASE:-http://api:5000}
-    depends_on:
-      - api
-    networks:
-      - app-net
-
-  pipelines:
-    build:
-      context: ./apps/pipelines
-      dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/dashboard}
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-net
-    # Runs to completion and exits; use `docker compose run pipelines` to re-run
-    profiles:
-      - etl
-
-volumes:
-  pgdata:
-
-
-networks:
-  app-net:
-    driver: bridge
+      - db

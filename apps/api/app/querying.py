@@ -54,8 +54,8 @@ def get_dataset_or_none(dataset: str) -> DatasetConfig | None:
 
 def build_where_clauses(
     config: DatasetConfig, params: FilterParams
-) -> tuple[list[sql.Composed], list[Any]]:
-    clauses: list[sql.Composed] = []
+) -> tuple[list[sql.Composable], list[Any]]:
+    clauses: list[sql.Composable] = []
     values: list[Any] = []
 
     if params.year is not None:
@@ -129,6 +129,10 @@ def build_dataset_query(
 
     if where_clauses:
         query = query + sql.SQL(" WHERE ") + sql.SQL(" AND ").join(where_clauses)
+
+    query = query + sql.SQL(
+        " ORDER BY d.school_year_start DESC, d.dist_name, d.school_name, f.school_key"
+    )
 
     if limit is not None:
         query = query + sql.SQL(" LIMIT %s")

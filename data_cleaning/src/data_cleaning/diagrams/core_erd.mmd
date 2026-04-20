@@ -9,6 +9,7 @@ erDiagram
     dim_school_info ||--o{ fact_teacher_effectiveness : "evaluates"
     dim_school_info ||--o{ fact_teacher_experience : "tracks"
     dim_school_info ||--o{ fact_school_outcomes_wide : "outcomes"
+    dim_school_info ||--o{ fact_school_outcomes_demographic : "outcomes by demographic"
 
     %% =========================
     %% Reference canonicalization
@@ -47,15 +48,14 @@ erDiagram
     dim_geo_tract ||--o{ bridge_school_geo_county : "county"
 
     dim_school_info {
-        bigint school_key PK
+        int school_key PK
+        int dist_key FK
         varchar school_year_label
         smallint school_year_start
         smallint school_year_end
         char state_code
         bigint nces_id
-        int state_dist_id
         int state_school_id
-        text dist_name
         text school_name
         bigint nces_admin_id
         bigint nces_geo_id
@@ -71,6 +71,12 @@ erDiagram
         varchar nces_zip
         timestamptz _created_at
         timestamptz _updated_at
+    }
+
+    fact_district_info {
+        int dist_key PK 
+        int state_dist_id
+        text dist_name
     }
 
     fact_accountability {
@@ -182,6 +188,38 @@ erDiagram
         double coi_he
         double coi_st
         double ppe
+        timestamptz _created_at
+        timestamptz _updated_at
+    }
+
+    fact_school_outcomes_demographic {
+        bigint school_key FK
+        smallint year
+        int enrollment
+        double ach_all
+        double grw_all
+        double abs_all
+        double ach_ecd
+        double grw_ecd
+        double abs_ecd
+        double ach_esl
+        double grw_esl
+        double abs_esl
+        double ach_asian
+        double grw_asian
+        double abs_asian
+        double ach_black
+        double grw_black
+        double abs_black
+        double ach_hsp
+        double grw_hsp
+        double abs_hsp
+        double ach_white
+        double grw_white
+        double abs_white
+        double ach_other
+        double grw_other
+        double abs_other
         timestamptz _created_at
         timestamptz _updated_at
     }

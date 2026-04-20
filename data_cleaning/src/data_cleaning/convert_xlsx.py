@@ -23,13 +23,15 @@ for one in level_one:
         dfs = []
         for file in sub_dir.rglob("*.csv"):
             try:
-                df = pl.read_csv(sub_dir / file, ignore_errors=True)
+                df = pl.read_csv(file, ignore_errors=True)
                 print(len(df.columns))
                 out_path = out_data_dir / f"{one}_{two}.csv"
                 dfs.append(df)
                 # lf.sink_csv(out_path)
             except Exception as e:
                 print(f"Error {e} for {sub_dir}")
+        if not dfs:
+            continue
         out_path = out_data_dir / f"{one}_{two}.csv"
         df = pl.concat(dfs, how="diagonal_relaxed")
         df.write_csv(out_path)

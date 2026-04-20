@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from uuid import uuid4
@@ -10,7 +11,8 @@ import psycopg
 from psycopg import sql
 
 
-DB_URI = "postgresql://dev_user:dev_password@localhost:5433/eflt"
+DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
+DB_URI = os.getenv("DATABASE_URL") or os.getenv("DB_URI") or DEFAULT_DB_URI
 SOURCE_TABLE = "staging.stg_student_demographics"
 TARGET_TABLE = "sandbox.impute_student_demographics_long"
 DIAGNOSTICS_TABLE = "sandbox.impute_student_demographics_diagnostics"
@@ -1210,17 +1212,28 @@ def ensure_output_tables(
     )
 
 
-def fetch_scope_data(db_uri: str, source_table: str, scope: Scope) -> pl.DataFrame:
-    where_parts = [f"year = '{scope.year}'"]
-    if scope.system is not None:
-        escaped = scope.system.replace("'", "''")
-        where_parts.append(f"system = '{escaped}'")
-    if scope.district_only:
-        where_parts.append("school = system")
+def table_identifier(table_name: str) -> sql.Composed:
+    parts = [part.strip() for part in table_name.split(".") if part.strip()]
+    if not parts:
+        raise ValueError(f"Invalid table name: '{table_name}'")
+    return sql.SQL(".").join([sql.Identifier(part) for part in parts])
 
-    query = f"SELECT * FROM {source_table} WHERE {' AND '.join(where_parts)};"
+
+def fetch_scope_data(db_uri: str, source_table: str, scope: Scope) -> pl.DataFrame:
+    where_parts: list[sql.Composable] = [
+        sql.SQL("year = {} ").format(sql.Literal(scope.year))
+    ]
+    if scope.system is not None:
+        where_parts.append(sql.SQL("system = {} ").format(sql.Literal(scope.system)))
+    if scope.district_only:
+        where_parts.append(sql.SQL("school = system"))
+
+    query = sql.SQL("SELECT * FROM {} WHERE ").format(
+        table_identifier(source_table)
+    ) + sql.SQL(" AND ").join(where_parts)
+
     with psycopg.connect(db_uri) as conn:
-        return pl.read_database(query=query, connection=conn)
+        return pl.read_database(query=query.as_string(conn), connection=conn)
 
 
 def process_scope(
@@ -1301,31 +1314,29 @@ def process_scope(
 
 
 def fetch_year_stats(db_uri: str, source_table: str) -> pl.DataFrame:
+    query = sql.SQL(
+        "SELECT year, COUNT(*)::bigint AS row_count "
+        "FROM {} "
+        "WHERE year IS NOT NULL "
+        "GROUP BY year "
+        "ORDER BY year"
+    ).format(table_identifier(source_table))
+
     with psycopg.connect(db_uri) as conn:
-        return pl.read_database(
-            query=f"""
-                SELECT year, COUNT(*)::bigint AS row_count
-                FROM {source_table}
-                WHERE year IS NOT NULL
-                GROUP BY year
-                ORDER BY year
-            """,
-            connection=conn,
-        )
+        return pl.read_database(query=query.as_string(conn), connection=conn)
 
 
 def fetch_systems_for_year(db_uri: str, source_table: str, year: str) -> list[str]:
+    query = sql.SQL(
+        "SELECT DISTINCT system "
+        "FROM {} "
+        "WHERE year = {} "
+        "AND system IS NOT NULL "
+        "ORDER BY system"
+    ).format(table_identifier(source_table), sql.Literal(year))
+
     with psycopg.connect(db_uri) as conn:
-        systems = pl.read_database(
-            query=f"""
-                SELECT DISTINCT system
-                FROM {source_table}
-                WHERE year = '{year}'
-                  AND system IS NOT NULL
-                ORDER BY system
-            """,
-            connection=conn,
-        )
+        systems = pl.read_database(query=query.as_string(conn), connection=conn)
     return systems.get_column("system").to_list()
 
 

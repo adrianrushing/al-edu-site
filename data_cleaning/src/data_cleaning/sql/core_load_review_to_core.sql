@@ -1,12 +1,91 @@
--- Upsert reviewed sandbox tables into core.
+-- Rebuild core reviewed school + fact tables from sandbox.
 -- Run after review approval.
 
 BEGIN;
 
 CREATE SCHEMA IF NOT EXISTS core;
 
-CREATE TABLE IF NOT EXISTS core.dim_school_info (
+DROP MATERIALIZED VIEW IF EXISTS core.mv_student_census_features;
+DROP MATERIALIZED VIEW IF EXISTS core.mv_student_race_pivot;
+DROP MATERIALIZED VIEW IF EXISTS core.mv_staff_census_features;
+DROP MATERIALIZED VIEW IF EXISTS core.mv_teacher_race_pivot;
+DROP MATERIALIZED VIEW IF EXISTS core.mv_teacher_experience_pivot;
+
+DROP TABLE IF EXISTS core.fact_teacher_demographics;
+DROP TABLE IF EXISTS core.fact_student_demographics;
+DROP TABLE IF EXISTS core.fact_accountability;
+DROP TABLE IF EXISTS core.fact_edunomics;
+DROP TABLE IF EXISTS core.fact_teacher_effectiveness;
+DROP TABLE IF EXISTS core.fact_teacher_experience;
+DROP TABLE IF EXISTS core.bridge_school_geo_county;
+DROP TABLE IF EXISTS core.fact_school_outcomes_wide;
+DROP TABLE IF EXISTS core.bridge_school_year;
+DROP TABLE IF EXISTS core.dim_school;
+DROP TABLE IF EXISTS core.dim_district;
+DROP TABLE IF EXISTS core.dim_state;
+DROP TABLE IF EXISTS core.dim_school_info;
+
+CREATE TABLE core.dim_state (
+    state_key        BIGINT PRIMARY KEY,
+    state_code       CHAR(2) NOT NULL UNIQUE,
+    department_name  TEXT NOT NULL,
+    _created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE core.dim_district (
+    district_key           BIGINT PRIMARY KEY,
+    state_key              BIGINT NOT NULL REFERENCES core.dim_state(state_key),
+    state_code             CHAR(2) NOT NULL,
+    district_name          TEXT NOT NULL,
+    district_name_norm     TEXT NOT NULL,
+    state_dist_id          INTEGER,
+    nces_admin_id          BIGINT,
+    source_state_dist_id   TEXT,
+    _created_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_core_dim_district UNIQUE (state_code, district_name_norm)
+);
+
+CREATE TABLE core.dim_school (
     school_key             BIGINT PRIMARY KEY,
+    district_key           BIGINT NOT NULL REFERENCES core.dim_district(district_key),
+    state_code             CHAR(2) NOT NULL,
+    school_name            TEXT NOT NULL,
+    school_name_norm       TEXT NOT NULL,
+    state_school_id        INTEGER,
+    nces_geo_id            BIGINT,
+    census_id              BIGINT,
+    nces_id                BIGINT,
+    nces_charter           BOOLEAN,
+    nces_magnet            BOOLEAN,
+    nces_address           TEXT,
+    nces_city              VARCHAR(120),
+    nces_zip               VARCHAR(15),
+    source_state_school_id TEXT,
+    _created_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_core_dim_school UNIQUE (district_key, school_name_norm)
+);
+
+CREATE TABLE core.bridge_school_year (
+    school_key           BIGINT NOT NULL REFERENCES core.dim_school(school_key),
+    school_year_label    VARCHAR(9) NOT NULL,
+    school_year_start    SMALLINT NOT NULL,
+    school_year_end      SMALLINT,
+    nces_locale_key      SMALLINT NOT NULL REFERENCES ref.nces_locale_canonical(nces_locale_key),
+    nces_locale_type     VARCHAR(20),
+    nces_locale_subtype  VARCHAR(20),
+    source_nces_locale   TEXT,
+    _source_file         TEXT,
+    _ingested_at         TIMESTAMP,
+    _created_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT pk_core_bridge_school_year PRIMARY KEY (school_key, school_year_start)
+);
+
+CREATE TABLE core.dim_school_info (
+    school_key             BIGINT NOT NULL,
     school_year_label      VARCHAR(9) NOT NULL,
     school_year_start      SMALLINT NOT NULL,
     school_year_end        SMALLINT,
@@ -30,11 +109,12 @@ CREATE TABLE IF NOT EXISTS core.dim_school_info (
     nces_zip               VARCHAR(15),
     _created_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
     _updated_at            TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT pk_core_dim_school_info PRIMARY KEY (school_key, school_year_start),
     CONSTRAINT uq_core_school_bk UNIQUE (school_year_label, dist_name, school_name)
 );
 
-CREATE TABLE IF NOT EXISTS core.fact_teacher_demographics (
-    school_key         BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+CREATE TABLE core.fact_teacher_demographics (
+    school_key         BIGINT NOT NULL,
     year               SMALLINT NOT NULL,
     gender             TEXT NOT NULL REFERENCES ref.gender_canonical(canonical_value),
     race               TEXT NOT NULL REFERENCES ref.race_canonical(canonical_value),
@@ -47,11 +127,121 @@ CREATE TABLE IF NOT EXISTS core.fact_teacher_demographics (
     _created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
     _updated_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT pk_core_teacher_long PRIMARY KEY
-      (school_key, year, gender, race, ethnicity, sub_population)
+      (school_key, year, gender, race, ethnicity, sub_population),
+    CONSTRAINT fk_core_teacher_demo_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
-CREATE TABLE IF NOT EXISTS core.fact_student_demographics (
-    school_key         BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+INSERT INTO core.dim_state (
+    state_key,
+    state_code,
+    department_name,
+    _created_at,
+    _updated_at
+)
+SELECT
+    s.state_key::bigint,
+    s.state_code::char(2),
+    s.department_name,
+    coalesce(s._created_at::timestamptz, now()),
+    coalesce(s._updated_at::timestamptz, now())
+FROM sandbox.dim_state_review s;
+
+INSERT INTO core.dim_district (
+    district_key,
+    state_key,
+    state_code,
+    district_name,
+    district_name_norm,
+    state_dist_id,
+    nces_admin_id,
+    source_state_dist_id,
+    _created_at,
+    _updated_at
+)
+SELECT
+    d.district_key::bigint,
+    d.state_key::bigint,
+    d.state_code::char(2),
+    d.district_name,
+    d.district_name_norm,
+    d.state_dist_id::integer,
+    d.nces_admin_id::bigint,
+    d.source_state_dist_id,
+    coalesce(d._created_at::timestamptz, now()),
+    coalesce(d._updated_at::timestamptz, now())
+FROM sandbox.dim_district_review d;
+
+INSERT INTO core.dim_school (
+    school_key,
+    district_key,
+    state_code,
+    school_name,
+    school_name_norm,
+    state_school_id,
+    nces_geo_id,
+    census_id,
+    nces_id,
+    nces_charter,
+    nces_magnet,
+    nces_address,
+    nces_city,
+    nces_zip,
+    source_state_school_id,
+    _created_at,
+    _updated_at
+)
+SELECT
+    s.school_key::bigint,
+    s.district_key::bigint,
+    s.state_code::char(2),
+    s.school_name,
+    s.school_name_norm,
+    s.state_school_id::integer,
+    s.nces_geo_id::bigint,
+    s.census_id::bigint,
+    s.nces_id::bigint,
+    s.nces_charter,
+    s.nces_magnet,
+    s.nces_address,
+    s.nces_city,
+    s.nces_zip,
+    s.source_state_school_id,
+    coalesce(s._created_at::timestamptz, now()),
+    coalesce(s._updated_at::timestamptz, now())
+FROM sandbox.dim_school_review s;
+
+INSERT INTO core.bridge_school_year (
+    school_key,
+    school_year_label,
+    school_year_start,
+    school_year_end,
+    nces_locale_key,
+    nces_locale_type,
+    nces_locale_subtype,
+    source_nces_locale,
+    _source_file,
+    _ingested_at,
+    _created_at,
+    _updated_at
+)
+SELECT
+    b.school_key::bigint,
+    b.school_year_label,
+    b.school_year_start::smallint,
+    b.school_year_end::smallint,
+    b.nces_locale_key::smallint,
+    b.nces_locale_type,
+    b.nces_locale_subtype,
+    b.source_nces_locale,
+    b._source_file,
+    b._ingested_at,
+    coalesce(b._created_at::timestamptz, now()),
+    coalesce(b._updated_at::timestamptz, now())
+FROM sandbox.bridge_school_year_review b;
+
+CREATE TABLE core.fact_student_demographics (
+    school_key         BIGINT NOT NULL,
     year               SMALLINT NOT NULL,
     grade              VARCHAR(30),
     gender             TEXT NOT NULL REFERENCES ref.gender_canonical(canonical_value),
@@ -62,14 +252,13 @@ CREATE TABLE IF NOT EXISTS core.fact_student_demographics (
     _created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
     _updated_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT pk_core_student_long PRIMARY KEY
-      (school_key, year, grade, gender, ethnicity, race, sub_population)
+      (school_key, year, grade, gender, ethnicity, race, sub_population),
+    CONSTRAINT fk_core_student_demo_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
-ALTER TABLE core.fact_student_demographics
-DROP COLUMN IF EXISTS graduation_year;
-
-CREATE TABLE IF NOT EXISTS core.fact_accountability (
-    school_key        BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+CREATE TABLE core.fact_accountability (
+    school_key        BIGINT NOT NULL,
     year              SMALLINT NOT NULL,
     indicator         TEXT NOT NULL,
     grade             VARCHAR(30) NOT NULL,
@@ -82,11 +271,13 @@ CREATE TABLE IF NOT EXISTS core.fact_accountability (
     _updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT uq_core_fact_accountability
       UNIQUE NULLS NOT DISTINCT
-      (school_key, year, indicator, grade, gender, race, ethnicity, sub_population)
+      (school_key, year, indicator, grade, gender, race, ethnicity, sub_population),
+    CONSTRAINT fk_core_accountability_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
-CREATE TABLE IF NOT EXISTS core.fact_edunomics (
-    school_key                        BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+CREATE TABLE core.fact_edunomics (
+    school_key                        BIGINT NOT NULL,
     year                              SMALLINT NOT NULL,
     ncesenroll                        INTEGER,
     gradespan                         VARCHAR(30),
@@ -116,28 +307,26 @@ CREATE TABLE IF NOT EXISTS core.fact_edunomics (
     _updated_at                       TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT pk_core_fact_edunomics PRIMARY KEY (school_key, year),
     CONSTRAINT ck_core_fact_edunomics_title_i_status
-      CHECK (title_i_status IN ('UNREPORTED', 'NON_TITLE_I', 'TARGETED_ASSISTANCE', 'SCHOOLWIDE'))
+      CHECK (title_i_status IN ('UNREPORTED', 'NON_TITLE_I', 'TARGETED_ASSISTANCE', 'SCHOOLWIDE')),
+    CONSTRAINT fk_core_edunomics_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
-ALTER TABLE core.fact_edunomics
-DROP COLUMN IF EXISTS nces_title1;
-
-ALTER TABLE core.fact_edunomics
-DROP COLUMN IF EXISTS nces_title1_schoolwide;
-
-CREATE TABLE IF NOT EXISTS core.fact_teacher_effectiveness (
-    school_key                        BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+CREATE TABLE core.fact_teacher_effectiveness (
+    school_key                        BIGINT NOT NULL,
     year                              SMALLINT NOT NULL,
     score                             TEXT,
     atot_completion_rate_designation  TEXT,
     title_i_status                    VARCHAR(30),
     _created_at                       TIMESTAMPTZ NOT NULL DEFAULT now(),
     _updated_at                       TIMESTAMPTZ NOT NULL DEFAULT now(),
-    CONSTRAINT pk_core_fact_teacher_effectiveness PRIMARY KEY (school_key, year)
+    CONSTRAINT pk_core_fact_teacher_effectiveness PRIMARY KEY (school_key, year),
+    CONSTRAINT fk_core_teacher_effect_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
-CREATE TABLE IF NOT EXISTS core.fact_teacher_experience (
-    school_key        BIGINT NOT NULL REFERENCES core.dim_school_info(school_key),
+CREATE TABLE core.fact_teacher_experience (
+    school_key        BIGINT NOT NULL,
     year              SMALLINT NOT NULL,
     gender            TEXT NOT NULL REFERENCES ref.gender_canonical(canonical_value),
     race              TEXT NOT NULL REFERENCES ref.race_canonical(canonical_value),
@@ -151,7 +340,9 @@ CREATE TABLE IF NOT EXISTS core.fact_teacher_experience (
     _created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
     _updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT uq_core_fact_teacher_experience
-      UNIQUE NULLS NOT DISTINCT (school_key, year, gender, race, ethnicity, sub_population)
+      UNIQUE NULLS NOT DISTINCT (school_key, year, gender, race, ethnicity, sub_population),
+    CONSTRAINT fk_core_teacher_exp_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
 INSERT INTO core.dim_school_info (
@@ -164,37 +355,33 @@ INSERT INTO core.dim_school_info (
     _created_at, _updated_at
 )
 SELECT
-    school_key, school_year_label, school_year_start, school_year_end,
-    state_code, state_dist_id, state_school_id,
-    nces_admin_id, nces_geo_id, census_id, nces_id,
-    dist_name, school_name,
-    nces_locale_key, nces_locale_type, nces_locale_subtype, source_nces_locale,
-    nces_charter, nces_magnet, nces_address, nces_city, nces_zip,
-    _created_at, _updated_at
-FROM sandbox.dim_school_info_review_v2
-ON CONFLICT (school_key) DO UPDATE SET
-    school_year_label   = EXCLUDED.school_year_label,
-    school_year_start   = EXCLUDED.school_year_start,
-    school_year_end     = EXCLUDED.school_year_end,
-    state_code          = EXCLUDED.state_code,
-    state_dist_id       = EXCLUDED.state_dist_id,
-    state_school_id     = EXCLUDED.state_school_id,
-    nces_admin_id       = EXCLUDED.nces_admin_id,
-    nces_geo_id         = EXCLUDED.nces_geo_id,
-    census_id           = EXCLUDED.census_id,
-    nces_id             = EXCLUDED.nces_id,
-    dist_name           = EXCLUDED.dist_name,
-    school_name         = EXCLUDED.school_name,
-    nces_locale_key     = EXCLUDED.nces_locale_key,
-    nces_locale_type    = EXCLUDED.nces_locale_type,
-    nces_locale_subtype = EXCLUDED.nces_locale_subtype,
-    source_nces_locale  = EXCLUDED.source_nces_locale,
-    nces_charter        = EXCLUDED.nces_charter,
-    nces_magnet         = EXCLUDED.nces_magnet,
-    nces_address        = EXCLUDED.nces_address,
-    nces_city           = EXCLUDED.nces_city,
-    nces_zip            = EXCLUDED.nces_zip,
-    _updated_at         = now();
+    sy.school_key,
+    sy.school_year_label,
+    sy.school_year_start,
+    sy.school_year_end,
+    s.state_code,
+    d.state_dist_id,
+    s.state_school_id,
+    d.nces_admin_id,
+    s.nces_geo_id,
+    s.census_id,
+    s.nces_id,
+    d.district_name,
+    s.school_name,
+    sy.nces_locale_key,
+    sy.nces_locale_type,
+    sy.nces_locale_subtype,
+    sy.source_nces_locale,
+    s.nces_charter,
+    s.nces_magnet,
+    s.nces_address,
+    s.nces_city,
+    s.nces_zip,
+    now(),
+    now()
+FROM core.bridge_school_year sy
+JOIN core.dim_school s ON s.school_key = sy.school_key
+JOIN core.dim_district d ON d.district_key = s.district_key;
 
 INSERT INTO core.fact_teacher_demographics (
     school_key, year, gender, race, ethnicity, sub_population,

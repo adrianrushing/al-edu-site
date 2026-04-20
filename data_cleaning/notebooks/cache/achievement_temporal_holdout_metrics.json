@@ -1,0 +1,23 @@
+{
+  "train_years": [
+    2022,
+    2023
+  ],
+  "test_year": 2024,
+  "n_train": 1977,
+  "n_test": 980,
+  "r2": 0.6140534759286909,
+  "rmse": 11.261632465064473,
+  "mae": 9.062665261086435,
+  "selected_features": [
+    "nces_charter",
+    "nces_magnet",
+    "teacher_effectiveness_score",
+    "grw_all",
+    "abs_all",
+    "coi_ed",
+    "coi_he",
+    "coi_st",
+    "ppe"
+  ]
+}

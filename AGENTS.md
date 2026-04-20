@@ -7,17 +7,16 @@ existing patterns, and update this file when workflows change.
 
 - Monorepo with npm workspaces under `apps/*`.
 - Frontend: React + TypeScript + Vite + Tailwind in `apps/web`.
-- Backend API: Flask in `apps/api`.
-- Data pipelines: Python + Polars in `apps/pipelines`.
+- Backend API: FastAPI in `apps/api`.
 - Data cleaning package under `data_cleaning` (Python, uv_build).
 
 ## Build, Lint, Test
 
 ### Root commands
 
-- Dev (web + API): `npm run dev`
+- Dev (web): `npm run dev`
+- Dev (API): `npm run dev:api`
 - Build (web): `npm run build`
-- Install all deps: `npm run install:all`
 - Docker compose: `npm run docker:up`, `npm run docker:down`, `npm run docker:reset`
 
 ### Frontend (apps/web)
@@ -31,16 +30,14 @@ If you add tests, also add a `test` script and document a per-test command.
 
 ### Backend API (apps/api)
 
-- Run locally: `python apps/api/app/run.py`
+- Run locally: `uv run --project apps/api python -m uvicorn app.main:app --app-dir apps/api --reload --host 0.0.0.0 --port 8000`
 
 Single test: no test runner configured in repo.
 If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_name`.
 
-### Pipelines (apps/pipelines)
+### Pipelines
 
-- Run sample clean: `python apps/pipelines/silver/sample_clean.py`
-
-Single test: no test runner configured in repo.
+- `apps/pipelines` is not present in the current repository layout.
 
 ### Data cleaning package (data_cleaning)
 
@@ -82,7 +79,7 @@ Naming
 - Components: `PascalCase`.
 - Hooks: `useX`.
 - Variables/functions: `camelCase`.
-- Files: match existing conventions (routes are kebab-case in `src/routes`).
+- Files: match existing conventions (pages are kebab-case in `src/pages`).
 
 State and data
 - Prefer TanStack Query for server data; avoid ad-hoc fetch in components when
@@ -90,7 +87,7 @@ State and data
 - Centralize API calls in `apps/web/src/lib/api`.
 
 Error handling
-- Use `fetchApi` in `apps/web/src/lib/api/client.ts` for consistent API errors.
+- Use helpers in `apps/web/src/lib/api.ts` for consistent API errors.
 - Propagate errors to the UI via TanStack Query error states.
 
 Styling
@@ -99,11 +96,10 @@ Styling
 - Avoid adding global CSS unless absolutely necessary.
 
 Routing
-- Routes live under `apps/web/src/routes` and use TanStack Router file-based
-  conventions.
-- Update `routeTree.gen.ts` only via the router tooling if needed.
+- Routes are configured in `apps/web/src/router.tsx` via TanStack Router.
+- Route page components are under `apps/web/src/pages`.
 
-### Python (apps/api, apps/pipelines, data_cleaning)
+### Python (apps/api, data_cleaning)
 
 Imports
 - Standard library first, then third-party, then local imports.
@@ -128,16 +124,10 @@ Error handling
 
 ### API conventions (apps/api)
 
-- Flask app factory lives in `apps/api/app/__init__.py`.
-- Routes use blueprints (`apps/api/app/routes.py`).
+- FastAPI application is defined in `apps/api/app/main.py`.
+- Routes are organized under `apps/api/app/routes/*.py` and registered in `main.py`.
 - Configuration is in `apps/api/app/config.py`.
-- Do not introduce DB usage without also configuring SQLAlchemy and connection
-  settings in `Config`.
-
-### Data pipelines (apps/pipelines)
-
-- Use Polars idioms (`lazy()` when appropriate) and keep transformations pure.
-- Read/write paths should be explicit and logged.
+- Do not introduce DB usage without also configuring connection settings in `Settings`.
 
 ### Data cleaning package (data_cleaning)
 

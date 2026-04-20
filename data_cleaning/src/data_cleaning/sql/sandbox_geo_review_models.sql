@@ -51,7 +51,7 @@ CREATE TABLE sandbox.fact_geo_opportunity_review (
 
 
 CREATE TABLE sandbox.bridge_school_geo_county_review (
-    school_key          BIGINT PRIMARY KEY,
+    school_key          BIGINT NOT NULL,
     school_year_start   SMALLINT NOT NULL,
     dist_name           TEXT NOT NULL,
     county_fips         CHAR(5),
@@ -60,11 +60,13 @@ CREATE TABLE sandbox.bridge_school_geo_county_review (
     match_confidence    NUMERIC(4,3),
     strict_null_reason  TEXT,
     _created_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
-    _updated_at         TIMESTAMPTZ NOT NULL DEFAULT now()
+    _updated_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT pk_bridge_school_geo_county_review PRIMARY KEY (school_key, school_year_start)
 );
 
 CREATE TABLE sandbox.ref_al_district_to_county_review (
     nces_admin_id  CHAR(7) NOT NULL,
+    district_name_normalized TEXT NOT NULL,
     county_fips    CHAR(5) NOT NULL,
     county_name    TEXT NOT NULL,
     CONSTRAINT pk_ref_al_district_to_county_review PRIMARY KEY (nces_admin_id, county_fips)
@@ -404,15 +406,18 @@ ALTER TABLE _geo_subdomains_raw
 
 INSERT INTO sandbox.ref_al_district_to_county_review (
     nces_admin_id,
+    district_name_normalized,
     county_fips,
     county_name
 )
 SELECT DISTINCT
     (lpad(trim(r.state_fips), 2, '0') || lpad(trim(r.district_id_number), 5, '0'))::char(7) AS nces_admin_id,
+    lower(regexp_replace(trim(regexp_replace(trim(r.school_district_name), '\\s+School District$', '', 'i')), '[[:space:]]+', ' ', 'g')) AS district_name_normalized,
     (lpad(trim(r.state_fips), 2, '0') || lpad(trim(r.county_fips), 3, '0'))::char(5) AS county_fips,
     trim(r.county_names) AS county_name
 FROM _district_to_county_raw r
-WHERE upper(trim(coalesce(r.state_postal_code, ''))) = 'AL'
+WHERE trim(coalesce(r.state_fips, '')) = '1'
+  AND upper(trim(coalesce(r.state_postal_code, ''))) = 'AL'
   AND trim(coalesce(r.state_fips, '')) ~ '^[0-9]{1,2}$'
   AND trim(coalesce(r.district_id_number, '')) ~ '^[0-9]{1,5}$'
   AND trim(coalesce(r.county_fips, '')) ~ '^[0-9]{1,3}$';
@@ -861,7 +866,7 @@ school_base AS (
         lpad(s.nces_admin_id::text, 7, '0') AS nces_admin_id,
         lower(regexp_replace(trim(s.school_name), '[[:space:]]+', ' ', 'g')) AS school_name_norm,
         lower(regexp_replace(trim(s.dist_name), '[[:space:]]+', ' ', 'g')) AS dist_name_norm
-    FROM sandbox.dim_school_info_review_v2 s
+    FROM sandbox.dim_school_info_review s
 ),
 county_base AS (
     SELECT
@@ -882,6 +887,15 @@ district_county_map AS (
         min(m.county_name) AS county_name
     FROM sandbox.ref_al_district_to_county_review m
     GROUP BY m.nces_admin_id
+),
+district_name_map AS (
+    SELECT
+        m.district_name_normalized,
+        count(*)::int AS county_count,
+        min(m.county_fips) AS county_fips,
+        min(m.county_name) AS county_name
+    FROM sandbox.ref_al_district_to_county_review m
+    GROUP BY m.district_name_normalized
 ),
 crosswalk_ranked AS (
     SELECT
@@ -935,14 +949,14 @@ SELECT
     CASE
         WHEN s.school_year_start < y.min_year OR s.school_year_start > y.max_year THEN NULL
         WHEN sc.county_count = 1 THEN sc.county_fips
-        WHEN c.county_fips IS NOT NULL THEN c.county_fips
+        WHEN dn.county_count = 1 THEN dn.county_fips
         WHEN d.county_count = 1 THEN d.county_fips
         ELSE NULL
     END AS county_fips,
     CASE
         WHEN s.school_year_start < y.min_year OR s.school_year_start > y.max_year THEN NULL
         WHEN sc.county_count = 1 THEN gc.county_name
-        WHEN c.county_fips IS NOT NULL THEN c.county_name
+        WHEN dn.county_count = 1 THEN dn.county_name
         WHEN d.county_count = 1 THEN d.county_name
         ELSE NULL
     END AS county_name,
@@ -950,14 +964,14 @@ SELECT
         WHEN s.school_year_start < y.min_year OR s.school_year_start > y.max_year THEN NULL
         WHEN sc.county_count = 1 AND xb.match_method = 'HAND_MATCH' THEN 'hand_match_ncessch'
         WHEN sc.county_count = 1 THEN 'ncessch_crosswalk'
-        WHEN c.county_fips IS NOT NULL THEN 'dist_name_exact_county'
+        WHEN dn.county_count = 1 THEN 'district_name_crosswalk'
         WHEN d.county_count = 1 THEN 'nces_admin_crosswalk'
         ELSE NULL
     END AS match_method,
     CASE
         WHEN s.school_year_start < y.min_year OR s.school_year_start > y.max_year THEN NULL
         WHEN sc.county_count = 1 THEN 1.000::numeric(4,3)
-        WHEN c.county_fips IS NOT NULL THEN 1.000::numeric(4,3)
+        WHEN dn.county_count = 1 THEN 1.000::numeric(4,3)
         WHEN d.county_count = 1 THEN 1.000::numeric(4,3)
         ELSE NULL
     END AS match_confidence,
@@ -966,11 +980,14 @@ SELECT
         WHEN s.school_year_start < y.min_year OR s.school_year_start > y.max_year THEN 'YEAR_OUT_OF_RANGE'
         WHEN xb.ncessch_count > 1 THEN 'AMBIGUOUS_NCESSCH_MATCH'
         WHEN xb.ncessch IS NOT NULL AND (sc.county_count IS NULL OR sc.county_count = 0)
-            AND c.county_fips IS NULL AND (d.county_count IS NULL OR d.county_count = 0)
+            AND (dn.county_count IS NULL OR dn.county_count = 0)
+            AND (d.county_count IS NULL OR d.county_count = 0)
             THEN 'NO_NCESSCH_RESOLUTION'
         WHEN sc.county_count > 1 THEN 'AMBIGUOUS_SCHOOL_COUNTY'
-        WHEN c.county_fips IS NULL AND d.county_count > 1 THEN 'AMBIGUOUS_DISTRICT_COUNTY'
-        WHEN c.county_fips IS NULL AND (d.county_count IS NULL OR d.county_count = 0) THEN 'NO_EXACT_COUNTY_MATCH'
+        WHEN (dn.county_count IS NULL OR dn.county_count = 0)
+             AND d.county_count > 1 THEN 'AMBIGUOUS_DISTRICT_COUNTY'
+        WHEN (dn.county_count IS NULL OR dn.county_count = 0)
+             AND (d.county_count IS NULL OR d.county_count = 0) THEN 'NO_EXACT_COUNTY_MATCH'
         ELSE NULL
     END AS strict_null_reason
 FROM school_base s
@@ -995,11 +1012,45 @@ LEFT JOIN school_county_year sc
  AND sc.year = s.school_year_start
 LEFT JOIN county_base gc
   ON gc.county_fips = sc.county_fips
-LEFT JOIN county_base c
-  ON c.county_name_normalized = s.dist_name_norm
+LEFT JOIN district_name_map dn
+  ON dn.district_name_normalized = s.dist_name_norm
 LEFT JOIN district_county_map d
   ON d.nces_admin_id = s.nces_admin_id
 CROSS JOIN year_bounds y;
+
+-- Forward-fill county details from the most recent prior year on the same school_key.
+WITH prior_county AS (
+    SELECT
+        b.school_key,
+        b.school_year_start,
+        p.county_fips,
+        p.county_name
+    FROM sandbox.bridge_school_geo_county_review b
+    JOIN LATERAL (
+        SELECT
+            p1.county_fips,
+            p1.county_name
+        FROM sandbox.bridge_school_geo_county_review p1
+        WHERE p1.school_key = b.school_key
+          AND p1.school_year_start < b.school_year_start
+          AND p1.county_fips IS NOT NULL
+        ORDER BY p1.school_year_start DESC
+        LIMIT 1
+    ) p ON TRUE
+    WHERE b.county_fips IS NULL
+)
+UPDATE sandbox.bridge_school_geo_county_review b
+SET county_fips = p.county_fips,
+    county_name = coalesce(p.county_name, b.county_name),
+    match_method = 'school_key_carry_forward',
+    match_confidence = coalesce(b.match_confidence, 0.900::numeric(4,3)),
+    strict_null_reason = NULL,
+    _updated_at = now()
+FROM prior_county p
+WHERE b.school_key = p.school_key
+  AND b.school_year_start = p.school_year_start
+  AND b.county_fips IS NULL
+  AND p.county_fips IS NOT NULL;
 
 CREATE INDEX idx_dim_geo_tract_review_county
   ON sandbox.dim_geo_tract_review (county_fips);

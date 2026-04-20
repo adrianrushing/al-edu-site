@@ -1,18 +1,17 @@
 {
-  "name": "dashboard-site-monorepo",
-  "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
-  "scripts": {
-    "dev": "concurrently \"npm run dev -w apps/web\" \"python apps/api/app/run.py\"",
-    "build": "npm run build -w apps/web",
-    "install:all": "npm install && pip install -r apps/api/requirements.txt && pip install -r apps/pipelines/requirements.txt",
-    "docker:up": "docker compose up --build",
-    "docker:down": "docker compose down",
-    "docker:reset": "docker compose down -v && docker compose up --build"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.2"
-  }
+    "name": "al-edu-site",
+    "private": true,
+    "description": "AI for EFLT - Education data ingestion and cleaning",
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "dev": "npm run dev -w apps/web",
+        "dev:api": "uv run --project apps/api python -m uvicorn app.main:app --app-dir apps/api --reload --host 0.0.0.0 --port 8000",
+        "dev:web": "npm run dev -w apps/web",
+        "build": "npm run build -w apps/web",
+        "docker:up": "docker compose up --build",
+        "docker:down": "docker compose down",
+        "docker:reset": "docker compose down -v && docker compose up --build"
+    }
 }

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from uuid import uuid4
@@ -8,7 +9,8 @@ import polars as pl
 import psycopg
 
 
-DB_URI = "postgresql://dev_user:dev_password@localhost:5433/eflt"
+DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
+DB_URI = os.getenv("DATABASE_URL") or os.getenv("DB_URI") or DEFAULT_DB_URI
 SOURCE_TABLE = "staging.stg_teacher_demographics"
 TARGET_TABLE = "sandbox.impute_teacher_demographics"
 DIAG_TABLE = "sandbox.impute_teacher_demographics_diagnostics"

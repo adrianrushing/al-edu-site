@@ -12,8 +12,9 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
 
-from config import settings
+from app.config import settings
 
 
 def main():
@@ -187,6 +188,21 @@ def main():
         X = df_target[selected_features]
         y = df_target[target]
 
+        if len(df_target) < 5:
+            print("Not enough rows for train/validation split. Skipping target.")
+            continue
+
+        try:
+            X_train, X_valid, y_train, y_valid = train_test_split(
+                X,
+                y,
+                test_size=0.2,
+                random_state=42,
+            )
+        except ValueError as exc:
+            print(f"Could not split data for target '{target}': {exc}")
+            continue
+
         # Build a preprocessor
         numeric_transformer = Pipeline(
             steps=[
@@ -236,16 +252,22 @@ def main():
         best_model = None
 
         for name, model in models.items():
-            model.fit(X, y)
-            preds = model.predict(X)
-            mse = mean_squared_error(y, preds)
-            r2 = r2_score(y, preds)
+            model.fit(X_train, y_train)
+            preds = model.predict(X_valid)
+            mse = mean_squared_error(y_valid, preds)
+            r2 = r2_score(y_valid, preds)
             print(f"Model: {name:<20} | RMSE: {np.sqrt(mse):.4f} | R2: {r2:.4f}")
 
             if r2 > best_r2:
                 best_r2 = r2
                 best_model_name = name
                 best_model = model
+
+        if best_model is None:
+            print("No model selected. Skipping target.")
+            continue
+
+        best_model.fit(X, y)
 
         print(f"\nBest Model: {best_model_name} (R2: {best_r2:.4f})")
 
