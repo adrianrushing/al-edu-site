@@ -1,0 +1,47 @@
+# EFLT Pipeline
+
+This app recreates the database structure for the medallion architecture on a remote Postgres instance.
+
+## Schema Model
+
+- `bronze`: raw landing and file manifests
+- `silver`: standardized staging tables
+- `gold`: serving tables for API and analytics
+- `platinum`: materialized views for heavy query paths
+- `sandbox`: review/transient ETL layer (unchanged)
+- `ref`: canonical reference dictionaries (unchanged)
+
+## Setup
+
+```bash
+cp apps/pipeline/.env.example apps/pipeline/.env
+```
+
+Fill in `DATABASE_URL` with the remote DB URL you bootstrap.
+
+## Commands
+
+```bash
+uv sync --project apps/pipeline
+uv run --project apps/pipeline eflt-pipeline status
+uv run --project apps/pipeline eflt-pipeline plan
+uv run --project apps/pipeline eflt-pipeline apply
+```
+
+Dry run:
+
+```bash
+uv run --project apps/pipeline eflt-pipeline apply --dry-run
+```
+
+## Scope
+
+- This app creates structure only (schemas, tables, views, materialized views, indexes).
+- It does not load data from flat files.
+- It does not modify local/dev DB unless `DATABASE_URL` points there.
+
+## Migration Metadata
+
+- Tracks execution in `pipeline_meta.schema_migrations`
+- Records migration name, checksum, and timestamp
+- Prevents silent drift when migration files change

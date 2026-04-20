@@ -1,0 +1,17 @@
+[project]
+name = "eflt-pipeline"
+version = "0.1.0"
+description = "Schema recreation and migration runner for EFLT medallion architecture"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic-settings>=2.11.0",
+    "psycopg[binary]>=3.2.1",
+]
+
+[project.scripts]
+eflt-pipeline = "pipeline.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.26,<0.10.0"]
+build-backend = "uv_build"

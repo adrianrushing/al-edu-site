@@ -1,0 +1,65 @@
+{
+    "version": "2026-04-20",
+    "steps": [
+        {
+            "name": "ingest_school_accountability",
+            "source": "flat_data/in/raw_data/school/accountability/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_school_accountability"
+        },
+        {
+            "name": "ingest_school_edunomics",
+            "source": "flat_data/in/raw_data/school/edunomics/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_school_edunomics"
+        },
+        {
+            "name": "ingest_student_demographics",
+            "source": "flat_data/in/raw_data/student/demographics/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_student_demographics"
+        },
+        {
+            "name": "ingest_teacher_demographics",
+            "source": "flat_data/in/raw_data/teacher/demographics/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_teacher_demographics"
+        },
+        {
+            "name": "ingest_teacher_effectiveness",
+            "source": "flat_data/in/raw_data/teacher/effectiveness/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_teacher_effectiveness"
+        },
+        {
+            "name": "ingest_teacher_experience",
+            "source": "flat_data/in/raw_data/teacher/experience/*.csv",
+            "target_layer": "silver",
+            "target_table": "silver.stg_teacher_experience"
+        },
+        {
+            "name": "canonical_references",
+            "source": "sql/ref_*",
+            "target_layer": "ref",
+            "target_table": "ref.*"
+        },
+        {
+            "name": "review_models",
+            "source": "silver + ref",
+            "target_layer": "sandbox",
+            "target_table": "sandbox.*_review"
+        },
+        {
+            "name": "publish_serving_tables",
+            "source": "sandbox + ref",
+            "target_layer": "gold",
+            "target_table": "gold.*"
+        },
+        {
+            "name": "publish_materialized_views",
+            "source": "gold",
+            "target_layer": "platinum",
+            "target_table": "platinum.mv_*"
+        }
+    ]
+}
