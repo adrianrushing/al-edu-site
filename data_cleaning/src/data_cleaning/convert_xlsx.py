@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import polars as pl
 
 p = Path(__file__).resolve()

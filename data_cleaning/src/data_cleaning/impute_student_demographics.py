@@ -10,7 +10,6 @@ import polars as pl
 import psycopg
 from psycopg import sql
 
-
 DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
 DB_URI = os.getenv("DATABASE_URL") or os.getenv("DB_URI") or DEFAULT_DB_URI
 SOURCE_TABLE = "staging.stg_student_demographics"
@@ -225,10 +224,7 @@ def apply_grade_rollup_rule(df: pl.DataFrame, metric: str) -> tuple[pl.DataFrame
     group_keys = ["year", "system", "school", "gender", "ethnicity", "sub_population"]
     agg = df.group_by(group_keys).agg(
         [
-            pl.col(metric)
-            .filter(pl.col("grade") == "All Grades")
-            .max()
-            .alias("_parent"),
+            pl.col(metric).filter(pl.col("grade") == "All Grades").max().alias("_parent"),
             pl.col(metric)
             .filter(pl.col("grade") != "All Grades")
             .drop_nulls()
@@ -548,14 +544,8 @@ def apply_long_pair_rule(
     agg = df.group_by(group_keys).agg(
         [
             pl.col("count").filter(pl.col(dim_col) == left_value).max().alias("_left"),
-            pl.col("count")
-            .filter(pl.col(dim_col) == right_value)
-            .max()
-            .alias("_right"),
-            pl.col("count")
-            .filter(pl.col(dim_col) == total_value)
-            .max()
-            .alias("_total"),
+            pl.col("count").filter(pl.col(dim_col) == right_value).max().alias("_right"),
+            pl.col("count").filter(pl.col(dim_col) == total_value).max().alias("_total"),
         ]
     )
 
@@ -1165,9 +1155,7 @@ def to_long_race(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def ensure_output_tables(
-    db_uri: str, target_table: str, diagnostics_table: str
-) -> None:
+def ensure_output_tables(db_uri: str, target_table: str, diagnostics_table: str) -> None:
     empty_long = pl.DataFrame(
         {
             "year": pl.Series([], dtype=pl.Int32),

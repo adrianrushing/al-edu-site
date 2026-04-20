@@ -13,7 +13,7 @@ def create_pool() -> ConnectionPool:
     return pool
 
 
-def get_connection(request: Request) -> Generator[Connection, None, None]:
+def get_connection(request: Request) -> Generator[Connection]:
     pool: ConnectionPool = request.app.state.db_pool
     with pool.connection() as conn:
         with conn.cursor() as cur:

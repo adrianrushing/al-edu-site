@@ -6,7 +6,6 @@ from datetime import datetime
 import polars as pl
 import psycopg
 
-
 DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
 
 
@@ -69,7 +68,7 @@ def year_end_expr() -> pl.Expr:
         pl.when(pl.col("year").str.contains(r"^\d{4}-\d{4}$"))
         .then(pl.col("year").str.slice(5, 4).cast(pl.Int64, strict=False))
         .when(pl.col("year").str.contains(r"^\d{4}$"))
-        .then((pl.col("year").cast(pl.Int64, strict=False) + 1))
+        .then(pl.col("year").cast(pl.Int64, strict=False) + 1)
         .otherwise(None)
     )
 
@@ -147,7 +146,7 @@ def build_school_rows(conn: psycopg.Connection) -> pl.DataFrame:
         FROM ref.nces_locale_canonical;
         """,
     )
-    unknown = locale_ref.filter(pl.col("is_unknown") == True).head(1)
+    unknown = locale_ref.filter(pl.col("is_unknown")).head(1)
     if unknown.height == 0:
         raise RuntimeError("ref.nces_locale_canonical missing is_unknown row")
     unknown_key = int(unknown["nces_locale_key"][0])
@@ -345,9 +344,7 @@ def build_school_rows(conn: psycopg.Connection) -> pl.DataFrame:
                     pl.lit(None, dtype=pl.String).alias("source_state_dist_id"),
                     pl.lit(None, dtype=pl.String).alias("source_state_school_id"),
                     pl.lit("impute_teacher_demographics").alias("_source_file"),
-                    pl.lit(datetime.now())
-                    .cast(pl.Datetime("us"))
-                    .alias("_ingested_at"),
+                    pl.lit(datetime.now()).cast(pl.Datetime("us")).alias("_ingested_at"),
                     pl.lit(1).alias("source_priority"),
                 ]
             )
@@ -620,9 +617,7 @@ def guardrails(dim_school: pl.DataFrame, dim_school_info: pl.DataFrame) -> None:
         == "impute_teacher_demographics"
     )
     if only_impute:
-        raise RuntimeError(
-            "Guardrail failed: dim_school_info_review is imputation-only"
-        )
+        raise RuntimeError("Guardrail failed: dim_school_info_review is imputation-only")
 
     dup_school_year = int(
         dim_school_info.group_by(["school_key", "school_year_start"])
@@ -631,9 +626,7 @@ def guardrails(dim_school: pl.DataFrame, dim_school_info: pl.DataFrame) -> None:
         .height
     )
     if dup_school_year > 0:
-        raise RuntimeError(
-            "Guardrail failed: duplicate (school_key, school_year_start)"
-        )
+        raise RuntimeError("Guardrail failed: duplicate (school_key, school_year_start)")
 
 
 def write_all(connection_uri: str, frames: dict[str, pl.DataFrame]) -> None:

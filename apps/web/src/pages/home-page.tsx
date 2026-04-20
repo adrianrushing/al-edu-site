@@ -26,9 +26,7 @@ export function HomePage() {
             {datasetsQuery.data?.map((dataset) => (
                 <Card key={dataset.key}>
                     <CardHeader>
-                        <CardTitle>
-                            {dataset.key.replaceAll("_", " ")}
-                        </CardTitle>
+                        <CardTitle>{dataset.key.replaceAll("_", " ")}</CardTitle>
                         <CardDescription>{dataset.description}</CardDescription>
                     </CardHeader>
                     <CardContent>

@@ -16,6 +16,4 @@ def load_manifest(manifest_path: Path | None = None) -> PipelineManifest:
         Path(__file__).resolve().parent / "sql" / "specs" / "etl_steps.json"
     )
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return PipelineManifest(
-        version=str(payload["version"]), steps=list(payload["steps"])
-    )
+    return PipelineManifest(version=str(payload["version"]), steps=list(payload["steps"]))

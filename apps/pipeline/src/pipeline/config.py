@@ -1,5 +1,5 @@
-from pathlib import Path
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -20,9 +20,7 @@ class Settings(BaseSettings):
     def validate_database_url(cls, value: str) -> str:
         if not value.strip():
             raise ValueError("DATABASE_URL cannot be empty")
-        if not value.startswith("postgresql://") and not value.startswith(
-            "postgres://"
-        ):
+        if not value.startswith("postgresql://") and not value.startswith("postgres://"):
             raise ValueError("DATABASE_URL must be a PostgreSQL URL")
         return value
 

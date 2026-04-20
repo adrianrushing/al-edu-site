@@ -83,7 +83,7 @@ def _(Path, os, pl, psycopg):
                 cur.execute(query, params or ())
                 rows = cur.fetchall()
                 columns = [desc[0] for desc in cur.description]
-        return pl.from_dicts([dict(zip(columns, row)) for row in rows])
+        return pl.from_dicts([dict(zip(columns, row, strict=False)) for row in rows])
 
     return (run_query,)
 
@@ -297,9 +297,7 @@ def _(
         )
         model_df = model_df.with_columns(
             [
-                (pl.col(s_col) / pl.col("all_race_count")).alias(
-                    f"student_{grp}_share"
-                ),
+                (pl.col(s_col) / pl.col("all_race_count")).alias(f"student_{grp}_share"),
                 (pl.col(f"teacher_{grp}_count") / pl.col("teacher_total")).alias(
                     f"teacher_{grp}_share"
                 ),
@@ -328,17 +326,13 @@ def _(
         [
             pl.sum_horizontal(
                 [
-                    (
-                        pl.col(f"student_{grp}_share") - pl.col(f"county_{grp}_share")
-                    ).abs()
+                    (pl.col(f"student_{grp}_share") - pl.col(f"county_{grp}_share")).abs()
                     for grp in race_groups
                 ]
             ).alias("student_race_mismatch"),
             pl.sum_horizontal(
                 [
-                    (
-                        pl.col(f"teacher_{grp}_share") - pl.col(f"county_{grp}_share")
-                    ).abs()
+                    (pl.col(f"teacher_{grp}_share") - pl.col(f"county_{grp}_share")).abs()
                     for grp in race_groups
                 ]
             ).alias("teacher_race_mismatch"),
@@ -361,12 +355,10 @@ def _(
     model_df = model_df.with_columns(
         [
             (
-                (pl.col("student_race_mismatch") + pl.col("student_hisp_mismatch"))
-                / 2.0
+                (pl.col("student_race_mismatch") + pl.col("student_hisp_mismatch")) / 2.0
             ).alias("student_mismatch"),
             (
-                (pl.col("teacher_race_mismatch") + pl.col("teacher_hisp_mismatch"))
-                / 2.0
+                (pl.col("teacher_race_mismatch") + pl.col("teacher_hisp_mismatch")) / 2.0
             ).alias("teacher_mismatch"),
         ]
     )
@@ -1110,9 +1102,7 @@ def _(funding_metrics_df, np, plt, year_metrics_df):
         "teacher_diversity_index",
         "Student Diversity vs Teacher Diversity",
     )
-    _x, _y = _xy(
-        funding_metrics_df, "student_diversity_index", "teacher_diversity_index"
-    )
+    _x, _y = _xy(funding_metrics_df, "student_diversity_index", "teacher_diversity_index")
     _scatter_and_fit(
         _axes_targets[2, 1],
         _x,

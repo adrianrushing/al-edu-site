@@ -36,9 +36,7 @@ const METADATA_GC_TIME_MS = 30 * 60 * 1000;
 export function AchievementSimulatorPage() {
     const [selectedYear, setSelectedYear] = useState<number | undefined>();
     const [schoolQuery, setSchoolQuery] = useState("");
-    const [selectedSchoolKey, setSelectedSchoolKey] = useState<number | null>(
-        null,
-    );
+    const [selectedSchoolKey, setSelectedSchoolKey] = useState<number | null>(null);
     const [baseline, setBaseline] = useState<BaselineResponse | null>(null);
     const [scenario, setScenario] = useState<SimulatorPayload | null>(null);
     const [dirtyFields, setDirtyFields] = useState<Record<string, boolean>>({});
@@ -164,9 +162,7 @@ export function AchievementSimulatorPage() {
 
             setScenario(nextScenario);
         } catch (error) {
-            setRunError(
-                error instanceof Error ? error.message : "Simulation failed",
-            );
+            setRunError(error instanceof Error ? error.message : "Simulation failed");
         } finally {
             setIsRunning(false);
         }
@@ -185,9 +181,7 @@ export function AchievementSimulatorPage() {
     const scenarioAchievement = scenario?.ach_all ?? baselineAchievement;
     const achievementDelta = scenarioAchievement - baselineAchievement;
     const achievementPct =
-        baselineAchievement !== 0
-            ? (achievementDelta / baselineAchievement) * 100
-            : 0;
+        baselineAchievement !== 0 ? (achievementDelta / baselineAchievement) * 100 : 0;
 
     return (
         <section className="grid gap-4 lg:grid-cols-[340px_1fr]">
@@ -225,9 +219,7 @@ export function AchievementSimulatorPage() {
                         <Input
                             value={schoolQuery}
                             placeholder="Type district or school"
-                            onChange={(event) =>
-                                setSchoolQuery(event.target.value)
-                            }
+                            onChange={(event) => setSchoolQuery(event.target.value)}
                         />
                     </Field>
 
@@ -323,9 +315,7 @@ export function AchievementSimulatorPage() {
                             step={0.5}
                             value={Number(scenario?.exp_rate ?? 0)}
                             suffix="%"
-                            onChange={(value) =>
-                                updateNumericField("exp_rate", value)
-                            }
+                            onChange={(value) => updateNumericField("exp_rate", value)}
                         />
 
                         {demographicKeys.map((key) => (
@@ -334,17 +324,13 @@ export function AchievementSimulatorPage() {
                                 label={key
                                     .replace("pct_", "")
                                     .replaceAll("_", " ")
-                                    .replace(/\b\w/g, (match) =>
-                                        match.toUpperCase(),
-                                    )}
+                                    .replace(/\b\w/g, (match) => match.toUpperCase())}
                                 min={0}
                                 max={100}
                                 step={1}
                                 value={Number(scenario?.[key] ?? 0) * 100}
                                 suffix="%"
-                                onChange={(value) =>
-                                    updateNumericField(key, value / 100)
-                                }
+                                onChange={(value) => updateNumericField(key, value / 100)}
                             />
                         ))}
                     </CardContent>
@@ -373,14 +359,10 @@ export function AchievementSimulatorPage() {
                             />
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            Race percentage total:{" "}
-                            {(raceTotal * 100).toFixed(1)}%
-                            {raceTotal > 1 &&
-                                " (above 100% - adjust for realism)"}
+                            Race percentage total: {(raceTotal * 100).toFixed(1)}%
+                            {raceTotal > 1 && " (above 100% - adjust for realism)"}
                         </p>
-                        {runError && (
-                            <p className="text-sm text-red-600">{runError}</p>
-                        )}
+                        {runError && <p className="text-sm text-red-600">{runError}</p>}
                         <div className="flex gap-2">
                             <Button
                                 onClick={runSimulation}
@@ -422,9 +404,7 @@ function RangeField({
 }) {
     return (
         <div className="space-y-1">
-            <label className="text-sm font-medium text-muted-foreground">
-                {label}
-            </label>
+            <label className="text-sm font-medium text-muted-foreground">{label}</label>
             <Input
                 type="range"
                 min={min}

@@ -13,12 +13,7 @@ import {
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
-import {
-    fetchDatasets,
-    fetchFilters,
-    fetchPreview,
-    getDownloadUrl,
-} from "@/lib/api";
+import { fetchDatasets, fetchFilters, fetchPreview, getDownloadUrl } from "@/lib/api";
 import type { DownloadSearch } from "@/pages/types";
 
 const INPUT_DEBOUNCE_MS = 300;
@@ -58,15 +53,12 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 
     const previewQuery = useQuery({
         queryKey: ["preview", search],
-        queryFn: () =>
-            fetchPreview(search.dataset ?? "teacher_effectiveness", search),
+        queryFn: () => fetchPreview(search.dataset ?? "teacher_effectiveness", search),
         enabled: Boolean(search.dataset),
     });
 
     const effectiveDataset =
-        search.dataset ??
-        datasetsQuery.data?.[0]?.key ??
-        "teacher_effectiveness";
+        search.dataset ?? datasetsQuery.data?.[0]?.key ?? "teacher_effectiveness";
     const downloadUrl = getDownloadUrl(effectiveDataset, search);
     const previewRows = previewQuery.data?.rows ?? [];
 
@@ -194,8 +186,8 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
                     <CardHeader>
                         <CardTitle>Filters</CardTitle>
                         <CardDescription>
-                            Use this left panel as your query navbar. Preview
-                            updates automatically as you type.
+                            Use this left panel as your query navbar. Preview updates
+                            automatically as you type.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
@@ -203,17 +195,11 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
                             <Select
                                 value={draftFilters.dataset ?? effectiveDataset}
                                 onChange={(event) =>
-                                    updateDraftAndApply(
-                                        "dataset",
-                                        event.target.value,
-                                    )
+                                    updateDraftAndApply("dataset", event.target.value)
                                 }
                             >
                                 {datasetsQuery.data?.map((dataset) => (
-                                    <option
-                                        key={dataset.key}
-                                        value={dataset.key}
-                                    >
+                                    <option key={dataset.key} value={dataset.key}>
                                         {dataset.key}
                                     </option>
                                 ))}
@@ -275,9 +261,7 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 
                         <Field label="School Key">
                             <Input
-                                value={
-                                    draftFilters.school_key?.toString() ?? ""
-                                }
+                                value={draftFilters.school_key?.toString() ?? ""}
                                 placeholder="7941"
                                 onChange={(event) =>
                                     updateDraftAndApply(
@@ -336,8 +320,8 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
                     </CardDescription>
                     {isBusyError && (
                         <p className="text-xs font-medium text-primary">
-                            The database is busy. Wait a moment, then click
-                            Apply Now or edit a filter again.
+                            The database is busy. Wait a moment, then click Apply Now or
+                            edit a filter again.
                         </p>
                     )}
                 </CardHeader>
@@ -347,10 +331,8 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
                         data={previewRows}
                         emptyMessage="No preview rows yet. Adjust filters to load results."
                         pagination={{
-                            canPreviousPage:
-                                canPreviousPage && !previewQuery.isFetching,
-                            canNextPage:
-                                canNextPage && !previewQuery.isFetching,
+                            canPreviousPage: canPreviousPage && !previewQuery.isFetching,
+                            canNextPage: canNextPage && !previewQuery.isFetching,
                             onPreviousPage: goToPreviousPage,
                             onNextPage: goToNextPage,
                             summary:

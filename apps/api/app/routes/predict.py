@@ -1,10 +1,11 @@
 import os
+from typing import Optional
+
 import joblib
-import pandas as pd
 import numpy as np
+import pandas as pd
 from fastapi import APIRouter, HTTPException, Path, Request
 from pydantic import BaseModel, Field
-from typing import Optional
 
 router = APIRouter(prefix="/predict", tags=["predict"])
 
@@ -131,17 +132,19 @@ async def get_baseline(
                 )
 
             columns = [desc.name for desc in cur.description]
-            baseline_data = dict(zip(columns, base_row))
+            baseline_data = dict(zip(columns, base_row, strict=False))
 
             cur.execute(defaults_query, (year, year, year, year))
             defaults_row = cur.fetchone()
             default_columns = [desc.name for desc in cur.description]
-            defaults = dict(zip(default_columns, defaults_row))
+            defaults = dict(zip(default_columns, defaults_row, strict=False))
 
             cur.execute(global_defaults_query)
             global_defaults_row = cur.fetchone()
             global_defaults_columns = [desc.name for desc in cur.description]
-            global_defaults = dict(zip(global_defaults_columns, global_defaults_row))
+            global_defaults = dict(
+                zip(global_defaults_columns, global_defaults_row, strict=False)
+            )
 
             numeric_keys = [
                 "ach_all",
@@ -200,27 +203,27 @@ async def get_baseline(
 
 class PredictRequest(BaseModel):
     # Core variables
-    ach_all: Optional[float] = None
-    per_pupil_total_raw: Optional[float] = None
-    nces_poverty: Optional[float] = None
-    nces_freelunch: Optional[float] = None
-    exp_rate: Optional[float] = None
-    inexp_rate: Optional[float] = None
+    ach_all: float | None = None
+    per_pupil_total_raw: float | None = None
+    nces_poverty: float | None = None
+    nces_freelunch: float | None = None
+    exp_rate: float | None = None
+    inexp_rate: float | None = None
 
     # Structural variables
-    nces_locale_type: Optional[str] = Field(
+    nces_locale_type: str | None = Field(
         "City: Large", description="e.g. City: Large, Suburb: Large, Rural: Fringe"
     )
-    is_charter: Optional[int] = Field(0, description="1 if charter, 0 otherwise")
-    is_magnet: Optional[int] = Field(0, description="1 if magnet, 0 otherwise")
+    is_charter: int | None = Field(0, description="1 if charter, 0 otherwise")
+    is_magnet: int | None = Field(0, description="1 if magnet, 0 otherwise")
 
     # Demographics
-    pct_american_indian_alaska_native: Optional[float] = 0.0
-    pct_asian: Optional[float] = 0.0
-    pct_black_or_african_american: Optional[float] = 0.0
-    pct_native_hawaiian_pacific_islander: Optional[float] = 0.0
-    pct_two_or_more_races: Optional[float] = 0.0
-    pct_white: Optional[float] = 0.0
+    pct_american_indian_alaska_native: float | None = 0.0
+    pct_asian: float | None = 0.0
+    pct_black_or_african_american: float | None = 0.0
+    pct_native_hawaiian_pacific_islander: float | None = 0.0
+    pct_two_or_more_races: float | None = 0.0
+    pct_white: float | None = 0.0
 
 
 @router.post("/{target_variable}")

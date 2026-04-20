@@ -51,9 +51,7 @@ def cmd_manifest() -> int:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="EFLT medallion schema migration runner"
-    )
+    parser = argparse.ArgumentParser(description="EFLT medallion schema migration runner")
     parser.add_argument(
         "--migrations-dir",
         type=Path,

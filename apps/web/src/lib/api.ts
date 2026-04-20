@@ -1,8 +1,6 @@
 const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
 
-function buildSearchParams(
-    search: Record<string, string | number | undefined>,
-) {
+function buildSearchParams(search: Record<string, string | number | undefined>) {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(search)) {
         if (value === undefined || value === "") continue;
@@ -15,9 +13,7 @@ async function readErrorMessage(
     response: Response,
     fallbackMessage: string,
 ): Promise<string> {
-    const body = await response
-        .json()
-        .catch(() => ({ detail: fallbackMessage }));
+    const body = await response.json().catch(() => ({ detail: fallbackMessage }));
     return body.detail ?? fallbackMessage;
 }
 
@@ -193,13 +189,9 @@ export async function fetchPreview(
 ): Promise<PreviewResponse> {
     const params = buildSearchParams(search);
 
-    const response = await fetch(
-        `${API_BASE}/data/${dataset}?${params.toString()}`,
-    );
+    const response = await fetch(`${API_BASE}/data/${dataset}?${params.toString()}`);
     if (!response.ok) {
-        throw new Error(
-            await readErrorMessage(response, "Preview request failed"),
-        );
+        throw new Error(await readErrorMessage(response, "Preview request failed"));
     }
     return response.json();
 }
@@ -208,13 +200,9 @@ export async function fetchBaseline(
     schoolKey: number,
     year: number,
 ): Promise<BaselineResponse> {
-    const response = await fetch(
-        `${API_BASE}/predict/baseline/${schoolKey}/${year}`,
-    );
+    const response = await fetch(`${API_BASE}/predict/baseline/${schoolKey}/${year}`);
     if (!response.ok) {
-        throw new Error(
-            await readErrorMessage(response, "Failed to load baseline"),
-        );
+        throw new Error(await readErrorMessage(response, "Failed to load baseline"));
     }
     return response.json();
 }
@@ -232,9 +220,7 @@ export async function predictTarget(
     });
 
     if (!response.ok) {
-        throw new Error(
-            await readErrorMessage(response, "Prediction request failed"),
-        );
+        throw new Error(await readErrorMessage(response, "Prediction request failed"));
     }
 
     return response.json();
@@ -250,15 +236,10 @@ export async function fetchDistrictRankings(search: {
         limit: search.limit,
         cursor: search.cursor,
     });
-    const response = await fetch(
-        `${API_BASE}/rankings/districts?${params.toString()}`,
-    );
+    const response = await fetch(`${API_BASE}/rankings/districts?${params.toString()}`);
     if (!response.ok) {
         throw new Error(
-            await readErrorMessage(
-                response,
-                "Failed to load district rankings",
-            ),
+            await readErrorMessage(response, "Failed to load district rankings"),
         );
     }
     return response.json();
@@ -301,10 +282,7 @@ export async function fetchSchoolPerformanceTrend(
     );
     if (!response.ok) {
         throw new Error(
-            await readErrorMessage(
-                response,
-                "Failed to load school performance",
-            ),
+            await readErrorMessage(response, "Failed to load school performance"),
         );
     }
     return response.json();

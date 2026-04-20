@@ -62,8 +62,7 @@ export function DistrictsPage({ search, setSearch }: DistrictsPageProps) {
             {
                 accessorKey: "school_year_start",
                 header: "Year",
-                cell: ({ row }) =>
-                    String(row.getValue("school_year_start") ?? ""),
+                cell: ({ row }) => String(row.getValue("school_year_start") ?? ""),
             },
             {
                 accessorKey: "school_key",
@@ -74,9 +73,7 @@ export function DistrictsPage({ search, setSearch }: DistrictsPageProps) {
         [],
     );
 
-    const updateDistrictSearch = (
-        updater: (prev: DistrictSearch) => DistrictSearch,
-    ) => {
+    const updateDistrictSearch = (updater: (prev: DistrictSearch) => DistrictSearch) => {
         setSearch((prev) => updater(prev), { replace: true });
     };
 

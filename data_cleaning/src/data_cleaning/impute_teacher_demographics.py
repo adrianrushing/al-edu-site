@@ -8,7 +8,6 @@ from uuid import uuid4
 import polars as pl
 import psycopg
 
-
 DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
 DB_URI = os.getenv("DATABASE_URL") or os.getenv("DB_URI") or DEFAULT_DB_URI
 SOURCE_TABLE = "staging.stg_teacher_demographics"
@@ -61,9 +60,7 @@ def normalize_source(raw: pl.DataFrame) -> pl.DataFrame:
             pl.col("demographic_count")
             .cast(pl.Float64, strict=False)
             .alias("demographic_count_num"),
-            pl.col("total_count")
-            .cast(pl.Float64, strict=False)
-            .alias("total_count_num"),
+            pl.col("total_count").cast(pl.Float64, strict=False).alias("total_count_num"),
             pl.col("demographic_rate")
             .cast(pl.Float64, strict=False)
             .alias("demographic_rate_num"),
@@ -241,9 +238,9 @@ def recompute_rate(df: pl.DataFrame) -> pl.DataFrame:
                 & (pl.col("total_count_num") > 0)
             )
             .then(
-                (
-                    pl.col("demographic_count_num") / pl.col("total_count_num") * 100
-                ).round(2)
+                (pl.col("demographic_count_num") / pl.col("total_count_num") * 100).round(
+                    2
+                )
             )
             .otherwise(pl.col("demographic_rate_num"))
             .alias("demographic_rate_num")
@@ -312,9 +309,7 @@ def finalize_output(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def stats_to_df(
-    run_id: str, stats: list[RuleStat], out_df: pl.DataFrame
-) -> pl.DataFrame:
+def stats_to_df(run_id: str, stats: list[RuleStat], out_df: pl.DataFrame) -> pl.DataFrame:
     now = datetime.now()
     rows = [
         {

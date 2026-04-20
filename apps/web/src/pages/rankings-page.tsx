@@ -56,12 +56,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
     }, [filtersQuery.data, search.year, setSearch]);
 
     const rankingsQuery = useQuery({
-        queryKey: [
-            "district-rankings",
-            search.year,
-            search.limit,
-            search.cursor,
-        ],
+        queryKey: ["district-rankings", search.year, search.limit, search.cursor],
         queryFn: () =>
             fetchDistrictRankings({
                 year: search.year,
@@ -79,16 +74,13 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
                 <CardHeader>
                     <CardTitle>District Funding Rankings</CardTitle>
                     <CardDescription>
-                        Ranked by average per-pupil funding. Expand districts to
-                        lazy-load schools, then expand schools for multi-year
-                        performance.
+                        Ranked by average per-pupil funding. Expand districts to lazy-load
+                        schools, then expand schools for multi-year performance.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-wrap items-end gap-3">
                     <label className="grid gap-1 text-sm">
-                        <span className="font-medium text-muted-foreground">
-                            Year
-                        </span>
+                        <span className="font-medium text-muted-foreground">Year</span>
                         <Select
                             value={search.year?.toString() ?? ""}
                             onChange={(event) =>
@@ -114,9 +106,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
                     </label>
 
                     <label className="grid gap-1 text-sm">
-                        <span className="font-medium text-muted-foreground">
-                            Rows
-                        </span>
+                        <span className="font-medium text-muted-foreground">Rows</span>
                         <Select
                             value={String(search.limit ?? 25)}
                             onChange={(event) =>
@@ -140,10 +130,9 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
                         <Button
                             variant="outline"
                             onClick={() =>
-                                setSearch(
-                                    (prev) => ({ ...prev, cursor: undefined }),
-                                    { replace: true },
-                                )
+                                setSearch((prev) => ({ ...prev, cursor: undefined }), {
+                                    replace: true,
+                                })
                             }
                             disabled={!search.cursor}
                         >
@@ -236,15 +225,11 @@ function DistrictRow({
                     </Button>
                 </td>
                 <td className="px-2 py-2">{district.funding_rank}</td>
-                <td className="px-2 py-2 font-medium">
-                    {district.district_name}
-                </td>
+                <td className="px-2 py-2 font-medium">{district.district_name}</td>
                 <td className="px-2 py-2">
                     {formatCurrency(district.avg_per_pupil_funding)}
                 </td>
-                <td className="px-2 py-2">
-                    {formatNumber(district.avg_achievement)}
-                </td>
+                <td className="px-2 py-2">{formatNumber(district.avg_achievement)}</td>
                 <td className="px-2 py-2">{district.school_count}</td>
             </tr>
             {expanded && (
@@ -263,36 +248,26 @@ function DistrictRow({
                                 <table className="w-full text-sm">
                                     <thead>
                                         <tr className="border-b text-left">
-                                            <th className="px-2 py-1">
-                                                Expand
-                                            </th>
-                                            <th className="px-2 py-1">
-                                                School
-                                            </th>
-                                            <th className="px-2 py-1">
-                                                Funding
-                                            </th>
-                                            <th className="px-2 py-1">
-                                                Achievement
-                                            </th>
+                                            <th className="px-2 py-1">Expand</th>
+                                            <th className="px-2 py-1">School</th>
+                                            <th className="px-2 py-1">Funding</th>
+                                            <th className="px-2 py-1">Achievement</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {schoolsQuery.data?.items.map(
-                                            (school) => (
-                                                <SchoolRow
-                                                    key={`${school.school_key}`}
-                                                    school={school}
-                                                    year={year}
-                                                />
-                                            ),
-                                        )}
+                                        {schoolsQuery.data?.items.map((school) => (
+                                            <SchoolRow
+                                                key={`${school.school_key}`}
+                                                school={school}
+                                                year={year}
+                                            />
+                                        ))}
                                     </tbody>
                                 </table>
                                 {schoolsQuery.data?.next_cursor && (
                                     <p className="text-xs text-muted-foreground">
-                                        More schools are available. Increase row
-                                        limits in API/UI if needed.
+                                        More schools are available. Increase row limits in
+                                        API/UI if needed.
                                     </p>
                                 )}
                             </div>
@@ -304,13 +279,7 @@ function DistrictRow({
     );
 }
 
-function SchoolRow({
-    school,
-    year,
-}: {
-    school: DistrictSchoolItem;
-    year?: number;
-}) {
+function SchoolRow({ school, year }: { school: DistrictSchoolItem; year?: number }) {
     const [expanded, setExpanded] = useState(false);
 
     const trendQuery = useQuery({
@@ -360,19 +329,13 @@ function SchoolRow({
                                         <th className="px-2 py-1">Funding</th>
                                         <th className="px-2 py-1">Ach</th>
                                         <th className="px-2 py-1">Growth</th>
-                                        <th className="px-2 py-1">
-                                            Absenteeism
-                                        </th>
+                                        <th className="px-2 py-1">Absenteeism</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {trendQuery.data?.points.map((point) => (
-                                        <tr
-                                            key={`${school.school_key}-${point.year}`}
-                                        >
-                                            <td className="px-2 py-1">
-                                                {point.year}
-                                            </td>
+                                        <tr key={`${school.school_key}-${point.year}`}>
+                                            <td className="px-2 py-1">{point.year}</td>
                                             <td className="px-2 py-1">
                                                 {formatCurrency(
                                                     point.per_pupil_total_raw,

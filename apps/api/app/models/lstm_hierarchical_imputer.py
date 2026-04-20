@@ -16,7 +16,6 @@ from sklearn.preprocessing import StandardScaler
 from sqlalchemy import create_engine
 from torch.utils.data import DataLoader, Dataset
 
-
 try:
     from app.config import settings
 except ModuleNotFoundError:
@@ -164,9 +163,7 @@ def build_sequences(df: pd.DataFrame, scaler: StandardScaler) -> dict:
     obs_idx = np.where(obs > 0)[0]
     if obs_idx.size:
         scaled = (
-            scaler.transform(y_filled[obs_idx].reshape(-1, 1))
-            .astype(np.float32)
-            .ravel()
+            scaler.transform(y_filled[obs_idx].reshape(-1, 1)).astype(np.float32).ravel()
         )
         value[seq_ids[obs_idx], t_idxs[obs_idx]] = scaled
 
@@ -556,7 +553,7 @@ def reconcile_dimension(
             if old != float(p_new):
                 adjusted_idx.add(parent_i)
 
-        for j, new_v in zip(child_i, c_new):
+        for j, new_v in zip(child_i, c_new, strict=False):
             if bool(out.at[j, "was_missing"]):
                 old = float(out.at[j, value_col])
                 out.at[j, value_col] = float(new_v)
@@ -714,9 +711,7 @@ def main() -> None:
     for epoch in range(1, cfg.epochs + 1):
         tr_loss = run_epoch(model, train_loader, criterion, cfg.device, optimizer)
         va_loss = run_epoch(model, val_loader, criterion, cfg.device)
-        print(
-            f"Epoch {epoch:02d}/{cfg.epochs} | train={tr_loss:.6f} | val={va_loss:.6f}"
-        )
+        print(f"Epoch {epoch:02d}/{cfg.epochs} | train={tr_loss:.6f} | val={va_loss:.6f}")
         if va_loss < best_val:
             best_val = va_loss
             best_state = {
@@ -742,9 +737,9 @@ def main() -> None:
     ).astype(np.int16)
     out["reconciled_count"] = out["original_demographic_count"]
     miss_mask = out["was_missing"]
-    out.loc[miss_mask, "reconciled_count"] = out.loc[
-        miss_mask, "lstm_pred_count"
-    ].astype(float)
+    out.loc[miss_mask, "reconciled_count"] = out.loc[miss_mask, "lstm_pred_count"].astype(
+        float
+    )
 
     out, adjusted_idx, infeasible_idx = hierarchical_reconcile(out, cfg)
 

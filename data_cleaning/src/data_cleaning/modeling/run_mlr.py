@@ -8,7 +8,6 @@ import psycopg
 
 from data_cleaning.modeling.mlr import train_achievement_model
 
-
 MODEL_QUERY = """
 WITH base AS (
   SELECT school_key, year, county_fips
@@ -137,7 +136,7 @@ def _query_to_polars(
             cur.execute(query, params)
             rows = cur.fetchall()
             columns = [desc[0] for desc in cur.description]
-    return pl.from_dicts([dict(zip(columns, row)) for row in rows])
+    return pl.from_dicts([dict(zip(columns, row, strict=False)) for row in rows])
 
 
 def _prepare(df: pl.DataFrame) -> pl.DataFrame:

@@ -1,6 +1,6 @@
-from collections.abc import Iterator
 import csv
 import io
+from collections.abc import Iterator
 from typing import Any
 
 from psycopg import Connection, sql

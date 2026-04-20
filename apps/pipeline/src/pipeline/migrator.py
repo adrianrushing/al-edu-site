@@ -87,9 +87,7 @@ def apply_migrations(
 
     drifted = [m.name for m, status in plan if status == "drifted"]
     if drifted:
-        raise RuntimeError(
-            "Migration checksum drift detected for: " + ", ".join(drifted)
-        )
+        raise RuntimeError("Migration checksum drift detected for: " + ", ".join(drifted))
 
     pending = [migration for migration, status in plan if status == "pending"]
     if not pending:

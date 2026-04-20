@@ -5,7 +5,6 @@ from pathlib import Path
 
 import polars as pl
 
-
 DEFAULT_DB_URI = "postgresql://localhost:5433/eflt"
 
 RAW_TO_STAGING = {
@@ -80,9 +79,7 @@ def load_staging(source_path: Path) -> pl.DataFrame:
     stg = (
         raw.select(list(RAW_TO_STAGING.keys()))
         .rename(RAW_TO_STAGING)
-        .with_columns(
-            [normalize_text_expr(c).alias(c) for c in RAW_TO_STAGING.values()]
-        )
+        .with_columns([normalize_text_expr(c).alias(c) for c in RAW_TO_STAGING.values()])
         .with_columns(
             [
                 pl.when(pl.col(c).is_null() | (pl.col(c) == ""))
@@ -180,9 +177,7 @@ def build_review(stg: pl.DataFrame) -> pl.DataFrame:
 
     scored = typed.with_columns(
         [
-            normalize_text_expr("dist_name")
-            .str.to_lowercase()
-            .alias("_dist_name_norm"),
+            normalize_text_expr("dist_name").str.to_lowercase().alias("_dist_name_norm"),
             normalize_text_expr("school_name")
             .str.to_lowercase()
             .alias("_school_name_norm"),

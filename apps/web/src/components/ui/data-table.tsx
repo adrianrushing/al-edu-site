@@ -68,8 +68,7 @@ export function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
+                                                      header.column.columnDef.header,
                                                       header.getContext(),
                                                   )}
                                             {header.column.getCanResize() && (
@@ -123,9 +122,7 @@ export function DataTable<TData, TValue>({
             </div>
             {pagination && (
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-sm text-muted-foreground">
-                        {pagination.summary}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{pagination.summary}</p>
                     <div className="flex gap-2">
                         <Button
                             variant="outline"

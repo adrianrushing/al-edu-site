@@ -3,10 +3,10 @@ from __future__ import annotations
 import csv
 import re
 import zipfile
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Dict, Iterable
+from typing import Dict
 from xml.etree import ElementTree as ET
-
 
 NS = {
     "main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",

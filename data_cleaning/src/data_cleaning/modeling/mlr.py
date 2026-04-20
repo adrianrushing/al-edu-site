@@ -83,7 +83,9 @@ def _run_cv(
         lasso.fit(X_train_sc, y_train)
 
         selected_mask = np.abs(lasso.coef_) > 1e-10
-        selected_in_fold = [f for f, s in zip(feature_names, selected_mask) if s]
+        selected_in_fold = [
+            f for f, s in zip(feature_names, selected_mask, strict=False) if s
+        ]
         for f in selected_in_fold:
             selection_counts[f] += 1
 
@@ -135,9 +137,7 @@ def _run_cv(
             "std": float(np.std(mae_list)) if mae_list else 0.0,
         },
     }
-    feature_selection_freq = {
-        f: count / n_folds for f, count in selection_counts.items()
-    }
+    feature_selection_freq = {f: count / n_folds for f, count in selection_counts.items()}
     return cv_metrics, fold_details, feature_selection_freq
 
 
@@ -153,7 +153,9 @@ def _fit_final_model(
     lasso.fit(X_sc, y)
 
     selected_mask = np.abs(lasso.coef_) > 1e-10
-    selected_features = [f for f, s in zip(feature_names, selected_mask) if s]
+    selected_features = [
+        f for f, s in zip(feature_names, selected_mask, strict=False) if s
+    ]
 
     if len(selected_features) == 0:
         logger.warning("LASSO selected zero features on full data; using all features.")

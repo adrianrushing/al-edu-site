@@ -264,9 +264,7 @@ def get_district_schools(
     )
 
 
-@router.get(
-    "/schools/{school_key}/performance", response_model=SchoolPerformanceResponse
-)
+@router.get("/schools/{school_key}/performance", response_model=SchoolPerformanceResponse)
 def get_school_performance(
     school_key: int = Path(..., ge=1),
     from_year: int | None = Query(default=None, ge=2000, le=2100),

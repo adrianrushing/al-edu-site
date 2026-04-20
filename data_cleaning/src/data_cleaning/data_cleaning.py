@@ -6,10 +6,11 @@ app = marimo.App(width="full", app_title="Cleaning AL State Data")
 
 @app.cell
 def _():
-    import marimo as mo
-    import polars as pl
     from pathlib import Path
     from typing import Any
+
+    import marimo as mo
+    import polars as pl
 
     data_dir = Path(__file__).resolve().parents[3] / "flat_data" / "out"
 
@@ -109,36 +110,33 @@ def _(acc_df, edu_df, pl, stu_demo_df, tch_demo_df, tch_eff_df, tch_exp_df):
 
 @app.cell
 def _(input, pl):
-    result = input.with_columns(
-        pl.col("schoolid_stateassigned")
-          .str.extract(r"(\d+)$", group_index=1)          # extract last numeric segment
-          .str.replace(r"^0+", "", literal=False)          # strip all leading zeros
-          .alias("schoolid_stateassigned"),
-
-        pl.col("distid_stateassigned")
-          .str.extract(r"(\d+)$", group_index=1)
-          .str.replace(r"^0+", "", literal=False)
-          .alias("distid_stateassigned"),
-
-        pl.col("nces_locale")
-          .str.replace_all(r"[\d\-]", "", literal=False)
-          .alias("nces_locale"),
-    
-        pl.col("nces_charter")
-          .str.replace_all(r"[\d\-]", "", literal=False)
-          .alias("nces_charter"), 
-    
-        pl.col("nces_magnet")
-          .str.replace_all(r"[\d\-]", "", literal=False)
-          .alias("nces_magnet"), 
-   
-        pl.col("nces_address").str.to_uppercase(),
-        pl.col("nces_city").str.to_uppercase(), 
-    
-    ).unique().sort(by="school")
     result = (
-       result 
-        .group_by(pl.all())
+        input.with_columns(
+            pl.col("schoolid_stateassigned")
+            .str.extract(r"(\d+)$", group_index=1)  # extract last numeric segment
+            .str.replace(r"^0+", "", literal=False)  # strip all leading zeros
+            .alias("schoolid_stateassigned"),
+            pl.col("distid_stateassigned")
+            .str.extract(r"(\d+)$", group_index=1)
+            .str.replace(r"^0+", "", literal=False)
+            .alias("distid_stateassigned"),
+            pl.col("nces_locale")
+            .str.replace_all(r"[\d\-]", "", literal=False)
+            .alias("nces_locale"),
+            pl.col("nces_charter")
+            .str.replace_all(r"[\d\-]", "", literal=False)
+            .alias("nces_charter"),
+            pl.col("nces_magnet")
+            .str.replace_all(r"[\d\-]", "", literal=False)
+            .alias("nces_magnet"),
+            pl.col("nces_address").str.to_uppercase(),
+            pl.col("nces_city").str.to_uppercase(),
+        )
+        .unique()
+        .sort(by="school")
+    )
+    result = (
+        result.group_by(pl.all())
         .len()
         .sort("len", descending=True)
         .group_by("system", "school")

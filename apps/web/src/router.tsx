@@ -15,11 +15,7 @@ import { DistrictsPage } from "@/pages/districts-page";
 import { DownloadPage } from "@/pages/download-page";
 import { HomePage } from "@/pages/home-page";
 import { RankingsPage } from "@/pages/rankings-page";
-import type {
-    DistrictSearch,
-    DownloadSearch,
-    RankingsSearch,
-} from "@/pages/types";
+import type { DistrictSearch, DownloadSearch, RankingsSearch } from "@/pages/types";
 
 const queryClient = new QueryClient();
 
@@ -32,8 +28,7 @@ const rootRoute = createRootRoute({
                         EFLT Data Download Console
                     </h1>
                     <p className="text-sm text-muted-foreground">
-                        Filter state education data and export clean CSVs in
-                        seconds.
+                        Filter state education data and export clean CSVs in seconds.
                     </p>
                 </div>
                 <nav className="flex gap-2">

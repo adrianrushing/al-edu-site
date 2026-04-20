@@ -1,18 +1,19 @@
 import os
-import pandas as pd
-import numpy as np
+
 import joblib
-from sqlalchemy import create_engine
+import numpy as np
+import pandas as pd
 from scipy.stats import pearsonr
-from statsmodels.stats.multitest import multipletests
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
-from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sqlalchemy import create_engine
+from statsmodels.stats.multitest import multipletests
 
 from app.config import settings
 
@@ -170,7 +171,9 @@ def main():
         )
 
         selected_numeric = []
-        for f, c, p, r in zip(tested_features, correlations, pvals_corrected, reject):
+        for f, _c, _p, r in zip(
+            tested_features, correlations, pvals_corrected, reject, strict=False
+        ):
             is_significant = r
             if is_significant:
                 selected_numeric.append(f)

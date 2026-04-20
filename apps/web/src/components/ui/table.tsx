@@ -7,15 +7,9 @@ import type {
 
 import { cn } from "@/lib/utils";
 
-export function Table({
-    className,
-    ...props
-}: TableHTMLAttributes<HTMLTableElement>) {
+export function Table({ className, ...props }: TableHTMLAttributes<HTMLTableElement>) {
     return (
-        <table
-            className={cn("w-full caption-bottom text-sm", className)}
-            {...props}
-        />
+        <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
     );
 }
 
@@ -30,18 +24,10 @@ export function TableBody({
     className,
     ...props
 }: HTMLAttributes<HTMLTableSectionElement>) {
-    return (
-        <tbody
-            className={cn("[&_tr:last-child]:border-0", className)}
-            {...props}
-        />
-    );
+    return <tbody className={cn("[&_tr:last-child]:border-0", className)} {...props} />;
 }
 
-export function TableRow({
-    className,
-    ...props
-}: HTMLAttributes<HTMLTableRowElement>) {
+export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) {
     return (
         <tr
             className={cn(

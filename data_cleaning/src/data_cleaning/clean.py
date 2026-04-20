@@ -1,7 +1,8 @@
-import polars as pl
-from pathlib import Path
-from decimal import Decimal, InvalidOperation
 import re
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+
+import polars as pl
 
 data_dir = Path(__file__).resolve().parents[3] / "flat_data" / "out"
 
