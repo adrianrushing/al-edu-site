@@ -5,7 +5,7 @@ from pathlib import Path
 
 from pipeline.db import connect
 from pipeline.manifest import load_manifest
-from pipeline.migrator import apply_migrations, plan_migrations
+from pipeline.migrator import apply_migrations, discover_migrations, plan_migrations
 
 
 def default_migrations_dir() -> Path:
@@ -26,6 +26,11 @@ def cmd_plan(migrations_dir: Path) -> int:
 
 
 def cmd_apply(migrations_dir: Path, dry_run: bool) -> int:
+    if dry_run:
+        for migration in discover_migrations(migrations_dir):
+            print(f"DRY RUN - would apply {migration.name}")
+        return 0
+
     with connect() as conn:
         messages = apply_migrations(conn, migrations_dir, dry_run=dry_run)
 

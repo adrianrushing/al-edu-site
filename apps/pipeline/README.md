@@ -23,16 +23,18 @@ Fill in `DATABASE_URL` with the remote DB URL you bootstrap.
 
 ```bash
 uv sync --project apps/pipeline
-uv run --project apps/pipeline eflt-pipeline status
-uv run --project apps/pipeline eflt-pipeline plan
-uv run --project apps/pipeline eflt-pipeline apply
+uv run --project apps/pipeline python -m pipeline.cli status
+uv run --project apps/pipeline python -m pipeline.cli plan
+uv run --project apps/pipeline python -m pipeline.cli apply
 ```
 
 Dry run:
 
 ```bash
-uv run --project apps/pipeline eflt-pipeline apply --dry-run
+uv run --project apps/pipeline python -m pipeline.cli apply --dry-run
 ```
+
+`--dry-run` is offline and does not connect to the database.
 
 ## Scope
 
