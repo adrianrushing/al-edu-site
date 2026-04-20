@@ -35,3 +35,55 @@ class DataPreviewResponse(BaseModel):
     offset: int
     row_count: int
     rows: list[dict[str, object]]
+
+
+class DistrictRankingItem(BaseModel):
+    district_key: int
+    district_name: str
+    year: int
+    school_count: int
+    avg_per_pupil_funding: float | None
+    avg_achievement: float | None
+    funding_rank: int
+
+
+class DistrictRankingsResponse(BaseModel):
+    year: int
+    limit: int
+    next_cursor: str | None
+    items: list[DistrictRankingItem]
+
+
+class DistrictSchoolItem(BaseModel):
+    district_key: int
+    district_name: str
+    school_key: int
+    school_name: str
+    year: int
+    per_pupil_total_raw: float | None
+    ach_all: float | None
+
+
+class DistrictSchoolsResponse(BaseModel):
+    district_key: int
+    year: int
+    limit: int
+    next_cursor: str | None
+    items: list[DistrictSchoolItem]
+
+
+class SchoolPerformancePoint(BaseModel):
+    year: int
+    per_pupil_total_raw: float | None
+    ach_all: float | None
+    grw_all: float | None
+    abs_all: float | None
+
+
+class SchoolPerformanceResponse(BaseModel):
+    school_key: int
+    school_name: str | None
+    district_name: str | None
+    from_year: int | None
+    to_year: int | None
+    points: list[SchoolPerformancePoint]
