@@ -8,6 +8,8 @@
                 "run",
                 "-i",
                 "--rm",
+                "--name",
+                "opencode-postgres-mcp",
                 "--add-host=host.docker.internal:host-gateway",
                 "-e",
                 "DATABASE_URI",
