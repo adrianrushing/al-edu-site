@@ -16,11 +16,12 @@ node_modules/
 
 # data
 flat_data/
-
 lecture/
-todo.md
+prototype/
 
+todo.md
 roadmap.md
 eda.md
 FeatureEngineering.md
 modeling.md
+
