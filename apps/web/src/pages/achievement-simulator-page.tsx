@@ -15,9 +15,11 @@ import {
     type BaselineResponse,
     fetchBaseline,
     fetchFilters,
+    fetchSchoolSimulationMetadata,
     fetchSchools,
     predictTarget,
     type SchoolItem,
+    type SchoolSimulationMetadataResponse,
     type SimulatorPayload,
     type SimulatorTarget,
 } from "@/lib/api";
@@ -74,6 +76,30 @@ export function AchievementSimulatorPage() {
             }),
         enabled: selectedYear !== undefined,
     });
+
+    const simulationMetadataQuery = useQuery<SchoolSimulationMetadataResponse>({
+        queryKey: ["school-simulation-metadata", selectedSchoolKey, selectedYear],
+        queryFn: () => {
+            if (!selectedSchoolKey) {
+                throw new Error("School is required");
+            }
+            return fetchSchoolSimulationMetadata(selectedSchoolKey, {
+                year: selectedYear,
+            });
+        },
+        enabled: selectedSchoolKey !== null,
+    });
+
+    const simulationMetadata = simulationMetadataQuery.data;
+
+    useEffect(() => {
+        if (!selectedSchoolKey || selectedYear !== undefined) {
+            return;
+        }
+        if (simulationMetadata?.selected_year != null) {
+            setSelectedYear(simulationMetadata.selected_year);
+        }
+    }, [selectedSchoolKey, selectedYear, simulationMetadata]);
 
     const schoolsByDistrict = (schoolsQuery.data ?? []).reduce<SchoolDistrictGroup[]>(
         (groups, school) => {
@@ -237,7 +263,11 @@ export function AchievementSimulatorPage() {
                             }}
                         >
                             <option value="">Select year</option>
-                            {filtersQuery.data?.years.map((year) => (
+                            {(
+                                simulationMetadata?.available_years ??
+                                filtersQuery.data?.years ??
+                                []
+                            ).map((year) => (
                                 <option key={year} value={year}>
                                     {year}
                                 </option>
@@ -256,13 +286,17 @@ export function AchievementSimulatorPage() {
                     <Field label="School">
                         <Select
                             value={selectedSchoolKey?.toString() ?? ""}
-                            onChange={(event) =>
+                            onChange={(event) => {
                                 setSelectedSchoolKey(
                                     event.target.value
                                         ? Number(event.target.value)
                                         : null,
-                                )
-                            }
+                                );
+                                setSelectedYear(undefined);
+                                setBaseline(null);
+                                setScenario(null);
+                                setRunError(null);
+                            }}
                         >
                             <option value="">Select school</option>
                             {schoolsByDistrict.map((group) => (
@@ -299,7 +333,18 @@ export function AchievementSimulatorPage() {
                             <p>Locale: {baseline.nces_locale_type}</p>
                             <p>Charter: {baseline.is_charter ? "Yes" : "No"}</p>
                             <p>Magnet: {baseline.is_magnet ? "Yes" : "No"}</p>
+                            <p>
+                                Latest simulatable year:{" "}
+                                {simulationMetadata?.latest_simulatable_year ?? "-"}
+                            </p>
                         </div>
+                    )}
+
+                    {simulationMetadata && !simulationMetadata.is_simulatable && (
+                        <p className="text-xs text-amber-700">
+                            Selected year is not simulatable. Missing fields:{" "}
+                            {simulationMetadata.missing_features.join(", ") || "Unknown"}
+                        </p>
                     )}
                 </CardContent>
             </Card>
@@ -415,7 +460,13 @@ export function AchievementSimulatorPage() {
                         <div className="flex gap-2">
                             <Button
                                 onClick={runSimulation}
-                                disabled={!scenario || isRunning}
+                                disabled={
+                                    !scenario ||
+                                    isRunning ||
+                                    (simulationMetadata
+                                        ? !simulationMetadata.is_simulatable
+                                        : false)
+                                }
                             >
                                 {isRunning ? "Running..." : "Run Simulation"}
                             </Button>
