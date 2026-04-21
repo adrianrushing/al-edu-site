@@ -330,6 +330,7 @@ def get_school_simulation_metadata(
             return SchoolSimulationMetadataResponse(
                 school_key=school_key,
                 available_years=available_years,
+                required_features=required_features,
                 latest_year=latest_year,
                 latest_simulatable_year=latest_simulatable_year,
                 selected_year=selected_year,

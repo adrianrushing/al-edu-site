@@ -98,6 +98,7 @@ class SchoolSimulationYearStatus(BaseModel):
 class SchoolSimulationMetadataResponse(BaseModel):
     school_key: int
     available_years: list[int]
+    required_features: list[str]
     latest_year: int | None
     latest_simulatable_year: int | None
     selected_year: int | None
