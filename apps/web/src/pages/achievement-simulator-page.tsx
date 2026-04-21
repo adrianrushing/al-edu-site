@@ -201,11 +201,17 @@ export function AchievementSimulatorPage() {
         setRunError(null);
     };
 
-    const baselineAchievement = baseline?.ach_all ?? 0;
+    const baselineAchievement = baseline?.ach_all;
     const scenarioAchievement = scenario?.ach_all ?? baselineAchievement;
-    const achievementDelta = scenarioAchievement - baselineAchievement;
+    const hasAchievementValues =
+        baselineAchievement != null && scenarioAchievement != null;
+    const achievementDelta = hasAchievementValues
+        ? scenarioAchievement - baselineAchievement
+        : null;
     const achievementPct =
-        baselineAchievement !== 0 ? (achievementDelta / baselineAchievement) * 100 : 0;
+        hasAchievementValues && baselineAchievement !== 0
+            ? ((scenarioAchievement - baselineAchievement) / baselineAchievement) * 100
+            : null;
 
     return (
         <section className="grid gap-4 lg:grid-cols-[340px_1fr]">
@@ -378,15 +384,27 @@ export function AchievementSimulatorPage() {
                         <div className="grid gap-2 md:grid-cols-3">
                             <Metric
                                 label="Baseline Achievement"
-                                value={baselineAchievement.toFixed(2)}
+                                value={
+                                    baselineAchievement != null
+                                        ? baselineAchievement.toFixed(2)
+                                        : "--"
+                                }
                             />
                             <Metric
                                 label="Scenario Achievement"
-                                value={scenarioAchievement.toFixed(2)}
+                                value={
+                                    scenarioAchievement != null
+                                        ? scenarioAchievement.toFixed(2)
+                                        : "--"
+                                }
                             />
                             <Metric
                                 label="Delta"
-                                value={`${achievementDelta >= 0 ? "+" : ""}${achievementDelta.toFixed(2)} (${achievementPct.toFixed(1)}%)`}
+                                value={
+                                    achievementDelta != null && achievementPct != null
+                                        ? `${achievementDelta >= 0 ? "+" : ""}${achievementDelta.toFixed(2)} (${achievementPct.toFixed(1)}%)`
+                                        : "--"
+                                }
                             />
                         </div>
                         <p className="text-xs text-muted-foreground">

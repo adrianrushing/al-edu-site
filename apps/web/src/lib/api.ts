@@ -57,21 +57,21 @@ export type SimulatorTarget =
     | "inexp_rate";
 
 export type SimulatorPayload = {
-    ach_all?: number;
-    per_pupil_total_raw?: number;
-    nces_poverty?: number;
-    nces_freelunch?: number;
-    exp_rate?: number;
-    inexp_rate?: number;
+    ach_all?: number | null;
+    per_pupil_total_raw?: number | null;
+    nces_poverty?: number | null;
+    nces_freelunch?: number | null;
+    exp_rate?: number | null;
+    inexp_rate?: number | null;
     nces_locale_type?: string;
     is_charter?: number;
     is_magnet?: number;
-    pct_american_indian_alaska_native?: number;
-    pct_asian?: number;
-    pct_black_or_african_american?: number;
-    pct_native_hawaiian_pacific_islander?: number;
-    pct_two_or_more_races?: number;
-    pct_white?: number;
+    pct_american_indian_alaska_native?: number | null;
+    pct_asian?: number | null;
+    pct_black_or_african_american?: number | null;
+    pct_native_hawaiian_pacific_islander?: number | null;
+    pct_two_or_more_races?: number | null;
+    pct_white?: number | null;
 };
 
 export type BaselineResponse = Required<
