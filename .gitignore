@@ -19,6 +19,7 @@ flat_data/
 lecture/
 prototype/
 pgdata/
+worktrees/
 *.csv
 # Markdowns
 todo.md
@@ -27,3 +28,4 @@ eda.md
 FeatureEngineering.md
 modeling.md
 
+**/.ruff_cache
