@@ -48,7 +48,6 @@ export type SchoolItem = {
 export type SchoolSimulationMetadataResponse = {
 	school_key: number;
 	available_years: number[];
-	required_features: string[];
 	latest_year: number | null;
 	latest_simulatable_year: number | null;
 	selected_year: number | null;
@@ -59,21 +58,6 @@ export type SchoolSimulationMetadataResponse = {
 		is_simulatable: boolean;
 		missing_features: string[];
 	}>;
-};
-
-export type SchoolSimulationMetadataResponse = {
-    school_key: number;
-    available_years: number[];
-    latest_year: number | null;
-    latest_simulatable_year: number | null;
-    selected_year: number | null;
-    is_simulatable: boolean;
-    missing_features: string[];
-    year_status: Array<{
-        year: number;
-        is_simulatable: boolean;
-        missing_features: string[];
-    }>;
 };
 
 export type PreviewResponse = {
@@ -235,24 +219,6 @@ export async function fetchSchoolSimulationMetadata(
 		);
 	}
 	return response.json();
-}
-
-export async function fetchSchoolSimulationMetadata(
-    schoolKey: number,
-    search: {
-        year?: number;
-    },
-): Promise<SchoolSimulationMetadataResponse> {
-    const params = buildSearchParams({ year: search.year });
-    const response = await fetch(
-        `${API_BASE}/schools/${schoolKey}/simulation-metadata?${params.toString()}`,
-    );
-    if (!response.ok) {
-        throw new Error(
-            await readErrorMessage(response, "Failed to load school metadata"),
-        );
-    }
-    return response.json();
 }
 
 export async function fetchPreview(

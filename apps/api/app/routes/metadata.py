@@ -12,10 +12,10 @@ from app.db import get_connection
 from app.schemas import (
     DatasetInfo,
     FiltersResponse,
+    SchoolItem,
     SchoolMetadataResponse,
     SchoolSimulationMetadataResponse,
     SchoolSimulationYearStatus,
-    SchoolItem,
 )
 
 router = APIRouter(tags=["metadata"])
