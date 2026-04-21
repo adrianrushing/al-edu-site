@@ -85,7 +85,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-wrap items-end gap-3">
-					<label className="grid gap-1 text-sm">
+					<div className="grid gap-1 text-sm">
 						<span className="font-medium text-muted-foreground">
 							Year
 						</span>
@@ -111,9 +111,9 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 								</option>
 							))}
 						</Select>
-					</label>
+					</div>
 
-					<label className="grid gap-1 text-sm">
+					<div className="grid gap-1 text-sm">
 						<span className="font-medium text-muted-foreground">
 							Rows
 						</span>
@@ -134,7 +134,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 							<option value="25">25</option>
 							<option value="50">50</option>
 						</Select>
-					</label>
+					</div>
 
 					<div className="flex gap-2">
 						<Button

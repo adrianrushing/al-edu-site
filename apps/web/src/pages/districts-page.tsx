@@ -168,9 +168,9 @@ export function DistrictsPage({ search, setSearch }: DistrictsPageProps) {
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
 	return (
-		<label className="grid gap-1 text-sm">
+		<div className="grid gap-1 text-sm">
 			<span className="font-medium text-muted-foreground">{label}</span>
 			{children}
-		</label>
+		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useId } from 'react';
 
 import { Input } from '@/components/ui/input';
 
@@ -10,10 +10,10 @@ export function Field({
 	label: string;
 }) {
 	return (
-		<label className="grid gap-1 text-sm">
+		<div className="grid gap-1 text-sm">
 			<span className="font-medium text-muted-foreground">{label}</span>
 			{children}
-		</label>
+		</div>
 	);
 }
 
@@ -47,13 +47,19 @@ export function RangeField({
 	suffix?: string;
 	value: number;
 }) {
+	const inputId = useId();
+
 	return (
 		<div className="space-y-1">
-			<label className="text-sm font-medium text-muted-foreground">
+			<label
+				className="text-sm font-medium text-muted-foreground"
+				htmlFor={inputId}
+			>
 				{label}
 			</label>
 			<Input
 				disabled={disabled}
+				id={inputId}
 				max={max}
 				min={min}
 				onBlur={onCommit}

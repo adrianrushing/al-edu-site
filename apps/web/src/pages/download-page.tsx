@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import {
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
@@ -82,18 +89,18 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 		}));
 	}, [previewRows]);
 
-	const clearPendingApply = () => {
+	const clearPendingApply = useCallback(() => {
 		if (pendingApplyTimeoutRef.current !== null) {
 			window.clearTimeout(pendingApplyTimeoutRef.current);
 			pendingApplyTimeoutRef.current = null;
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		return () => {
 			clearPendingApply();
 		};
-	}, []);
+	}, [clearPendingApply]);
 
 	const applyDraftFilters = (
 		nextDraft: DownloadSearch,
@@ -367,9 +374,9 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
 	return (
-		<label className="grid gap-1 text-sm">
+		<div className="grid gap-1 text-sm">
 			<span className="font-medium text-muted-foreground">{label}</span>
 			{children}
-		</label>
+		</div>
 	);
 }

@@ -73,13 +73,14 @@ export function DataTable<TData, TValue>({
 														header.getContext(),
 													)}
 											{header.column.getCanResize() && (
-												<div
+												<button
 													className="absolute right-0 top-0 h-full w-1 cursor-col-resize select-none bg-border/70 hover:bg-primary"
 													onDoubleClick={() =>
 														header.column.resetSize()
 													}
 													onMouseDown={header.getResizeHandler()}
 													onTouchStart={header.getResizeHandler()}
+													type="button"
 												/>
 											)}
 										</div>
