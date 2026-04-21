@@ -15,6 +15,8 @@ import {
 } from '../constants';
 import { RangeField } from './shared';
 
+const PERCENT_SCALE = 100;
+
 type ScenarioControlsCardProps = {
 	activeGroup: string | null;
 	commitScenario: () => void;
@@ -92,12 +94,15 @@ export function ScenarioControlsCard({
 					max={100}
 					min={0}
 					onChange={(value) =>
-						updateNumericField('nces_poverty', value / 100)
+						updateNumericField(
+							'nces_poverty',
+							value / PERCENT_SCALE,
+						)
 					}
 					onCommit={commitScenario}
 					step={1}
 					suffix="%"
-					value={Number(scenario?.nces_poverty ?? 0) * 100}
+					value={Number(scenario?.nces_poverty ?? 0) * PERCENT_SCALE}
 				/>
 				<RangeField
 					disabled={disabledFor(
@@ -159,12 +164,12 @@ export function ScenarioControlsCard({
 						max={100}
 						min={0}
 						onChange={(value) =>
-							updateNumericField(key, value / 100)
+							updateNumericField(key, value / PERCENT_SCALE)
 						}
 						onCommit={commitScenario}
 						step={1}
 						suffix="%"
-						value={Number(scenario?.[key] ?? 0) * 100}
+						value={Number(scenario?.[key] ?? 0) * PERCENT_SCALE}
 					/>
 				))}
 

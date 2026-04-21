@@ -9,6 +9,8 @@ import {
 
 import { Metric } from './shared';
 
+const PERCENT_SCALE = 100;
+
 type OutcomeSnapshotCardProps = {
 	achievementDelta: number | null;
 	achievementPct: number | null;
@@ -81,7 +83,7 @@ export function OutcomeSnapshotCard({
 					<Metric label="Delta" value={deltaValue} />
 					<Metric
 						label="Race percentage total"
-						value={`${(raceTotal * 100).toFixed(1)}%`}
+						value={`${(raceTotal * PERCENT_SCALE).toFixed(1)}%`}
 					/>
 				</div>
 

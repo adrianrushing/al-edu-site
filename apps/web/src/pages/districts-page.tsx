@@ -15,8 +15,13 @@ import { Select } from '@/components/ui/select';
 import { fetchFilters, fetchSchools } from '@/lib/api';
 import type { DistrictSearch } from '@/pages/types';
 
-const METADATA_STALE_TIME_MS = 10 * 60 * 1000;
-const METADATA_GC_TIME_MS = 30 * 60 * 1000;
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+const METADATA_GC_MINUTES = 30;
+const METADATA_STALE_TIME_MS =
+	10 * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
+const METADATA_GC_TIME_MS =
+	METADATA_GC_MINUTES * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
 
 type DistrictsPageProps = {
 	search: DistrictSearch;

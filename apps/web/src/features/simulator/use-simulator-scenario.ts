@@ -18,6 +18,10 @@ type UseSimulatorScenarioParams = {
 	isSimulatable: boolean;
 };
 
+const PERCENT_SCALE = 100;
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+
 const PREDICT_SIGNATURE_FIELDS: Array<keyof SimulatorPayload> = [
 	'per_pupil_total_raw',
 	'nces_poverty',
@@ -123,7 +127,7 @@ export function useSimulatorScenario({
 			selectedSchoolKey !== null &&
 			selectedYear !== undefined,
 		retry: false,
-		staleTime: 60 * 1000,
+		staleTime: SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND,
 		refetchOnWindowFocus: false,
 	});
 
@@ -203,9 +207,15 @@ export function useSimulatorScenario({
 			};
 
 			if (key === 'exp_rate') {
-				next.inexp_rate = Math.max(0, Math.min(100, 100 - value));
+				next.inexp_rate = Math.max(
+					0,
+					Math.min(PERCENT_SCALE, PERCENT_SCALE - value),
+				);
 			} else if (key === 'inexp_rate') {
-				next.exp_rate = Math.max(0, Math.min(100, 100 - value));
+				next.exp_rate = Math.max(
+					0,
+					Math.min(PERCENT_SCALE, PERCENT_SCALE - value),
+				);
 			}
 
 			return next;
@@ -294,7 +304,7 @@ export function useSimulatorScenario({
 		hasAchievementValues && baselineAchievement !== 0
 			? ((scenarioAchievement - baselineAchievement) /
 					baselineAchievement) *
-				100
+				PERCENT_SCALE
 			: null;
 
 	return {

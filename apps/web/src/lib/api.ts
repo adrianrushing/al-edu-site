@@ -1,4 +1,5 @@
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000';
+const DEFAULT_SCHOOLS_LIMIT = 200;
 
 function buildSearchParams(
 	search: Record<string, string | number | undefined>,
@@ -195,7 +196,7 @@ export async function fetchSchools(search: {
 	const params = new URLSearchParams();
 	if (search.q) params.set('q', search.q);
 	if (search.year !== undefined) params.set('year', String(search.year));
-	params.set('limit', String(search.limit ?? 200));
+	params.set('limit', String(search.limit ?? DEFAULT_SCHOOLS_LIMIT));
 	params.set('offset', String(search.offset ?? 0));
 
 	const response = await fetch(`${API_BASE}/schools?${params.toString()}`);

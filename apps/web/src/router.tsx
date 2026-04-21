@@ -22,6 +22,8 @@ import type {
 } from '@/pages/types';
 
 const queryClient = new QueryClient();
+const DEFAULT_DOWNLOAD_LIMIT = 50;
+const DEFAULT_RANKINGS_LIMIT = 25;
 
 const rootRoute = createRootRoute({
 	component: () => (
@@ -45,7 +47,7 @@ const rootRoute = createRootRoute({
 					</Link>
 					<Link
 						className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted data-[status=active]:bg-muted"
-						search={{ limit: 50, offset: 0 }}
+						search={{ limit: DEFAULT_DOWNLOAD_LIMIT, offset: 0 }}
 						to="/download"
 					>
 						Download
@@ -66,7 +68,7 @@ const rootRoute = createRootRoute({
 					</Link>
 					<Link
 						className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted data-[status=active]:bg-muted"
-						search={{ limit: 25 }}
+						search={{ limit: DEFAULT_RANKINGS_LIMIT }}
 						to="/rankings"
 					>
 						Rankings
@@ -95,7 +97,7 @@ const downloadSearch = z.object({
 	ethnicity: z.string().optional(),
 	sub_population: z.string().optional(),
 	grade: z.string().optional(),
-	limit: z.coerce.number().optional().default(50),
+	limit: z.coerce.number().optional().default(DEFAULT_DOWNLOAD_LIMIT),
 	offset: z.coerce.number().optional().default(0),
 });
 
@@ -127,7 +129,7 @@ const simulatorRoute = createRoute({
 
 const rankingsSearch = z.object({
 	year: z.coerce.number().optional(),
-	limit: z.coerce.number().optional().default(25),
+	limit: z.coerce.number().optional().default(DEFAULT_RANKINGS_LIMIT),
 	cursor: z.string().optional(),
 });
 

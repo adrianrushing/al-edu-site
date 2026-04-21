@@ -20,8 +20,15 @@ import {
 } from '@/lib/api';
 import type { RankingsSearch } from '@/pages/types';
 
-const METADATA_STALE_TIME_MS = 10 * 60 * 1000;
-const METADATA_GC_TIME_MS = 30 * 60 * 1000;
+const DEFAULT_RANKINGS_LIMIT = 25;
+const TREND_LOOKBACK_YEARS = 5;
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+const METADATA_GC_MINUTES = 30;
+const METADATA_STALE_TIME_MS =
+	10 * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
+const METADATA_GC_TIME_MS =
+	METADATA_GC_MINUTES * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
 
 type RankingsPageProps = {
 	search: RankingsSearch;
@@ -48,7 +55,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 			(prev) => ({
 				...prev,
 				year: latestYear,
-				limit: prev.limit ?? 25,
+				limit: prev.limit ?? DEFAULT_RANKINGS_LIMIT,
 				cursor: undefined,
 			}),
 			{ replace: true },
@@ -65,7 +72,7 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 		queryFn: () =>
 			fetchDistrictRankings({
 				year: search.year,
-				limit: search.limit ?? 25,
+				limit: search.limit ?? DEFAULT_RANKINGS_LIMIT,
 				cursor: search.cursor,
 			}),
 		enabled: search.year !== undefined,
@@ -128,7 +135,9 @@ export function RankingsPage({ search, setSearch }: RankingsPageProps) {
 									{ replace: true },
 								)
 							}
-							value={String(search.limit ?? 25)}
+							value={String(
+								search.limit ?? DEFAULT_RANKINGS_LIMIT,
+							)}
 						>
 							<option value="10">10</option>
 							<option value="25">25</option>
@@ -319,7 +328,7 @@ function SchoolRow({
 		queryKey: ['ranking-school-trend', school.school_key, year],
 		queryFn: () =>
 			fetchSchoolPerformanceTrend(school.school_key, {
-				from_year: year ? year - 5 : undefined,
+				from_year: year ? year - TREND_LOOKBACK_YEARS : undefined,
 				to_year: year,
 			}),
 		enabled: expanded,

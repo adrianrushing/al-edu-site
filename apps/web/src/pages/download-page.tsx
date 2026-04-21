@@ -29,8 +29,14 @@ import {
 import type { DownloadSearch } from '@/pages/types';
 
 const INPUT_DEBOUNCE_MS = 300;
-const METADATA_STALE_TIME_MS = 10 * 60 * 1000;
-const METADATA_GC_TIME_MS = 30 * 60 * 1000;
+const DEFAULT_PAGE_SIZE = 50;
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+const METADATA_GC_MINUTES = 30;
+const METADATA_STALE_TIME_MS =
+	10 * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
+const METADATA_GC_TIME_MS =
+	METADATA_GC_MINUTES * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
 
 type DownloadPageProps = {
 	search: DownloadSearch;
@@ -111,7 +117,7 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 				...prev,
 				...nextDraft,
 				dataset: nextDraft.dataset ?? effectiveDataset,
-				limit: nextDraft.limit ?? 50,
+				limit: nextDraft.limit ?? DEFAULT_PAGE_SIZE,
 				offset: 0,
 			}),
 			options,
@@ -151,7 +157,7 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 	const resetFilters = () => {
 		const resetState: DownloadSearch = {
 			dataset: effectiveDataset,
-			limit: 50,
+			limit: DEFAULT_PAGE_SIZE,
 			offset: 0,
 		};
 
@@ -164,7 +170,7 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 		previewQuery.error instanceof Error &&
 		previewQuery.error.message.toLowerCase().includes('busy');
 
-	const pageSize = search.limit ?? 50;
+	const pageSize = search.limit ?? DEFAULT_PAGE_SIZE;
 	const offset = search.offset ?? 0;
 	const currentCount = previewQuery.data?.row_count ?? 0;
 	const canPreviousPage = offset > 0;
@@ -179,7 +185,10 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 
 		setSearch((prev) => ({
 			...prev,
-			offset: Math.max((prev.offset ?? 0) - (prev.limit ?? 50), 0),
+			offset: Math.max(
+				(prev.offset ?? 0) - (prev.limit ?? DEFAULT_PAGE_SIZE),
+				0,
+			),
 		}));
 	};
 
@@ -190,7 +199,7 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 
 		setSearch((prev) => ({
 			...prev,
-			offset: (prev.offset ?? 0) + (prev.limit ?? 50),
+			offset: (prev.offset ?? 0) + (prev.limit ?? DEFAULT_PAGE_SIZE),
 		}));
 	};
 
@@ -308,7 +317,9 @@ export function DownloadPage({ search, setSearch }: DownloadPageProps) {
 										Number(event.target.value),
 									)
 								}
-								value={String(draftFilters.limit ?? 50)}
+								value={String(
+									draftFilters.limit ?? DEFAULT_PAGE_SIZE,
+								)}
 							>
 								<option value="25">25</option>
 								<option value="50">50</option>
