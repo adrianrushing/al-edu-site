@@ -1,5 +1,5 @@
-import { AchievementSimulatorView } from "@/features/simulator/achievement-simulator-view";
+import { AchievementSimulatorView } from '@/features/simulator/achievement-simulator-view';
 
 export function AchievementSimulatorPage() {
-    return <AchievementSimulatorView />;
+	return <AchievementSimulatorView />;
 }

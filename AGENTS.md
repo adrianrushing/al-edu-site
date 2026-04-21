@@ -18,13 +18,15 @@ existing patterns, and update this file when workflows change.
 - Dev (web): `npm run dev`
 - Dev (API): `npm run dev:api`
 - Build (web): `npm run build`
+- Lint (web scope): `npm run lint`
+- Format: `npm run format`
 - Docker compose: `npm run docker:up`, `npm run docker:down`, `npm run docker:reset`
 
 ### Frontend (apps/web)
 
 - Dev server: `npm run dev -w apps/web`
 - Build: `npm run build -w apps/web`
-- Lint: `npm run lint -w apps/web`
+- Lint: `npm run lint`
 
 Single test: no test runner configured in repo.
 If you add tests, also add a `test` script and document a per-test command.
@@ -73,7 +75,7 @@ Imports
 - Group imports by origin and separate with a blank line when it improves readability.
 
 Formatting
-- The repo mixes single and double quotes; respect the file’s current style.
+- Prefer single quotes in JS/TS per `biome.json`; respect existing file style when needed.
 - Use trailing commas where already present; do not normalize formatting.
 - Keep JSX props readable; wrap only when lines become long.
 
@@ -116,7 +118,7 @@ Frontend Architecture & Modularization Rules:
 
     UI Component Reuse: Always check apps/web/src/components/ui for existing Radix/Tailwind components before creating new atomic elements. Do not duplicate UI logic.
 
-    Feature Grouping: Do not put complex logic directly in src/routes. Create feature-specific folders (e.g., src/features/districts/components/...) and import them into the TanStack router files.
+    Feature Grouping: Do not put complex logic directly in route/page files. Create feature-specific folders (e.g., src/features/districts/components/...) and import them into the TanStack router/page files.
 
     Props & Types: Explicitly define interface blocks for all component props in the same file. Do not use inline any types.
 
@@ -125,9 +127,9 @@ Frontend Architecture & Modularization Rules:
 
 Formatting & Validation Rules:
 
-    Biome Formatting: All code must adhere to the rules defined in biome.json: use 4-space indentation and a 90-character line width. Do not format unrelated code.
+    Biome Formatting: All code must adhere to the rules defined in biome.json: use tab indentation with width 4. Do not format unrelated code.
 
-    Frontend Linting: After generating React/TypeScript code, you must assume the code will be validated against the ESLint rules defined in apps/web (npm run lint -w apps/web). Ensure no unused directives or React-hooks violations occur.
+    Frontend Linting: After generating React/TypeScript code, run npm run lint (Biome). Ensure no formatting or lint violations.
 
     Typescript strictness: Follow the tsconfig.json paths utilizing @/ for absolute imports, placing third-party imports before local ones.
 
@@ -176,7 +178,9 @@ Error handling
 
 ## Hard Checks
 
-All commits must pass Ruff and Biome validation. Run npx biome check --apply . and ruff check --fix . before pushing.
+All commits must pass Ruff and Biome validation.
+Run `npm run lint` and `ruff check --fix .` before pushing.
+If formatting changes are needed, run `npm run format`.
 
 ## If You Add Tests
 

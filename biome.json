@@ -1,53 +1,77 @@
 {
-    "files": {
-        "includes": [
-            "apps/web/src/**/*.js",
-            "apps/web/src/**/*.jsx",
-            "apps/web/src/**/*.ts",
-            "apps/web/src/**/*.tsx",
-            "apps/web/package.json",
-            "biome.json"
-        ]
-    },
-    "formatter": {
-        "enabled": true,
-        "formatWithErrors": false,
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineWidth": 90
-    },
-    "linter": {
-        "enabled": true,
-        "rules": {
-            "recommended": false,
-            "complexity": {
-                "noExcessiveCognitiveComplexity": {
-                    "level": "error",
-                    "options": {
-                        "maxAllowedComplexity": 10
-                    }
-                }
-            }
-        }
-    },
-    "javascript": {
-        "formatter": {
-            "quoteStyle": "double"
-        }
-    },
-    "overrides": [
-        {
-            "includes": [
-                "apps/web/src/pages/achievement-simulator-page.tsx",
-                "apps/web/src/pages/download-page.tsx"
-            ],
-            "linter": {
-                "rules": {
-                    "complexity": {
-                        "noExcessiveCognitiveComplexity": "off"
-                    }
-                }
-            }
-        }
-    ]
+	"files": {
+		"includes": [
+			"apps/web/src/**/*.js",
+			"apps/web/src/**/*.jsx",
+			"apps/web/src/**/*.ts",
+			"apps/web/src/**/*.tsx",
+			"apps/web/package.json",
+			"biome.json"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 4
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedAttributes": "on"
+			}
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error",
+				"noMagicNumbers": "warn",
+				"useFilenamingConvention": "off"
+			},
+			"performance": {
+				"useTopLevelRegex": "off"
+			},
+			"complexity": {
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 10
+					}
+				}
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"overrides": [
+		{
+			"includes": [
+				"apps/web/src/pages/achievement-simulator-page.tsx",
+				"apps/web/src/pages/download-page.tsx"
+			],
+			"linter": {
+				"rules": {
+					"complexity": {
+						"noExcessiveCognitiveComplexity": "off"
+					}
+				}
+			}
+		}
+	]
 }
