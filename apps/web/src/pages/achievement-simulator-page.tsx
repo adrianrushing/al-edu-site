@@ -17,6 +17,7 @@ import {
     fetchFilters,
     fetchSchools,
     predictTarget,
+    type SchoolItem,
     type SimulatorPayload,
     type SimulatorTarget,
 } from "@/lib/api";
@@ -32,6 +33,11 @@ const demographicKeys = [
 
 const METADATA_STALE_TIME_MS = 10 * 60 * 1000;
 const METADATA_GC_TIME_MS = 30 * 60 * 1000;
+
+type SchoolDistrictGroup = {
+    districtName: string;
+    schools: SchoolItem[];
+};
 
 export function AchievementSimulatorPage() {
     const [selectedYear, setSelectedYear] = useState<number | undefined>();
@@ -68,6 +74,24 @@ export function AchievementSimulatorPage() {
             }),
         enabled: selectedYear !== undefined,
     });
+
+    const schoolsByDistrict = (schoolsQuery.data ?? []).reduce<SchoolDistrictGroup[]>(
+        (groups, school) => {
+            const districtName = school.dist_name?.trim() || "Unknown District";
+            const existingGroup = groups.find(
+                (group) => group.districtName === districtName,
+            );
+
+            if (existingGroup) {
+                existingGroup.schools.push(school);
+                return groups;
+            }
+
+            groups.push({ districtName, schools: [school] });
+            return groups;
+        },
+        [],
+    );
 
     const baselineQuery = useQuery({
         queryKey: ["simulator-baseline", selectedSchoolKey, selectedYear],
@@ -235,13 +259,20 @@ export function AchievementSimulatorPage() {
                             }
                         >
                             <option value="">Select school</option>
-                            {schoolsQuery.data?.map((school) => (
-                                <option
-                                    key={`${school.school_key}-${school.school_year_start}`}
-                                    value={school.school_key}
+                            {schoolsByDistrict.map((group) => (
+                                <optgroup
+                                    key={group.districtName}
+                                    label={group.districtName}
                                 >
-                                    {school.school_name} - {school.dist_name}
-                                </option>
+                                    {group.schools.map((school) => (
+                                        <option
+                                            key={`${school.school_key}-${school.school_year_start}`}
+                                            value={school.school_key}
+                                        >
+                                            {school.school_name}
+                                        </option>
+                                    ))}
+                                </optgroup>
                             ))}
                         </Select>
                     </Field>
