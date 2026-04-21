@@ -36,6 +36,8 @@ If you add tests, also add a `test` script and document a per-test command.
 Single test: no test runner configured in repo.
 If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_name`.
 
+- When new endpoints are added, add them to the ./API_ENDPOINTS.md
+
 ### Pipelines
 
 - Sync deps: `uv sync --project apps/pipeline`
