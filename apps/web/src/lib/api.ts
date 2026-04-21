@@ -40,6 +40,21 @@ export type SchoolItem = {
     school_name: string;
 };
 
+export type SchoolSimulationMetadataResponse = {
+    school_key: number;
+    available_years: number[];
+    latest_year: number | null;
+    latest_simulatable_year: number | null;
+    selected_year: number | null;
+    is_simulatable: boolean;
+    missing_features: string[];
+    year_status: Array<{
+        year: number;
+        is_simulatable: boolean;
+        missing_features: string[];
+    }>;
+};
+
 export type PreviewResponse = {
     dataset: string;
     limit: number;
@@ -57,21 +72,21 @@ export type SimulatorTarget =
     | "inexp_rate";
 
 export type SimulatorPayload = {
-    ach_all?: number;
-    per_pupil_total_raw?: number;
-    nces_poverty?: number;
-    nces_freelunch?: number;
-    exp_rate?: number;
-    inexp_rate?: number;
+    ach_all?: number | null;
+    per_pupil_total_raw?: number | null;
+    nces_poverty?: number | null;
+    nces_freelunch?: number | null;
+    exp_rate?: number | null;
+    inexp_rate?: number | null;
     nces_locale_type?: string;
     is_charter?: number;
     is_magnet?: number;
-    pct_american_indian_alaska_native?: number;
-    pct_asian?: number;
-    pct_black_or_african_american?: number;
-    pct_native_hawaiian_pacific_islander?: number;
-    pct_two_or_more_races?: number;
-    pct_white?: number;
+    pct_american_indian_alaska_native?: number | null;
+    pct_asian?: number | null;
+    pct_black_or_african_american?: number | null;
+    pct_native_hawaiian_pacific_islander?: number | null;
+    pct_two_or_more_races?: number | null;
+    pct_white?: number | null;
 };
 
 export type BaselineResponse = Required<
@@ -180,6 +195,24 @@ export async function fetchSchools(search: {
 
     const response = await fetch(`${API_BASE}/schools?${params.toString()}`);
     if (!response.ok) throw new Error("Failed to load schools");
+    return response.json();
+}
+
+export async function fetchSchoolSimulationMetadata(
+    schoolKey: number,
+    search: {
+        year?: number;
+    },
+): Promise<SchoolSimulationMetadataResponse> {
+    const params = buildSearchParams({ year: search.year });
+    const response = await fetch(
+        `${API_BASE}/schools/${schoolKey}/simulation-metadata?${params.toString()}`,
+    );
+    if (!response.ok) {
+        throw new Error(
+            await readErrorMessage(response, "Failed to load school metadata"),
+        );
+    }
     return response.json();
 }
 
