@@ -12,14 +12,38 @@
     "formatter": {
         "enabled": true,
         "formatWithErrors": false,
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineWidth": 90
+        "indentStyle": "tab",
+        "indentWidth": 4
+    },
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "on",
+                "useSortedAttributes": "on"
+            }
+        }
     },
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": false,
+            "recommended": true,
+            "style": {
+                "noParameterAssign": "error",
+                "useAsConstAssertion": "error",
+                "useDefaultParameterLast": "error",
+                "useEnumInitializers": "error",
+                "useSelfClosingElements": "error",
+                "useSingleVarDeclarator": "error",
+                "noUnusedTemplateLiteral": "error",
+                "useNumberNamespace": "error",
+                "noInferrableTypes": "error",
+                "noUselessElse": "error",
+                "noMagicNumbers": "warn",
+                "useFilenamingConvention": "off"
+            },
+            "performance": {
+                "useTopLevelRegex": "off"
+            },
             "complexity": {
                 "noExcessiveCognitiveComplexity": {
                     "level": "error",
@@ -32,7 +56,7 @@
     },
     "javascript": {
         "formatter": {
-            "quoteStyle": "double"
+            "quoteStyle": "single"
         }
     },
     "overrides": [

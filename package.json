@@ -12,6 +12,8 @@
         "build": "npm run build -w apps/web",
         "docker:up": "docker compose up --build",
         "docker:down": "docker compose down",
-        "docker:reset": "docker compose down -v && docker compose up --build"
+        "docker:reset": "docker compose down -v && docker compose up --build",
+        "lint": "biome check apps/web/src apps/web/package.json",
+        "format": "biome format --write ."
     }
 }
