@@ -5,9 +5,15 @@ import joblib
 import numpy as np
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Path, Request
+from psycopg.errors import UndefinedTable
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/predict", tags=["predict"])
+
+CORE_TABLES_MISSING_DETAIL = (
+    "Core data tables are not loaded. Run the data load scripts to create core.* "
+    "tables and materialized views."
+)
 
 _model_cache = {}
 
@@ -55,7 +61,7 @@ async def get_baseline(
         ON t.school_key = i.school_key AND t.year = %s
        AND t.sub_population = 'All SubPopulation'
     WHERE i.school_key = %s
-      AND i.school_year_start = %s
+    ORDER BY i.school_year_start DESC
     LIMIT 1
     """
 
@@ -119,86 +125,91 @@ async def get_baseline(
       AND ethnicity = 'All Ethnicity' AND race != 'All Race'
     """
 
-    with pool.connection() as conn:
-        with conn.cursor() as cur:
-            # 1. Fetch base stats
-            cur.execute(base_query, (year, year, year, school_key, year))
-            base_row = cur.fetchone()
+    try:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                # 1. Fetch base stats
+                cur.execute(base_query, (year, year, year, school_key))
+                base_row = cur.fetchone()
 
-            if not base_row:
-                raise HTTPException(
-                    status_code=404,
-                    detail="Baseline data not found for this school and year.",
+                if not base_row:
+                    raise HTTPException(
+                        status_code=404,
+                        detail="Baseline data not found for this school and year.",
+                    )
+
+                columns = [desc.name for desc in cur.description]
+                baseline_data = dict(zip(columns, base_row, strict=False))
+
+                cur.execute(defaults_query, (year, year, year, year))
+                defaults_row = cur.fetchone()
+                default_columns = [desc.name for desc in cur.description]
+                defaults = dict(zip(default_columns, defaults_row, strict=False))
+
+                cur.execute(global_defaults_query)
+                global_defaults_row = cur.fetchone()
+                global_defaults_columns = [desc.name for desc in cur.description]
+                global_defaults = dict(
+                    zip(global_defaults_columns, global_defaults_row, strict=False)
                 )
 
-            columns = [desc.name for desc in cur.description]
-            baseline_data = dict(zip(columns, base_row, strict=False))
+                numeric_keys = [
+                    "ach_all",
+                    "per_pupil_total_raw",
+                    "nces_poverty",
+                    "nces_freelunch",
+                    "exp_rate",
+                    "inexp_rate",
+                ]
+                for key in numeric_keys:
+                    if baseline_data.get(key) is None:
+                        baseline_data[key] = defaults.get(key)
+                    if baseline_data.get(key) is None:
+                        baseline_data[key] = global_defaults.get(key)
 
-            cur.execute(defaults_query, (year, year, year, year))
-            defaults_row = cur.fetchone()
-            default_columns = [desc.name for desc in cur.description]
-            defaults = dict(zip(default_columns, defaults_row, strict=False))
+                if baseline_data.get("nces_locale_type") in (None, "", "Unknown"):
+                    baseline_data["nces_locale_type"] = "Suburb"
 
-            cur.execute(global_defaults_query)
-            global_defaults_row = cur.fetchone()
-            global_defaults_columns = [desc.name for desc in cur.description]
-            global_defaults = dict(
-                zip(global_defaults_columns, global_defaults_row, strict=False)
-            )
+                # 2. Fetch and pivot demographics
+                cur.execute(demo_query, (school_key, year))
+                demo_rows = cur.fetchall()
 
-            numeric_keys = [
-                "ach_all",
-                "per_pupil_total_raw",
-                "nces_poverty",
-                "nces_freelunch",
-                "exp_rate",
-                "inexp_rate",
-            ]
-            for key in numeric_keys:
-                if baseline_data.get(key) is None:
-                    baseline_data[key] = defaults.get(key)
-                if baseline_data.get(key) is None:
-                    baseline_data[key] = global_defaults.get(key)
+                # Default all to 0.0
+                races = [
+                    "American Indian/Alaska Native",
+                    "Asian",
+                    "Black or African American",
+                    "Native Hawaiian/Pacific Islander",
+                    "Two or More Races",
+                    "White",
+                ]
+                demo_counts = {r: 0.0 for r in races}
 
-            if baseline_data.get("nces_locale_type") in (None, "", "Unknown"):
-                baseline_data["nces_locale_type"] = "Suburb"
+                for row in demo_rows:
+                    race = row[0]
+                    count = float(row[1]) if row[1] is not None else 0.0
+                    if race in demo_counts:
+                        demo_counts[race] = count
 
-            # 2. Fetch and pivot demographics
-            cur.execute(demo_query, (school_key, year))
-            demo_rows = cur.fetchall()
+                total_students = sum(demo_counts.values())
 
-            # Default all to 0.0
-            races = [
-                "American Indian/Alaska Native",
-                "Asian",
-                "Black or African American",
-                "Native Hawaiian/Pacific Islander",
-                "Two or More Races",
-                "White",
-            ]
-            demo_counts = {r: 0.0 for r in races}
+                for race in races:
+                    clean_name = "pct_" + race.lower().replace(" ", "_").replace("/", "_")
+                    pct = (
+                        demo_counts[race] / total_students if total_students > 0 else 0.0
+                    )
+                    baseline_data[clean_name] = float(pct)
 
-            for row in demo_rows:
-                race = row[0]
-                count = float(row[1]) if row[1] is not None else 0.0
-                if race in demo_counts:
-                    demo_counts[race] = count
+                # Cast floats to ensure JSON serialization
+                for k, v in baseline_data.items():
+                    if isinstance(v, (np.floating, float)):
+                        baseline_data[k] = float(v)
+                    elif isinstance(v, (np.integer, int)):
+                        baseline_data[k] = int(v)
 
-            total_students = sum(demo_counts.values())
-
-            for race in races:
-                clean_name = "pct_" + race.lower().replace(" ", "_").replace("/", "_")
-                pct = demo_counts[race] / total_students if total_students > 0 else 0.0
-                baseline_data[clean_name] = float(pct)
-
-            # Cast floats to ensure JSON serialization
-            for k, v in baseline_data.items():
-                if isinstance(v, (np.floating, float)):
-                    baseline_data[k] = float(v)
-                elif isinstance(v, (np.integer, int)):
-                    baseline_data[k] = int(v)
-
-            return baseline_data
+                return baseline_data
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
 
 class PredictRequest(BaseModel):

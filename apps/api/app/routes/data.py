@@ -3,13 +3,19 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from psycopg import Connection
-from psycopg.errors import LockNotAvailable, QueryCanceled
+from psycopg.errors import LockNotAvailable, QueryCanceled, UndefinedTable
 
 from app.db import get_connection
 from app.querying import FilterParams, fetch_preview, get_dataset_or_none, iter_csv_rows
 from app.schemas import DataPreviewResponse
 
 router = APIRouter(tags=["data"])
+
+
+CORE_TABLES_MISSING_DETAIL = (
+    "Core data tables are not loaded. Run the data load scripts to create core.* "
+    "tables and materialized views."
+)
 
 
 def resolve_dataset_or_404(dataset: str):
@@ -79,6 +85,8 @@ def preview_dataset(
             status_code=503,
             detail="Database is busy processing another job. Retry shortly.",
         ) from exc
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
     return DataPreviewResponse(
         dataset=config.key,
@@ -140,3 +148,5 @@ def download_dataset_csv(
             status_code=503,
             detail="Database is busy processing another job. Retry shortly.",
         ) from exc
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc

@@ -18,6 +18,11 @@ from app.schemas import (
 
 router = APIRouter(prefix="/rankings", tags=["rankings"])
 
+CORE_TABLES_MISSING_DETAIL = (
+    "Core data tables are not loaded. Run the data load scripts to create core.* "
+    "tables and materialized views."
+)
+
 
 def encode_cursor(*parts: int | str) -> str:
     payload = json.dumps(list(parts), separators=(",", ":")).encode("utf-8")
@@ -41,9 +46,12 @@ def resolve_year(conn: Connection, year: int | None) -> int:
     if year is not None:
         return year
 
-    with conn.cursor() as cur:
-        cur.execute("SELECT MAX(year) FROM core.fact_edunomics")
-        latest = cur.fetchone()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT MAX(year) FROM core.fact_edunomics")
+            latest = cur.fetchone()
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
     if not latest or latest[0] is None:
         raise HTTPException(status_code=404, detail="No funding year data available")
@@ -173,6 +181,8 @@ def get_district_rankings(
             status_code=503,
             detail="Database is busy processing another job. Retry shortly.",
         ) from exc
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
     next_cursor: str | None = None
     if len(rows) > limit:
@@ -246,6 +256,8 @@ def get_district_schools(
             status_code=503,
             detail="Database is busy processing another job. Retry shortly.",
         ) from exc
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
     next_cursor: str | None = None
     if len(rows) > limit:
@@ -314,6 +326,8 @@ def get_school_performance(
             status_code=503,
             detail="Database is busy processing another job. Retry shortly.",
         ) from exc
+    except UndefinedTable as exc:
+        raise HTTPException(status_code=503, detail=CORE_TABLES_MISSING_DETAIL) from exc
 
     school_name = None
     district_name = None
