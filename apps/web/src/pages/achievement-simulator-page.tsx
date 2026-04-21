@@ -66,6 +66,7 @@ export function AchievementSimulatorPage() {
     const [activeGroup, setActiveGroup] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState(false);
     const [runError, setRunError] = useState<string | null>(null);
+    const [showMetadata, setShowMetadata] = useState(false);
 
     const filtersQuery = useQuery({
         queryKey: ["filters"],
@@ -346,6 +347,20 @@ export function AchievementSimulatorPage() {
                             {simulationMetadata.missing_features.join(", ") || "Unknown"}
                         </p>
                     )}
+
+                    {simulationMetadataQuery.error instanceof Error && (
+                        <p className="text-xs text-red-600">
+                            {simulationMetadataQuery.error.message}
+                        </p>
+                    )}
+
+                    <Button
+                        variant="outline"
+                        onClick={() => setShowMetadata(true)}
+                        disabled={!simulationMetadata}
+                    >
+                        View Data Metadata
+                    </Button>
                 </CardContent>
             </Card>
 
@@ -369,7 +384,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("per_pupil_total_raw", value)
                             }
-                            disabled={isLocked("per_pupil_total_raw")}
+                            disabled={!scenario || isLocked("per_pupil_total_raw")}
                         />
                         <RangeField
                             label="Poverty rate"
@@ -381,7 +396,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("nces_poverty", value / 100)
                             }
-                            disabled={isLocked("nces_poverty")}
+                            disabled={!scenario || isLocked("nces_poverty")}
                         />
                         <RangeField
                             label="Free lunch count"
@@ -392,7 +407,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("nces_freelunch", value)
                             }
-                            disabled={isLocked("nces_freelunch")}
+                            disabled={!scenario || isLocked("nces_freelunch")}
                         />
                         <RangeField
                             label="Experienced teacher rate"
@@ -402,7 +417,7 @@ export function AchievementSimulatorPage() {
                             value={Number(scenario?.exp_rate ?? 0)}
                             suffix="%"
                             onChange={(value) => updateNumericField("exp_rate", value)}
-                            disabled={isLocked("exp_rate")}
+                            disabled={!scenario || isLocked("exp_rate")}
                         />
                         <RangeField
                             label="Inexperienced teacher rate"
@@ -412,7 +427,7 @@ export function AchievementSimulatorPage() {
                             value={Number(scenario?.inexp_rate ?? 0)}
                             suffix="%"
                             onChange={(value) => updateNumericField("inexp_rate", value)}
-                            disabled={isLocked("inexp_rate")}
+                            disabled={!scenario || isLocked("inexp_rate")}
                         />
 
                         {demographicKeys.map((key) => (
@@ -428,7 +443,7 @@ export function AchievementSimulatorPage() {
                                 value={Number(scenario?.[key] ?? 0) * 100}
                                 suffix="%"
                                 onChange={(value) => updateNumericField(key, value / 100)}
-                                disabled={isLocked(key)}
+                                disabled={!scenario || isLocked(key)}
                             />
                         ))}
                         {activeGroup && (
@@ -502,7 +517,60 @@ export function AchievementSimulatorPage() {
                     </CardContent>
                 </Card>
             </div>
+
+            {showMetadata && (
+                <SchoolMetadataPopup
+                    metadata={simulationMetadata}
+                    onClose={() => setShowMetadata(false)}
+                />
+            )}
         </section>
+    );
+}
+
+function SchoolMetadataPopup({
+    metadata,
+    onClose,
+}: {
+    metadata: SchoolSimulationMetadataResponse | undefined;
+    onClose: () => void;
+}) {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <Card className="w-full max-w-lg">
+                <CardHeader>
+                    <CardTitle>School Data Metadata</CardTitle>
+                    <CardDescription>
+                        Summary of available years and simulation readiness.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2 text-sm">
+                    <p>Latest year: {metadata?.latest_year ?? "-"}</p>
+                    <p>
+                        Latest simulatable year:{" "}
+                        {metadata?.latest_simulatable_year ?? "-"}
+                    </p>
+                    <p>Selected year: {metadata?.selected_year ?? "-"}</p>
+                    <p>Simulatable: {metadata?.is_simulatable ? "Yes" : "No"}</p>
+                    <p>
+                        Available years: {metadata?.available_years.join(", ") || "None"}
+                    </p>
+                    {metadata?.year_status?.length ? (
+                        <div className="space-y-1 pt-1 text-xs">
+                            {metadata.year_status.map((status) => (
+                                <p key={status.year}>
+                                    {status.year}:{" "}
+                                    {status.is_simulatable ? "Ready" : "Missing data"}
+                                </p>
+                            ))}
+                        </div>
+                    ) : null}
+                    <Button variant="outline" onClick={onClose}>
+                        Close
+                    </Button>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
 
