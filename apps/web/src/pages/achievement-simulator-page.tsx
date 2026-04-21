@@ -21,7 +21,6 @@ import {
     type SchoolItem,
     type SchoolSimulationMetadataResponse,
     type SimulatorPayload,
-    type SimulatorTarget,
 } from "@/lib/api";
 
 const demographicKeys = [
@@ -32,6 +31,23 @@ const demographicKeys = [
     "pct_two_or_more_races",
     "pct_white",
 ] as const;
+
+type AdjustableField =
+    | "per_pupil_total_raw"
+    | "nces_poverty"
+    | "nces_freelunch"
+    | "exp_rate"
+    | "inexp_rate"
+    | (typeof demographicKeys)[number];
+
+const TEACHER_EXPERIENCE_GROUP = "teacher_experience";
+
+function toGroupKey(field: AdjustableField) {
+    if (field === "exp_rate" || field === "inexp_rate") {
+        return TEACHER_EXPERIENCE_GROUP;
+    }
+    return field;
+}
 
 const METADATA_STALE_TIME_MS = 10 * 60 * 1000;
 const METADATA_GC_TIME_MS = 30 * 60 * 1000;
@@ -47,7 +63,7 @@ export function AchievementSimulatorPage() {
     const [selectedSchoolKey, setSelectedSchoolKey] = useState<number | null>(null);
     const [baseline, setBaseline] = useState<BaselineResponse | null>(null);
     const [scenario, setScenario] = useState<SimulatorPayload | null>(null);
-    const [dirtyFields, setDirtyFields] = useState<Record<string, boolean>>({});
+    const [activeGroup, setActiveGroup] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState(false);
     const [runError, setRunError] = useState<string | null>(null);
 
@@ -135,7 +151,7 @@ export function AchievementSimulatorPage() {
         if (baselineQuery.data) {
             setBaseline(baselineQuery.data);
             setScenario(baselineQuery.data);
-            setDirtyFields({});
+            setActiveGroup(null);
             setRunError(null);
         }
     }, [baselineQuery.data]);
@@ -145,11 +161,13 @@ export function AchievementSimulatorPage() {
         0,
     );
 
-    const markDirty = (key: keyof SimulatorPayload) => {
-        setDirtyFields((prev) => ({ ...prev, [key]: true }));
-    };
+    const updateNumericField = (key: AdjustableField, value: number) => {
+        const targetGroup = toGroupKey(key);
+        if (activeGroup && activeGroup !== targetGroup) {
+            return;
+        }
 
-    const updateNumericField = (key: keyof SimulatorPayload, value: number) => {
+        setActiveGroup(targetGroup);
         setScenario((prev) => {
             if (!prev) {
                 return prev;
@@ -162,20 +180,8 @@ export function AchievementSimulatorPage() {
 
             if (key === "exp_rate") {
                 next.inexp_rate = Math.max(0, Math.min(100, 100 - value));
-                setDirtyFields((draft) => ({
-                    ...draft,
-                    exp_rate: true,
-                    inexp_rate: true,
-                }));
             } else if (key === "inexp_rate") {
                 next.exp_rate = Math.max(0, Math.min(100, 100 - value));
-                setDirtyFields((draft) => ({
-                    ...draft,
-                    exp_rate: true,
-                    inexp_rate: true,
-                }));
-            } else {
-                markDirty(key);
             }
 
             return next;
@@ -190,27 +196,16 @@ export function AchievementSimulatorPage() {
         setIsRunning(true);
         setRunError(null);
 
-        const nextScenario: SimulatorPayload = { ...scenario };
-
-        const maybePredict = async (target: SimulatorTarget) => {
-            if (dirtyFields[target]) {
-                return;
-            }
-            const result = await predictTarget(target, nextScenario);
-            nextScenario[target] = result.predicted_value;
-        };
-
         try {
-            await maybePredict("per_pupil_total_raw");
-            await maybePredict("nces_poverty");
-            await maybePredict("nces_freelunch");
-            await maybePredict("exp_rate");
-            await maybePredict("inexp_rate");
-
-            const achResult = await predictTarget("ach_all", nextScenario);
-            nextScenario.ach_all = achResult.predicted_value;
-
-            setScenario(nextScenario);
+            const achResult = await predictTarget("ach_all", scenario);
+            setScenario((prev) =>
+                prev
+                    ? {
+                          ...prev,
+                          ach_all: achResult.predicted_value,
+                      }
+                    : prev,
+            );
         } catch (error) {
             setRunError(error instanceof Error ? error.message : "Simulation failed");
         } finally {
@@ -223,8 +218,13 @@ export function AchievementSimulatorPage() {
             return;
         }
         setScenario(baseline);
-        setDirtyFields({});
+        setActiveGroup(null);
         setRunError(null);
+    };
+
+    const isLocked = (field: AdjustableField) => {
+        const targetGroup = toGroupKey(field);
+        return Boolean(activeGroup && activeGroup !== targetGroup);
     };
 
     const baselineAchievement = baseline?.ach_all;
@@ -354,7 +354,8 @@ export function AchievementSimulatorPage() {
                     <CardHeader>
                         <CardTitle>Scenario Controls</CardTitle>
                         <CardDescription>
-                            Adjust policy-sensitive inputs, then run simulation.
+                            Change one variable group at a time. Teacher experience rates
+                            are linked complements.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4 md:grid-cols-2">
@@ -368,6 +369,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("per_pupil_total_raw", value)
                             }
+                            disabled={isLocked("per_pupil_total_raw")}
                         />
                         <RangeField
                             label="Poverty rate"
@@ -379,6 +381,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("nces_poverty", value / 100)
                             }
+                            disabled={isLocked("nces_poverty")}
                         />
                         <RangeField
                             label="Free lunch count"
@@ -389,6 +392,7 @@ export function AchievementSimulatorPage() {
                             onChange={(value) =>
                                 updateNumericField("nces_freelunch", value)
                             }
+                            disabled={isLocked("nces_freelunch")}
                         />
                         <RangeField
                             label="Experienced teacher rate"
@@ -398,6 +402,17 @@ export function AchievementSimulatorPage() {
                             value={Number(scenario?.exp_rate ?? 0)}
                             suffix="%"
                             onChange={(value) => updateNumericField("exp_rate", value)}
+                            disabled={isLocked("exp_rate")}
+                        />
+                        <RangeField
+                            label="Inexperienced teacher rate"
+                            min={0}
+                            max={100}
+                            step={0.5}
+                            value={Number(scenario?.inexp_rate ?? 0)}
+                            suffix="%"
+                            onChange={(value) => updateNumericField("inexp_rate", value)}
+                            disabled={isLocked("inexp_rate")}
                         />
 
                         {demographicKeys.map((key) => (
@@ -413,8 +428,14 @@ export function AchievementSimulatorPage() {
                                 value={Number(scenario?.[key] ?? 0) * 100}
                                 suffix="%"
                                 onChange={(value) => updateNumericField(key, value / 100)}
+                                disabled={isLocked(key)}
                             />
                         ))}
+                        {activeGroup && (
+                            <p className="text-xs text-muted-foreground md:col-span-2">
+                                Active variable group: {activeGroup}
+                            </p>
+                        )}
                     </CardContent>
                 </Card>
 
@@ -486,6 +507,7 @@ export function AchievementSimulatorPage() {
 }
 
 function RangeField({
+    disabled,
     label,
     value,
     min,
@@ -494,6 +516,7 @@ function RangeField({
     suffix,
     onChange,
 }: {
+    disabled?: boolean;
     label: string;
     value: number;
     min: number;
@@ -506,6 +529,7 @@ function RangeField({
         <div className="space-y-1">
             <label className="text-sm font-medium text-muted-foreground">{label}</label>
             <Input
+                disabled={disabled}
                 type="range"
                 min={min}
                 max={max}
