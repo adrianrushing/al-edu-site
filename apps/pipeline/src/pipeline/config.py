@@ -1,4 +1,5 @@
 from functools import lru_cache
+import os
 from pathlib import Path
 
 from pydantic import field_validator
@@ -27,4 +28,11 @@ class Settings(BaseSettings):
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    return Settings()
+    return Settings()  # pyright: ignore[reportCallIssue]
+
+
+def get_raw_data_dir() -> Path:
+    env_path = os.getenv("FLAT_DATA_RAW_DIR")
+    if env_path:
+        return Path(env_path).expanduser().resolve()
+    return Path(__file__).resolve().parents[4] / "flat_data" / "in" / "raw_data"

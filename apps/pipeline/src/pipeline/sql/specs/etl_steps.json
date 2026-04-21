@@ -2,40 +2,46 @@
     "version": "2026-04-20",
     "steps": [
         {
+            "name": "ingest_raw_csv_sources",
+            "source": "flat_data/in/raw_data/**/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
+        },
+        {
             "name": "ingest_school_accountability",
-            "source": "flat_data/in/raw_data/school/accountability/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_school_accountability"
+            "source": "flat_data/in/raw_data/school_accountability/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
         },
         {
             "name": "ingest_school_edunomics",
-            "source": "flat_data/in/raw_data/school/edunomics/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_school_edunomics"
+            "source": "flat_data/in/raw_data/school_edunomics/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
         },
         {
             "name": "ingest_student_demographics",
-            "source": "flat_data/in/raw_data/student/demographics/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_student_demographics"
+            "source": "flat_data/in/raw_data/student_demographics/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
         },
         {
             "name": "ingest_teacher_demographics",
-            "source": "flat_data/in/raw_data/teacher/demographics/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_teacher_demographics"
-        },
-        {
-            "name": "ingest_teacher_effectiveness",
-            "source": "flat_data/in/raw_data/teacher/effectiveness/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_teacher_effectiveness"
+            "source": "flat_data/in/raw_data/teacher_demographics/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
         },
         {
             "name": "ingest_teacher_experience",
-            "source": "flat_data/in/raw_data/teacher/experience/*.csv",
-            "target_layer": "silver",
-            "target_table": "silver.stg_teacher_experience"
+            "source": "flat_data/in/raw_data/teacher_experience/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
+        },
+        {
+            "name": "ingest_teacher_effectiveness",
+            "source": "flat_data/in/raw_data/teacher_effectiveness/*.csv",
+            "target_layer": "bronze",
+            "target_table": "bronze.raw_csv_records"
         },
         {
             "name": "canonical_references",

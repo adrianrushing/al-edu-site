@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from pipeline.bronze_ingest import discover_csv_sources, ingest_csv_sources
+from pipeline.config import get_raw_data_dir
 from pipeline.db import connect
 from pipeline.manifest import load_manifest
 from pipeline.migrator import apply_migrations, discover_migrations, plan_migrations
@@ -50,6 +52,39 @@ def cmd_manifest() -> int:
     return 0
 
 
+def _resolve_raw_data_dir(raw_data_dir: Path | None) -> Path:
+    if raw_data_dir is not None:
+        return raw_data_dir.resolve()
+    return get_raw_data_dir()
+
+
+def cmd_sources(raw_data_dir: Path | None) -> int:
+    resolved_dir = _resolve_raw_data_dir(raw_data_dir)
+    sources = discover_csv_sources(resolved_dir)
+    if not sources:
+        print(f"No CSV sources found in {resolved_dir}")
+        return 0
+
+    print(f"raw_data_dir={resolved_dir}")
+    print(f"source_count={len(sources)}")
+    for source in sources:
+        print(f"- {source.dataset_key}: {source.source_path}")
+    return 0
+
+
+def cmd_ingest_bronze(raw_data_dir: Path | None) -> int:
+    resolved_dir = _resolve_raw_data_dir(raw_data_dir)
+    with connect() as conn:
+        summary = ingest_csv_sources(conn, resolved_dir)
+
+    duration_ms = int((summary.finished_at - summary.started_at).total_seconds() * 1000)
+    print(f"run_id={summary.run_id}")
+    print(f"source_count={summary.source_count}")
+    print(f"row_count={summary.row_count}")
+    print(f"duration_ms={duration_ms}")
+    return 0
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="EFLT medallion schema migration runner")
     parser.add_argument(
@@ -71,6 +106,24 @@ def parse_args() -> argparse.Namespace:
     )
 
     sub.add_parser("manifest", help="Print ETL step manifest summary")
+
+    sources_parser = sub.add_parser("sources", help="List discovered CSV sources")
+    sources_parser.add_argument(
+        "--raw-data-dir",
+        type=Path,
+        default=None,
+        help="Override path to raw CSV directory",
+    )
+
+    ingest_parser = sub.add_parser(
+        "ingest-bronze", help="Append raw CSV files into bronze layer"
+    )
+    ingest_parser.add_argument(
+        "--raw-data-dir",
+        type=Path,
+        default=None,
+        help="Override path to raw CSV directory",
+    )
     return parser.parse_args()
 
 
@@ -86,6 +139,10 @@ def main() -> int:
         return cmd_apply(migrations_dir, dry_run=bool(args.dry_run))
     if args.command == "manifest":
         return cmd_manifest()
+    if args.command == "sources":
+        return cmd_sources(raw_data_dir=args.raw_data_dir)
+    if args.command == "ingest-bronze":
+        return cmd_ingest_bronze(raw_data_dir=args.raw_data_dir)
     raise ValueError(f"Unknown command: {args.command}")
 
 
