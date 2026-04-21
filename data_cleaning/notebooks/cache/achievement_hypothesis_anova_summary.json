@@ -1,0 +1,23 @@
+{
+  "target_col": "ach_all",
+  "alpha": 0.05,
+  "n_rows": 5773,
+  "n_candidate_numeric": 11,
+  "n_features_tested": 11,
+  "n_features_significant_fdr": 10,
+  "anova_group_cols": [
+    "district_name",
+    "county_name",
+    "nces_charter",
+    "nces_magnet"
+  ],
+  "anova_significant_groups_fdr": [
+    "county_name",
+    "nces_magnet"
+  ],
+  "paths": {
+    "multiple_tests_csv": "/home/adrian/grad_class/EFLT/al-edu-site/data_cleaning/notebooks/cache/achievement_multiple_tests.csv",
+    "anova_csv": "/home/adrian/grad_class/EFLT/al-edu-site/data_cleaning/notebooks/cache/achievement_anova_results.csv",
+    "tukey_csv": "/home/adrian/grad_class/EFLT/al-edu-site/data_cleaning/notebooks/cache/achievement_tukey_posthoc.csv"
+  }
+}
