@@ -87,3 +87,20 @@ class SchoolPerformanceResponse(BaseModel):
     from_year: int | None
     to_year: int | None
     points: list[SchoolPerformancePoint]
+
+
+class SchoolSimulationYearStatus(BaseModel):
+    year: int
+    is_simulatable: bool
+    missing_features: list[str]
+
+
+class SchoolSimulationMetadataResponse(BaseModel):
+    school_key: int
+    available_years: list[int]
+    latest_year: int | None
+    latest_simulatable_year: int | None
+    selected_year: int | None
+    is_simulatable: bool
+    missing_features: list[str]
+    year_status: list[SchoolSimulationYearStatus]
