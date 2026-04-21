@@ -55,7 +55,7 @@ async def get_baseline(
         ON t.school_key = i.school_key AND t.year = %s
        AND t.sub_population = 'All SubPopulation'
     WHERE i.school_key = %s
-      AND i.school_year_start = %s
+    ORDER BY i.school_year_start DESC
     LIMIT 1
     """
 
@@ -122,7 +122,7 @@ async def get_baseline(
     with pool.connection() as conn:
         with conn.cursor() as cur:
             # 1. Fetch base stats
-            cur.execute(base_query, (year, year, year, school_key, year))
+            cur.execute(base_query, (year, year, year, school_key))
             base_row = cur.fetchone()
 
             if not base_row:
