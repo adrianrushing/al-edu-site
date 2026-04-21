@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 
 import { AppRouter } from "@/router";
-import "@/styles.css";
+import "@/styles/globals.css";
 
 const rootElement = document.getElementById("root");
 
