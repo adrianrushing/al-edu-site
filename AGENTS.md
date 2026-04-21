@@ -43,10 +43,7 @@ If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_nam
 ### Pipelines
 
 - Sync deps: `uv sync --project apps/pipeline`
-- Status: `uv run --project apps/pipeline python -m pipeline.cli status`
-- Plan: `uv run --project apps/pipeline python -m pipeline.cli plan`
-- Apply: `uv run --project apps/pipeline python -m pipeline.cli apply`
-- Dry run: `uv run --project apps/pipeline python -m pipeline.cli apply --dry-run`
+- The medallion pipeline commands were removed; running `uv run --project apps/pipeline python -m pipeline.cli` now returns a legacy notice.
 
 ### Data cleaning package (data_cleaning)
 

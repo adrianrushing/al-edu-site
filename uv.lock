@@ -1668,16 +1668,6 @@ wheels = [
 name = "pipeline"
 version = "0.1.0"
 source = { editable = "apps/pipeline" }
-dependencies = [
-    { name = "psycopg", extra = ["binary"] },
-    { name = "pydantic-settings" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.2.1" },
-    { name = "pydantic-settings", specifier = ">=2.11.0" },
-]
 
 [[package]]
 name = "platformdirs"
