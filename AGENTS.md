@@ -44,6 +44,7 @@ If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_nam
 
 - Sync deps: `uv sync --project apps/pipeline`
 - The medallion pipeline commands were removed; running `uv run --project apps/pipeline python -m pipeline.cli` now returns a legacy notice.
+- Load new source staging families (credentials + graduation rate): `uv run --project apps/pipeline alsde-staging-new-sources-load --expected-port 15432`
 
 ### Data cleaning package (data_cleaning)
 
@@ -51,6 +52,7 @@ If you add tests, prefer `pytest` and document `pytest path/to/test.py::test_nam
 - Refresh review SQL tables: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/sandbox_refresh_all_review.sql`
 - Load reviewed tables to core: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/core_load_review_to_core.sql`
 - Load reviewed geographic tables to core: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/core_load_geo_to_core.sql`
+- Create accountability all-pivot MV in core: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/core_create_accountability_all_pivot_mv.sql`
 - Report school-county strict nulls: `psql "$DATABASE_URL" -f data_cleaning/src/data_cleaning/sql/geo_strict_null_report.sql`
 
 Single test: no test runner configured in repo.

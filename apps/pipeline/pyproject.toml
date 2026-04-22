@@ -4,9 +4,22 @@ version = "0.1.0"
 description = "Legacy pipeline package with medallion commands removed"
 readme = "README.md"
 requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.12.3",
+    "psycopg>=3.3.3",
+    "selenium>=4.34.2",
+]
 
 [project.scripts]
 eflt-pipeline = "pipeline.cli:main"
+alsde-supporting-data-all = "pipeline.alsde_supporting_data.run_all:main"
+alsde-student-demographics-combine = "pipeline.alsde_supporting_data.combine_student_demographics_yearly:main"
+alsde-student-demographics-load = "pipeline.alsde_supporting_data.load_student_demographics_remote:main"
+alsde-staging-manifest = "pipeline.alsde_supporting_data.build_staging_ingest_manifest:main"
+alsde-teacher-demographics-load = "pipeline.alsde_supporting_data.load_teacher_demographics_remote:main"
+alsde-teacher-experience-load = "pipeline.alsde_supporting_data.load_teacher_experience_remote:main"
+alsde-staging-load-all = "pipeline.alsde_supporting_data.load_staging_all:main"
+alsde-staging-new-sources-load = "pipeline.alsde_supporting_data.load_new_sources_remote:main"
 
 [build-system]
 requires = ["uv_build>=0.9.26,<0.10.0"]
