@@ -4,6 +4,10 @@ DROP TABLE IF EXISTS sandbox.fact_teacher_experience_review;
 DROP TABLE IF EXISTS sandbox.fact_teacher_effectiveness_review;
 DROP TABLE IF EXISTS sandbox.fact_edunomics_review;
 DROP TABLE IF EXISTS sandbox.fact_accountability_review;
+DROP TABLE IF EXISTS sandbox.fact_graduation_rate_wide_review;
+DROP TABLE IF EXISTS sandbox.fact_graduation_rate_review;
+DROP TABLE IF EXISTS sandbox.fact_educator_credentials_wide_review;
+DROP TABLE IF EXISTS sandbox.fact_educator_credentials_review;
 
 CREATE TABLE sandbox.fact_accountability_review (
     year              SMALLINT NOT NULL,
@@ -93,6 +97,91 @@ CREATE TABLE sandbox.fact_teacher_experience_review (
     CONSTRAINT uq_fact_teacher_experience_review
       UNIQUE NULLS NOT DISTINCT
       (year, dist_name, school_name, gender, race, ethnicity, sub_population)
+);
+
+CREATE TABLE sandbox.fact_educator_credentials_review (
+    year              SMALLINT NOT NULL,
+    dist_name         TEXT NOT NULL,
+    school_name       TEXT NOT NULL,
+    gender            TEXT NOT NULL,
+    race              TEXT NOT NULL,
+    ethnicity         TEXT NOT NULL,
+    sub_population    TEXT NOT NULL,
+    degree_type       TEXT NOT NULL,
+    credential_count  NUMERIC(14,2),
+    total_count       NUMERIC(14,2),
+    credential_rate   NUMERIC(8,4),
+    _created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_fact_educator_credentials_review
+      UNIQUE NULLS NOT DISTINCT
+      (year, dist_name, school_name, gender, race, ethnicity, sub_population, degree_type)
+);
+
+CREATE TABLE sandbox.fact_educator_credentials_wide_review (
+    year                                             SMALLINT NOT NULL,
+    dist_name                                        TEXT NOT NULL,
+    school_name                                      TEXT NOT NULL,
+    gender                                           TEXT NOT NULL,
+    race                                             TEXT NOT NULL,
+    ethnicity                                        TEXT NOT NULL,
+    sub_population                                   TEXT NOT NULL,
+    total_count_all_degree                          NUMERIC(14,2),
+    credential_count_all_degree                     NUMERIC(14,2),
+    credential_rate_all_degree                      NUMERIC(8,4),
+    credential_count_six_year_class_aa              NUMERIC(14,2),
+    credential_rate_six_year_class_aa               NUMERIC(8,4),
+    credential_count_masters_degree_class_a         NUMERIC(14,2),
+    credential_rate_masters_degree_class_a          NUMERIC(8,4),
+    credential_count_bachelors_degree_class_b       NUMERIC(14,2),
+    credential_rate_bachelors_degree_class_b        NUMERIC(8,4),
+    credential_count_not_specified                  NUMERIC(14,2),
+    credential_rate_not_specified                   NUMERIC(8,4),
+    credential_count_emergency_certificates         NUMERIC(14,2),
+    credential_rate_emergency_certificates          NUMERIC(8,4),
+    credential_count_provisional_certificates       NUMERIC(14,2),
+    credential_rate_provisional_certificates        NUMERIC(8,4),
+    _created_at                                     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at                                     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_fact_educator_credentials_wide_review
+      UNIQUE NULLS NOT DISTINCT
+      (year, dist_name, school_name, gender, race, ethnicity, sub_population)
+);
+
+CREATE TABLE sandbox.fact_graduation_rate_review (
+    year                    SMALLINT NOT NULL,
+    dist_name               TEXT NOT NULL,
+    school_name             TEXT NOT NULL,
+    grade                   TEXT NOT NULL,
+    gender                  TEXT NOT NULL,
+    race                    TEXT NOT NULL,
+    ethnicity               TEXT NOT NULL,
+    sub_population          TEXT NOT NULL,
+    student_count           NUMERIC(14,2),
+    graduates               NUMERIC(14,2),
+    graduation_percent      NUMERIC(8,4),
+    ccr_attainment          NUMERIC(14,2),
+    ccr_attainment_percent  NUMERIC(8,4),
+    _created_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_fact_graduation_rate_review
+      UNIQUE NULLS NOT DISTINCT
+      (year, dist_name, school_name, grade, gender, race, ethnicity, sub_population)
+);
+
+CREATE TABLE sandbox.fact_graduation_rate_wide_review (
+    year                    SMALLINT NOT NULL,
+    dist_name               TEXT NOT NULL,
+    school_name             TEXT NOT NULL,
+    student_count           NUMERIC(14,2),
+    graduates               NUMERIC(14,2),
+    graduation_percent      NUMERIC(8,4),
+    ccr_attainment          NUMERIC(14,2),
+    ccr_attainment_percent  NUMERIC(8,4),
+    _created_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_fact_graduation_rate_wide_review
+      UNIQUE NULLS NOT DISTINCT (year, dist_name, school_name)
 );
 
 WITH src AS (
@@ -418,6 +507,197 @@ SELECT
 FROM src
 WHERE rn = 1;
 
+WITH src AS (
+    SELECT
+        t.year::smallint AS year,
+        trim(regexp_replace(t.system, '[[:space:]]+', ' ', 'g')) AS dist_name,
+        trim(regexp_replace(t.school, '[[:space:]]+', ' ', 'g')) AS school_name,
+        g.canonical_value AS gender,
+        r.canonical_value AS race,
+        e.canonical_value AS ethnicity,
+        COALESCE(NULLIF(trim(t.sub_population), ''), 'Unknown SubPopulation') AS sub_population,
+        COALESCE(NULLIF(trim(t.degree_type), ''), 'Unknown Degree Type') AS degree_type,
+        CASE
+            WHEN upper(trim(COALESCE(t.credential_count, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.credential_count), '[,$ ]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.credential_count), '[,$ ]', '', 'g')::numeric(14,2)
+            ELSE NULL
+        END AS credential_count,
+        CASE
+            WHEN upper(trim(COALESCE(t.total_count, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.total_count), '[,$ ]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.total_count), '[,$ ]', '', 'g')::numeric(14,2)
+            ELSE NULL
+        END AS total_count,
+        CASE
+            WHEN upper(trim(COALESCE(t.credential_rate, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.credential_rate), '[,$ %]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.credential_rate), '[,$ %]', '', 'g')::numeric(8,4)
+            ELSE NULL
+        END AS credential_rate,
+        t._source_file,
+        t._ingested_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY
+                t.year::smallint,
+                lower(trim(regexp_replace(t.system, '[[:space:]]+', ' ', 'g'))),
+                lower(trim(regexp_replace(t.school, '[[:space:]]+', ' ', 'g'))),
+                g.canonical_value,
+                r.canonical_value,
+                e.canonical_value,
+                COALESCE(NULLIF(trim(t.sub_population), ''), 'Unknown SubPopulation'),
+                COALESCE(NULLIF(trim(t.degree_type), ''), 'Unknown Degree Type')
+            ORDER BY t._ingested_at DESC NULLS LAST, t._source_file DESC NULLS LAST
+        ) AS rn
+    FROM staging.stg_educator_credentials t
+    JOIN ref.gender_canonical g
+      ON g.normalized_value = lower(trim(regexp_replace(t.gender, '[[:space:]]+', ' ', 'g')))
+    JOIN ref.race_canonical r
+      ON r.normalized_value = lower(trim(regexp_replace(t.race, '[[:space:]]+', ' ', 'g')))
+    JOIN ref.ethnicity_canonical e
+      ON e.normalized_value = lower(trim(regexp_replace(t.ethnicity, '[[:space:]]+', ' ', 'g')))
+    WHERE trim(COALESCE(t.year, '')) ~ '^[0-9]{4}$'
+)
+INSERT INTO sandbox.fact_educator_credentials_review (
+    year, dist_name, school_name, gender, race, ethnicity, sub_population,
+    degree_type, credential_count, total_count, credential_rate
+)
+SELECT
+    year, dist_name, school_name, gender, race, ethnicity, sub_population,
+    degree_type, credential_count, total_count, credential_rate
+FROM src
+WHERE rn = 1;
+
+INSERT INTO sandbox.fact_educator_credentials_wide_review (
+    year, dist_name, school_name, gender, race, ethnicity, sub_population,
+    total_count_all_degree, credential_count_all_degree, credential_rate_all_degree,
+    credential_count_six_year_class_aa, credential_rate_six_year_class_aa,
+    credential_count_masters_degree_class_a, credential_rate_masters_degree_class_a,
+    credential_count_bachelors_degree_class_b, credential_rate_bachelors_degree_class_b,
+    credential_count_not_specified, credential_rate_not_specified,
+    credential_count_emergency_certificates, credential_rate_emergency_certificates,
+    credential_count_provisional_certificates, credential_rate_provisional_certificates
+)
+SELECT
+    year,
+    dist_name,
+    school_name,
+    gender,
+    race,
+    ethnicity,
+    sub_population,
+    MAX(CASE WHEN degree_type = 'All Degree' THEN total_count END) AS total_count_all_degree,
+    MAX(CASE WHEN degree_type = 'All Degree' THEN credential_count END) AS credential_count_all_degree,
+    MAX(CASE WHEN degree_type = 'All Degree' THEN credential_rate END) AS credential_rate_all_degree,
+    MAX(CASE WHEN degree_type = 'Six-Year (Class AA)' THEN credential_count END) AS credential_count_six_year_class_aa,
+    MAX(CASE WHEN degree_type = 'Six-Year (Class AA)' THEN credential_rate END) AS credential_rate_six_year_class_aa,
+    MAX(CASE WHEN degree_type = 'Master''s Degree (Class A)' THEN credential_count END) AS credential_count_masters_degree_class_a,
+    MAX(CASE WHEN degree_type = 'Master''s Degree (Class A)' THEN credential_rate END) AS credential_rate_masters_degree_class_a,
+    MAX(CASE WHEN degree_type = 'Bachelor''s Degree (Class B)' THEN credential_count END) AS credential_count_bachelors_degree_class_b,
+    MAX(CASE WHEN degree_type = 'Bachelor''s Degree (Class B)' THEN credential_rate END) AS credential_rate_bachelors_degree_class_b,
+    MAX(CASE WHEN degree_type = 'Not Specified' THEN credential_count END) AS credential_count_not_specified,
+    MAX(CASE WHEN degree_type = 'Not Specified' THEN credential_rate END) AS credential_rate_not_specified,
+    MAX(CASE WHEN degree_type = 'Emergency Certificates' THEN credential_count END) AS credential_count_emergency_certificates,
+    MAX(CASE WHEN degree_type = 'Emergency Certificates' THEN credential_rate END) AS credential_rate_emergency_certificates,
+    MAX(CASE WHEN degree_type = 'Provisional Certificates' THEN credential_count END) AS credential_count_provisional_certificates,
+    MAX(CASE WHEN degree_type = 'Provisional Certificates' THEN credential_rate END) AS credential_rate_provisional_certificates
+FROM sandbox.fact_educator_credentials_review
+GROUP BY year, dist_name, school_name, gender, race, ethnicity, sub_population;
+
+WITH src AS (
+    SELECT
+        t.year::smallint AS year,
+        trim(regexp_replace(t.system, '[[:space:]]+', ' ', 'g')) AS dist_name,
+        trim(regexp_replace(t.school, '[[:space:]]+', ' ', 'g')) AS school_name,
+        COALESCE(NULLIF(trim(t.grade), ''), 'Unknown Grade') AS grade,
+        g.canonical_value AS gender,
+        r.canonical_value AS race,
+        e.canonical_value AS ethnicity,
+        COALESCE(NULLIF(trim(t.sub_population), ''), 'Unknown SubPopulation') AS sub_population,
+        CASE
+            WHEN upper(trim(COALESCE(t.student_count, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.student_count), '[,$ ]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.student_count), '[,$ ]', '', 'g')::numeric(14,2)
+            ELSE NULL
+        END AS student_count,
+        CASE
+            WHEN upper(trim(COALESCE(t.graduates, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.graduates), '[,$ ]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.graduates), '[,$ ]', '', 'g')::numeric(14,2)
+            ELSE NULL
+        END AS graduates,
+        CASE
+            WHEN upper(trim(COALESCE(t.graduation_percent, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.graduation_percent), '[,$ %]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.graduation_percent), '[,$ %]', '', 'g')::numeric(8,4)
+            ELSE NULL
+        END AS graduation_percent,
+        CASE
+            WHEN upper(trim(COALESCE(t.ccr_attainment, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.ccr_attainment), '[,$ ]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.ccr_attainment), '[,$ ]', '', 'g')::numeric(14,2)
+            ELSE NULL
+        END AS ccr_attainment,
+        CASE
+            WHEN upper(trim(COALESCE(t.ccr_attainment_percent, ''))) IN ('', 'NA', 'NRD', '*', '**', '~', '--', 'SUPP', 'SUPPRESSED') THEN NULL
+            WHEN regexp_replace(trim(t.ccr_attainment_percent), '[,$ %]', '', 'g') ~ '^[-]?[0-9]+(\.[0-9]+)?$'
+                THEN regexp_replace(trim(t.ccr_attainment_percent), '[,$ %]', '', 'g')::numeric(8,4)
+            ELSE NULL
+        END AS ccr_attainment_percent,
+        t._source_file,
+        t._ingested_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY
+                t.year::smallint,
+                lower(trim(regexp_replace(t.system, '[[:space:]]+', ' ', 'g'))),
+                lower(trim(regexp_replace(t.school, '[[:space:]]+', ' ', 'g'))),
+                COALESCE(NULLIF(trim(t.grade), ''), 'Unknown Grade'),
+                g.canonical_value,
+                r.canonical_value,
+                e.canonical_value,
+                COALESCE(NULLIF(trim(t.sub_population), ''), 'Unknown SubPopulation')
+            ORDER BY t._ingested_at DESC NULLS LAST, t._source_file DESC NULLS LAST
+        ) AS rn
+    FROM staging.stg_graduation_rate t
+    JOIN ref.gender_canonical g
+      ON g.normalized_value = lower(trim(regexp_replace(t.gender, '[[:space:]]+', ' ', 'g')))
+    JOIN ref.race_canonical r
+      ON r.normalized_value = lower(trim(regexp_replace(t.race, '[[:space:]]+', ' ', 'g')))
+    JOIN ref.ethnicity_canonical e
+      ON e.normalized_value = lower(trim(regexp_replace(t.ethnicity, '[[:space:]]+', ' ', 'g')))
+    WHERE trim(COALESCE(t.year, '')) ~ '^[0-9]{4}$'
+)
+INSERT INTO sandbox.fact_graduation_rate_review (
+    year, dist_name, school_name, grade, gender, race, ethnicity, sub_population,
+    student_count, graduates, graduation_percent, ccr_attainment, ccr_attainment_percent
+)
+SELECT
+    year, dist_name, school_name, grade, gender, race, ethnicity, sub_population,
+    student_count, graduates, graduation_percent, ccr_attainment, ccr_attainment_percent
+FROM src
+WHERE rn = 1;
+
+INSERT INTO sandbox.fact_graduation_rate_wide_review (
+    year, dist_name, school_name,
+    student_count, graduates, graduation_percent, ccr_attainment, ccr_attainment_percent
+)
+SELECT
+    year,
+    dist_name,
+    school_name,
+    MAX(student_count) AS student_count,
+    MAX(graduates) AS graduates,
+    MAX(graduation_percent) AS graduation_percent,
+    MAX(ccr_attainment) AS ccr_attainment,
+    MAX(ccr_attainment_percent) AS ccr_attainment_percent
+FROM sandbox.fact_graduation_rate_review
+WHERE grade = 'All Grades'
+  AND gender = 'All Gender'
+  AND race = 'All Race'
+  AND ethnicity = 'All Ethnicity'
+  AND sub_population = 'All SubPopulation'
+GROUP BY year, dist_name, school_name;
+
 CREATE INDEX idx_fact_accountability_review_school_year
   ON sandbox.fact_accountability_review (year, dist_name, school_name);
 CREATE INDEX idx_fact_edunomics_review_school_year
@@ -426,3 +706,11 @@ CREATE INDEX idx_fact_teacher_effect_review_school_year
   ON sandbox.fact_teacher_effectiveness_review (year, dist_name, school_name);
 CREATE INDEX idx_fact_teacher_exp_review_school_year
   ON sandbox.fact_teacher_experience_review (year, dist_name, school_name);
+CREATE INDEX idx_fact_educator_credentials_review_school_year
+  ON sandbox.fact_educator_credentials_review (year, dist_name, school_name);
+CREATE INDEX idx_fact_educator_credentials_wide_review_school_year
+  ON sandbox.fact_educator_credentials_wide_review (year, dist_name, school_name);
+CREATE INDEX idx_fact_graduation_rate_review_school_year
+  ON sandbox.fact_graduation_rate_review (year, dist_name, school_name);
+CREATE INDEX idx_fact_graduation_rate_wide_review_school_year
+  ON sandbox.fact_graduation_rate_wide_review (year, dist_name, school_name);

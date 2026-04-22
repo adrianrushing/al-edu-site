@@ -17,6 +17,8 @@ DROP TABLE IF EXISTS core.fact_accountability;
 DROP TABLE IF EXISTS core.fact_edunomics;
 DROP TABLE IF EXISTS core.fact_teacher_effectiveness;
 DROP TABLE IF EXISTS core.fact_teacher_experience;
+DROP TABLE IF EXISTS core.fact_graduation_rate_wide;
+DROP TABLE IF EXISTS core.fact_educator_credentials_wide;
 DROP TABLE IF EXISTS core.bridge_school_geo_county;
 DROP TABLE IF EXISTS core.fact_school_outcomes_wide;
 DROP TABLE IF EXISTS core.bridge_school_year;
@@ -345,6 +347,51 @@ CREATE TABLE core.fact_teacher_experience (
       REFERENCES core.dim_school_info(school_key, school_year_start)
 );
 
+CREATE TABLE core.fact_educator_credentials_wide (
+    school_key                                      BIGINT NOT NULL,
+    year                                            SMALLINT NOT NULL,
+    gender                                          TEXT NOT NULL REFERENCES ref.gender_canonical(canonical_value),
+    race                                            TEXT NOT NULL REFERENCES ref.race_canonical(canonical_value),
+    ethnicity                                       TEXT NOT NULL REFERENCES ref.ethnicity_canonical(canonical_value),
+    sub_population                                  TEXT NOT NULL,
+    total_count_all_degree                          NUMERIC(14,2),
+    credential_count_all_degree                     NUMERIC(14,2),
+    credential_rate_all_degree                      NUMERIC(8,4),
+    credential_count_six_year_class_aa              NUMERIC(14,2),
+    credential_rate_six_year_class_aa               NUMERIC(8,4),
+    credential_count_masters_degree_class_a         NUMERIC(14,2),
+    credential_rate_masters_degree_class_a          NUMERIC(8,4),
+    credential_count_bachelors_degree_class_b       NUMERIC(14,2),
+    credential_rate_bachelors_degree_class_b        NUMERIC(8,4),
+    credential_count_not_specified                  NUMERIC(14,2),
+    credential_rate_not_specified                   NUMERIC(8,4),
+    credential_count_emergency_certificates         NUMERIC(14,2),
+    credential_rate_emergency_certificates          NUMERIC(8,4),
+    credential_count_provisional_certificates       NUMERIC(14,2),
+    credential_rate_provisional_certificates        NUMERIC(8,4),
+    _created_at                                     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at                                     TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT uq_core_fact_educator_credentials_wide
+      UNIQUE NULLS NOT DISTINCT (school_key, year, gender, race, ethnicity, sub_population),
+    CONSTRAINT fk_core_educator_credentials_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
+);
+
+CREATE TABLE core.fact_graduation_rate_wide (
+    school_key               BIGINT NOT NULL,
+    year                     SMALLINT NOT NULL,
+    student_count            NUMERIC(14,2),
+    graduates                NUMERIC(14,2),
+    graduation_percent       NUMERIC(8,4),
+    ccr_attainment           NUMERIC(14,2),
+    ccr_attainment_percent   NUMERIC(8,4),
+    _created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+    _updated_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT pk_core_fact_graduation_rate_wide PRIMARY KEY (school_key, year),
+    CONSTRAINT fk_core_graduation_rate_school_year FOREIGN KEY (school_key, year)
+      REFERENCES core.dim_school_info(school_key, school_year_start)
+);
+
 INSERT INTO core.dim_school_info (
     school_key, school_year_label, school_year_start, school_year_end,
     state_code, state_dist_id, state_school_id,
@@ -622,5 +669,91 @@ ON CONFLICT (school_key, year, gender, race, ethnicity, sub_population) DO UPDAT
     inexp_count = EXCLUDED.inexp_count,
     inexp_rate  = EXCLUDED.inexp_rate,
     _updated_at = now();
+
+INSERT INTO core.fact_educator_credentials_wide (
+    school_key, year, gender, race, ethnicity, sub_population,
+    total_count_all_degree, credential_count_all_degree, credential_rate_all_degree,
+    credential_count_six_year_class_aa, credential_rate_six_year_class_aa,
+    credential_count_masters_degree_class_a, credential_rate_masters_degree_class_a,
+    credential_count_bachelors_degree_class_b, credential_rate_bachelors_degree_class_b,
+    credential_count_not_specified, credential_rate_not_specified,
+    credential_count_emergency_certificates, credential_rate_emergency_certificates,
+    credential_count_provisional_certificates, credential_rate_provisional_certificates,
+    _created_at, _updated_at
+)
+SELECT
+    d.school_key,
+    s.year,
+    s.gender,
+    s.race,
+    s.ethnicity,
+    s.sub_population,
+    s.total_count_all_degree,
+    s.credential_count_all_degree,
+    s.credential_rate_all_degree,
+    s.credential_count_six_year_class_aa,
+    s.credential_rate_six_year_class_aa,
+    s.credential_count_masters_degree_class_a,
+    s.credential_rate_masters_degree_class_a,
+    s.credential_count_bachelors_degree_class_b,
+    s.credential_rate_bachelors_degree_class_b,
+    s.credential_count_not_specified,
+    s.credential_rate_not_specified,
+    s.credential_count_emergency_certificates,
+    s.credential_rate_emergency_certificates,
+    s.credential_count_provisional_certificates,
+    s.credential_rate_provisional_certificates,
+    s._created_at,
+    s._updated_at
+FROM sandbox.fact_educator_credentials_wide_review s
+JOIN core.dim_school_info d
+  ON d.school_year_start = s.year
+ AND lower(trim(regexp_replace(d.dist_name, '[[:space:]]+', ' ', 'g'))) = lower(trim(regexp_replace(s.dist_name, '[[:space:]]+', ' ', 'g')))
+ AND lower(trim(regexp_replace(d.school_name, '[[:space:]]+', ' ', 'g'))) = lower(trim(regexp_replace(s.school_name, '[[:space:]]+', ' ', 'g')))
+ON CONFLICT (school_key, year, gender, race, ethnicity, sub_population) DO UPDATE SET
+    total_count_all_degree                    = EXCLUDED.total_count_all_degree,
+    credential_count_all_degree               = EXCLUDED.credential_count_all_degree,
+    credential_rate_all_degree                = EXCLUDED.credential_rate_all_degree,
+    credential_count_six_year_class_aa        = EXCLUDED.credential_count_six_year_class_aa,
+    credential_rate_six_year_class_aa         = EXCLUDED.credential_rate_six_year_class_aa,
+    credential_count_masters_degree_class_a   = EXCLUDED.credential_count_masters_degree_class_a,
+    credential_rate_masters_degree_class_a    = EXCLUDED.credential_rate_masters_degree_class_a,
+    credential_count_bachelors_degree_class_b = EXCLUDED.credential_count_bachelors_degree_class_b,
+    credential_rate_bachelors_degree_class_b  = EXCLUDED.credential_rate_bachelors_degree_class_b,
+    credential_count_not_specified            = EXCLUDED.credential_count_not_specified,
+    credential_rate_not_specified             = EXCLUDED.credential_rate_not_specified,
+    credential_count_emergency_certificates   = EXCLUDED.credential_count_emergency_certificates,
+    credential_rate_emergency_certificates    = EXCLUDED.credential_rate_emergency_certificates,
+    credential_count_provisional_certificates = EXCLUDED.credential_count_provisional_certificates,
+    credential_rate_provisional_certificates  = EXCLUDED.credential_rate_provisional_certificates,
+    _updated_at                               = now();
+
+INSERT INTO core.fact_graduation_rate_wide (
+    school_key, year,
+    student_count, graduates, graduation_percent, ccr_attainment, ccr_attainment_percent,
+    _created_at, _updated_at
+)
+SELECT
+    d.school_key,
+    s.year,
+    s.student_count,
+    s.graduates,
+    s.graduation_percent,
+    s.ccr_attainment,
+    s.ccr_attainment_percent,
+    s._created_at,
+    s._updated_at
+FROM sandbox.fact_graduation_rate_wide_review s
+JOIN core.dim_school_info d
+  ON d.school_year_start = s.year
+ AND lower(trim(regexp_replace(d.dist_name, '[[:space:]]+', ' ', 'g'))) = lower(trim(regexp_replace(s.dist_name, '[[:space:]]+', ' ', 'g')))
+ AND lower(trim(regexp_replace(d.school_name, '[[:space:]]+', ' ', 'g'))) = lower(trim(regexp_replace(s.school_name, '[[:space:]]+', ' ', 'g')))
+ON CONFLICT (school_key, year) DO UPDATE SET
+    student_count          = EXCLUDED.student_count,
+    graduates              = EXCLUDED.graduates,
+    graduation_percent     = EXCLUDED.graduation_percent,
+    ccr_attainment         = EXCLUDED.ccr_attainment,
+    ccr_attainment_percent = EXCLUDED.ccr_attainment_percent,
+    _updated_at            = now();
 
 COMMIT;

@@ -42,11 +42,15 @@ Reproducibility note:
 - `sandbox_core_remaining_tables.sql`: builds and populates typed review tables
   for the remaining core-aligned facts (accountability, edunomics, teacher
   effectiveness, teacher experience), including dedupe and school-key joins.
+  Also builds educator credentials review + explicit degree-type wide pivots and
+  graduation rate review + all-demographic school-year wide review tables.
 - `sandbox_refresh_all_review.sql`: convenience runner that executes review steps
   in sequence, including the Polars school hierarchy loader and the school
   outcomes demographic ETL.
 - `core_load_review_to_core.sql`: creates core long tables (if needed) and upserts
   reviewed sandbox school/student/teacher long data into `core`.
+  Also upserts `core.fact_educator_credentials_wide` and
+  `core.fact_graduation_rate_wide` from sandbox review-wide tables.
   Also loads hierarchy dims (`core.dim_state`, `core.dim_district`,
   `core.dim_school`, `core.bridge_school_year`) and keeps
   `core.dim_school_info` as compatibility layer.
@@ -58,7 +62,33 @@ Reproducibility note:
   `core.vw_school_year_geo_opportunity`, and
   `core.vw_school_year_geo_context` (single-row school-year context for
   school + district + state + county joins).
+- `core_create_school_year_profiles.sql`: creates joined serving views for
+  modeling and analytics at school-year and district-year grains:
+  `core.vw_school_year_full_profile`, `core.vw_district_year_features`, and
+  `core.vw_district_year_profile`.
+- `core_create_trainable_option3_compare.sql`: creates option-3 trainable
+  enrichment views with both district COI variants and leakage-safe as-of
+  funding fills:
+  `core.vw_district_county_weights`, `core.vw_district_coi_features`, and
+  `core.vw_school_year_full_profile_trainable_option3`.
+- `core_create_accountability_all_pivot_mv.sql`: creates
+  `core.mv_fact_accountability_all_pivot` at school-year grain with only
+  `All Grades/All Gender/All Race/All Ethnicity/All SubPopulation` rows,
+  mapping student + academic achievement into `achievement` and pivoting
+  accountability indicators into `achievement`, `graduation_rate`,
+  `academic_growth`, `absenteeism`, `ccr`, and `elp`.
+- `qa_core_school_year_joinability.sql`: read-only validation checks for
+  school-year joinability and usefulness, including cardinality, fanout,
+  county mapping quality, year overlap, and district-year sufficiency.
 - `geo_strict_null_report.sql`: reports matched rows and strict-null rows for
   school-county mapping from sandbox/core bridge tables.
 
-Run these scripts in order when bootstrapping a new environment.
+Run these scripts in order when bootstrapping a new environment:
+
+1. `sandbox_refresh_all_review.sql`
+2. `core_load_review_to_core.sql`
+3. `core_load_geo_to_core.sql`
+4. `core_create_accountability_all_pivot_mv.sql`
+5. `core_create_school_year_profiles.sql`
+6. `core_create_trainable_option3_compare.sql`
+7. Optional QA: `qa_core_school_year_joinability.sql`
