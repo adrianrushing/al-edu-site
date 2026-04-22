@@ -21,6 +21,7 @@ prototype/
 pgdata/
 worktrees/
 *.csv
+
 # Markdowns
 todo.md
 roadmap.md
@@ -30,3 +31,8 @@ modeling.md
 
 **/.ruff_cache
 **.dump
+**.side
+
+**/downloaded/*
+
+*_checkpoints*.json
