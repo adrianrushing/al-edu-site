@@ -3,6 +3,17 @@
 This file guides agentic coding tools in this repository. Keep changes small, follow
 existing patterns, and update this file when workflows change.
 
+## Agent Context Management & Execution Rules
+
+**CRITICAL: Protect the Context Window.** You must minimize the amount of raw data, logs, and text injected into the standard output. Token efficiency is a primary objective.
+
+- **Redirect and Inspect:** When running commands that produce heavy logging (e.g., `npm run build`, `pytest`, data pipeline scripts, or installations), you MUST redirect the output to a scratch file (e.g., `npm run build > build_out.log 2>&1`). 
+- **Selective Reading:** Never `cat` or read large files entirely into the context. To diagnose errors, use tools like `tail -n 50 build_out.log`, `head`, or `grep -i "error"` to pull only the relevant stack traces.
+- **Strict SQL Limits:** When querying the database to understand schema, data shape, or content, ALWAYS append `LIMIT 1` or `LIMIT 3`. Never run unbounded `SELECT` statements.
+- **Summarize Over Pasting:** If you encounter a massive error trace or JSON payload, summarize the root cause or key structure in your own words. Do not echo the entire raw payload back into the chat history.
+- **Clean Up:** Remove temporary scratch files (e.g., `rm build_out.log`) once you have extracted the necessary context.
+
+
 ## Repository Overview
 
 - Monorepo with npm workspaces under `apps/*`.
