@@ -1,0 +1,362 @@
+[
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2015-2016",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2015-2016.csv",
+    "size_bytes": 6741814,
+    "modified_at_epoch": 1776821695.1063676,
+    "row_count": 49137,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2016-2017",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2016-2017.csv",
+    "size_bytes": 11500427,
+    "modified_at_epoch": 1776821709.43258,
+    "row_count": 81235,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2017-2018",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2017-2018.csv",
+    "size_bytes": 14134095,
+    "modified_at_epoch": 1776821714.7516584,
+    "row_count": 97614,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2018-2019",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2018-2019.csv",
+    "size_bytes": 14084057,
+    "modified_at_epoch": 1776821730.3838878,
+    "row_count": 97284,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2019-2020",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2019-2020.csv",
+    "size_bytes": 77,
+    "modified_at_epoch": 1776821731.8826022,
+    "row_count": 0,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2020-2021",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2020-2021.csv",
+    "size_bytes": 14167915,
+    "modified_at_epoch": 1776821737.7909958,
+    "row_count": 98472,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2021-2022",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2021-2022.csv",
+    "size_bytes": 14422271,
+    "modified_at_epoch": 1776821742.9990716,
+    "row_count": 99462,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2022-2023",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2022-2023.csv",
+    "size_bytes": 14492992,
+    "modified_at_epoch": 1776821749.027159,
+    "row_count": 99858,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2023-2024",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2023-2024.csv",
+    "size_bytes": 14527686,
+    "modified_at_epoch": 1776821755.2152483,
+    "row_count": 100056,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "school_accountability",
+    "year_label": "2024-2025",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_accountability_2024-2025.csv",
+    "size_bytes": 14625230,
+    "modified_at_epoch": 1776821760.5573254,
+    "row_count": 100650,
+    "header_signature": "fb794c3dba57a9eba6facd7ad45a04d25843fc98"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2015-2016",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2015-2016.csv",
+    "size_bytes": 55270545,
+    "modified_at_epoch": 1776862268.913619,
+    "row_count": 424938,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2016-2017",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2016-2017.csv",
+    "size_bytes": 54696174,
+    "modified_at_epoch": 1776861879.5277004,
+    "row_count": 419319,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2017-2018",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2017-2018.csv",
+    "size_bytes": 62015564,
+    "modified_at_epoch": 1776862271.7836306,
+    "row_count": 481411,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2018-2019",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2018-2019.csv",
+    "size_bytes": 63240559,
+    "modified_at_epoch": 1776861966.9062138,
+    "row_count": 491045,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2019-2020",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2019-2020.csv",
+    "size_bytes": 63356508,
+    "modified_at_epoch": 1776862274.854643,
+    "row_count": 490461,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2020-2021",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2020-2021.csv",
+    "size_bytes": 63888929,
+    "modified_at_epoch": 1776862277.4856539,
+    "row_count": 494367,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2021-2022",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2021-2022.csv",
+    "size_bytes": 64445103,
+    "modified_at_epoch": 1776862280.1416647,
+    "row_count": 497657,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2022-2023",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2022-2023.csv",
+    "size_bytes": 65625404,
+    "modified_at_epoch": 1776862016.8634784,
+    "row_count": 505837,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2023-2024",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2023-2024.csv",
+    "size_bytes": 75973125,
+    "modified_at_epoch": 1776862283.626679,
+    "row_count": 581400,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "student_demographics",
+    "year_label": "2024-2025",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_student_demographics_2024-2025.csv",
+    "size_bytes": 77055777,
+    "modified_at_epoch": 1776862286.8166919,
+    "row_count": 588851,
+    "header_signature": "974b7c4143de55daafa58fcc742ac68cb7710dc5"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2015-2016",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2015-2016.csv",
+    "size_bytes": 15725778,
+    "modified_at_epoch": 1776843566.6293092,
+    "row_count": 140569,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2016-2017",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2016-2017.csv",
+    "size_bytes": 15931940,
+    "modified_at_epoch": 1776861072.0918114,
+    "row_count": 142261,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2017-2018",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2017-2018.csv",
+    "size_bytes": 16507473,
+    "modified_at_epoch": 1776843693.710399,
+    "row_count": 147163,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2018-2019",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2018-2019.csv",
+    "size_bytes": 16939496,
+    "modified_at_epoch": 1776843746.4278517,
+    "row_count": 151101,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2019-2020",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2019-2020.csv",
+    "size_bytes": 17825867,
+    "modified_at_epoch": 1776843787.0852258,
+    "row_count": 158619,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2020-2021",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2020-2021.csv",
+    "size_bytes": 18678530,
+    "modified_at_epoch": 1776843856.4259145,
+    "row_count": 165897,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2021-2022",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2021-2022.csv",
+    "size_bytes": 20190778,
+    "modified_at_epoch": 1776843887.421219,
+    "row_count": 178791,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2022-2023",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2022-2023.csv",
+    "size_bytes": 21159985,
+    "modified_at_epoch": 1776843980.6281245,
+    "row_count": 186836,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2023-2024",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2023-2024.csv",
+    "size_bytes": 21889776,
+    "modified_at_epoch": 1776844036.8776639,
+    "row_count": 192835,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_demographics",
+    "year_label": "2024-2025",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_demographics_2024-2025.csv",
+    "size_bytes": 22379290,
+    "modified_at_epoch": 1776844099.9452631,
+    "row_count": 197104,
+    "header_signature": "e5c1a18a385645d644713d26dca3c8583d9b63e3"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2015-2016",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2015-2016.csv",
+    "size_bytes": 11379018,
+    "modified_at_epoch": 1776844136.1206045,
+    "row_count": 92417,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2016-2017",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2016-2017.csv",
+    "size_bytes": 11732601,
+    "modified_at_epoch": 1776844146.9397063,
+    "row_count": 95215,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2017-2018",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2017-2018.csv",
+    "size_bytes": 12291369,
+    "modified_at_epoch": 1776844167.464899,
+    "row_count": 99703,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2018-2019",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2018-2019.csv",
+    "size_bytes": 12738709,
+    "modified_at_epoch": 1776844181.753033,
+    "row_count": 103291,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2019-2020",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2019-2020.csv",
+    "size_bytes": 13233788,
+    "modified_at_epoch": 1776844201.8842213,
+    "row_count": 107099,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2020-2021",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2020-2021.csv",
+    "size_bytes": 13747990,
+    "modified_at_epoch": 1776844222.6994154,
+    "row_count": 111044,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2021-2022",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2021-2022.csv",
+    "size_bytes": 14356054,
+    "modified_at_epoch": 1776844243.59061,
+    "row_count": 115701,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2022-2023",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2022-2023.csv",
+    "size_bytes": 14624992,
+    "modified_at_epoch": 1776844273.083884,
+    "row_count": 117697,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2023-2024",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2023-2024.csv",
+    "size_bytes": 15173492,
+    "modified_at_epoch": 1776844288.4820266,
+    "row_count": 121881,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  },
+  {
+    "dataset_type": "teacher_experience",
+    "year_label": "2024-2025",
+    "path": "/home/adrian/grad_class/EFLT/al-edu-site/apps/pipeline/src/pipeline/alsde_supporting_data/downloaded/alsde_educator_experience_2024-2025.csv",
+    "size_bytes": 15435350,
+    "modified_at_epoch": 1776844301.5441475,
+    "row_count": 123896,
+    "header_signature": "183e70d3300d31f902c5e9c8ab1cc627b05fb020"
+  }
+]
